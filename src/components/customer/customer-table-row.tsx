@@ -30,15 +30,15 @@ export const CustomerTableRow: React.FC<CustomerTableRowProps> = ({
       console.log(err);
     }
   };
-//   const handleDisable = async () => {
-//     try {
-//       await customerService.disablecustomerById(data.id);
-//       await onRefetch();
-//       setIsOpen(false);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
+  const handleDisable = async () => {
+    try {
+      await customerService.disablecustomerById(data.id);
+      await onRefetch();
+      setIsOpen(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <TableRow>
       <TableCell className="flex flex-row gap-4 items-center">
