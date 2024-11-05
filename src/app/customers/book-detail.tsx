@@ -61,22 +61,22 @@ export default function BookDetailRoute() {
     }
   }, [param]);
 
-//   const handleAddToCart = async () => {
-//     if (
-//       detailData?.id &&
-//       quantity <= detailData.stock_quantity &&
-//       quantity > 0
-//     ) {
-//       try {
-//         const response = await cartService.addToCart({
-//           bookId: detailData.id,
-//           quantity: quantity,
-//         });
-//       } catch (err) {
-//         console.log(err);
-//       }
-//     }
-//   };
+  const handleAddToCart = async () => {
+    if (
+      detailData?.id &&
+      quantity <= detailData.stock_quantity &&
+      quantity > 0
+    ) {
+      try {
+        const response = await cartService.addToCart({
+          bookId: detailData.id,
+          quantity: quantity,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
 
   return (
     detailData && (
