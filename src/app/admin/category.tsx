@@ -70,9 +70,9 @@ export default function CategoryRoute() {
     getAllCategories();
   }, [meta.page, tabState]);
 
-//   const handleAddNew = () => {
-//     dialogRef.current?.onOpen();
-//   };
+  const handleAddNew = () => {
+    dialogRef.current?.onOpen();
+  };
 
 //   const handleUpdate = async (id: string) => {
 //     await dialogRef.current?.onOpen(id);
