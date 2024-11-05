@@ -74,9 +74,9 @@ export default function CategoryRoute() {
     dialogRef.current?.onOpen();
   };
 
-//   const handleUpdate = async (id: string) => {
-//     await dialogRef.current?.onOpen(id);
-//   };
+  const handleUpdate = async (id: string) => {
+    await dialogRef.current?.onOpen(id);
+  };
 
 //   const handleEnterPress = async (event: KeyboardEvent<HTMLInputElement>) => {
 //     if (event.key === "Enter") {
