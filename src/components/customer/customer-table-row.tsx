@@ -21,24 +21,24 @@ export const CustomerTableRow: React.FC<CustomerTableRowProps> = ({
   onRefetch,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const handleActive = async () => {
-    try {
-      await customerService.enableCustomerById(data.id);
-      await onRefetch();
-      setIsOpen(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const handleDisable = async () => {
-    try {
-      await customerService.disablecustomerById(data.id);
-      await onRefetch();
-      setIsOpen(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+//   const handleActive = async () => {
+//     try {
+//       await customerService.enableCustomerById(data.id);
+//       await onRefetch();
+//       setIsOpen(false);
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+//   const handleDisable = async () => {
+//     try {
+//       await customerService.disablecustomerById(data.id);
+//       await onRefetch();
+//       setIsOpen(false);
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
   return (
     <TableRow>
       <TableCell className="flex flex-row gap-4 items-center">

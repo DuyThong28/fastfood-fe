@@ -62,11 +62,11 @@ export default function CustomerRoute() {
     fetchAllCustomer();
   }, [meta.page, tabState]);
 
-//   const handleEnterPress = async (event: KeyboardEvent<HTMLInputElement>) => {
-//     if (event.key === "Enter") {
-//       await fetchAllCustomer();
-//     }
-//   };
+  const handleEnterPress = async (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      await fetchAllCustomer();
+    }
+  };
 
 
   return (
