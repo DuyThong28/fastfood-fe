@@ -31,16 +31,16 @@ export const CategoryTableRow: React.FC<CategoryTableRowProps> = ({
     setIsOpen(false);
   };
 
-//   const handleShow = async () => {
-//     try {
-//       const response =await categoryService.enableCategoryById(data.id);
-//       console.log("thisi s", response)
-//       await onRefetch();
-//     } catch (err) {
-//       console.log(err);
-//     }
-//     setIsOpen(false);
-//   };
+  const handleShow = async () => {
+    try {
+      const response =await categoryService.enableCategoryById(data.id);
+      console.log("thisi s", response)
+      await onRefetch();
+    } catch (err) {
+      console.log(err);
+    }
+    setIsOpen(false);
+  };
 
   return (
     <TableRow>
