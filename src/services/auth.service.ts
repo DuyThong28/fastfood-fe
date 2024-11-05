@@ -11,6 +11,12 @@ class AuthService {
       password: data.password,
     });
   }
+  async singInWithPhone(data: { email_phone: string; password: string }) {
+    return api.post("/auth/sign-in/phone", {
+      phone: data.email_phone,
+      password: data.password,
+    });
+  }
 
   async signUpByEmail(data: User) {
     return api.post("/auth/sign-up/email", data);

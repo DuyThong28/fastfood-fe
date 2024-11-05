@@ -30,11 +30,11 @@ export default function SignInRoute() {
     e.preventDefault();
     try {
       let response;
-    //   if (/^\d+$/.test(input.email_phone)) {
-        // response = await authService.singInWithPhone(input);
-    //   } else {
+      if (/^\d+$/.test(input.email_phone)) {
+        response = await authService.singInWithPhone(input);
+      } else {
         response = await authService.signInWithEmail(input);
-    //   }
+      }
 
       if (response.data) {
         const accessToken: string = response.data.access_token;
