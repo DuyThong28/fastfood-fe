@@ -5,20 +5,20 @@ import axios from "axios";
 const URL_SERVER = import.meta.env.VITE_URL_SERVER;
 
 class AuthService {
+  async signInWithEmail(data: { email_phone: string; password: string }) {
+    return api.post("/auth/sign-in/email", {
+      email: data.email_phone,
+      password: data.password,
+    });
+  }
 
   async signUpByEmail(data: User) {
     return api.post("/auth/sign-up/email", data);
   }
 
-
   async verificationEmail(data: { token: string }) {
     return api.post("/auth/verify-email", data);
   }
-
-
-
-
-
 
   async refreshAccessToken(): Promise<string> {
     const token = getAccessToken();
