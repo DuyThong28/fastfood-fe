@@ -26,7 +26,6 @@ class AuthService {
     return api.post("/auth/verify-email", data);
   }
 
-  
   async forgotPassword(email: string) {
     return api.post("/auth/forgot-password", { email: email });
   }
@@ -38,7 +37,10 @@ class AuthService {
       code,
     });
   }
-
+  async logOut() {
+    return api.delete("/auth/sign-out");
+  }
+  
   async refreshAccessToken(): Promise<string> {
     const token = getAccessToken();
     if (!token) throw new Error("No refresh token available");
