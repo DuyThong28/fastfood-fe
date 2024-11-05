@@ -64,14 +64,14 @@ export default function AccountInfo() {
 //     }
 //   };
 
-//   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     try {
-//       await customerService.updateAccount(accountData, imageFile);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await customerService.updateAccount(accountData, imageFile);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   function handleChangeInput({ name, value }: { name: string; value: string }) {
     if (name === "birthday") {
