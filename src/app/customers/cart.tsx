@@ -72,13 +72,13 @@ export default function CartRoute() {
     }
   };
 
-//   const handlePurchase = () => {
-//     if (rowSelection.length > 0) {
-//       const query = rowSelection.map(String).join(",");
-//       console.log(query)
-//       navigate(`${routes.CUSTOMER.CHECKOUT}?state=${query}`);
-//     }
-//   };
+  const handlePurchase = () => {
+    if (rowSelection.length > 0) {
+      const query = rowSelection.map(String).join(",");
+      console.log(query)
+      navigate(`${routes.CUSTOMER.CHECKOUT}?state=${query}`);
+    }
+  };
 
   return (
     <ProductLayout>
