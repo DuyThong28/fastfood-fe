@@ -78,11 +78,11 @@ export default function CategoryRoute() {
     await dialogRef.current?.onOpen(id);
   };
 
-//   const handleEnterPress = async (event: KeyboardEvent<HTMLInputElement>) => {
-//     if (event.key === "Enter") {
-//       await getAllCategories();
-//     }
-//   };
+  const handleEnterPress = async (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      await getAllCategories();
+    }
+  };
 
   return (
     <DashBoardLayout>
