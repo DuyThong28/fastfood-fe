@@ -64,11 +64,11 @@ export default function ProductRoute() {
     getAllBooks();
   }, [meta.page, tabState]);
 
-//   const handleEnterPress = async (event: KeyboardEvent<HTMLInputElement>) => {
-//     if (event.key === "Enter") {
-//       await getAllBooks();
-//     }
-//   };
+  const handleEnterPress = async (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      await getAllBooks();
+    }
+  };
 
   return (
     <DashBoardLayout>
