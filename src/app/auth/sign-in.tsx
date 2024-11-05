@@ -14,6 +14,7 @@ const URL_SERVER = import.meta.env.VITE_URL_SERVER;
 export default function SignInRoute() {
   const [input, setinput] = useState({ email_phone: "", password: "" });
   const [auth, setAuth] = useAuth();
+  console.log(auth);
   const navigate = useNavigate();
 
   const handleChangeInput = ({name,value,}: {name: string;value: string;}) => {

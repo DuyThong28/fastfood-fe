@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function SignInSuccess() {
   const [auth,setAuth] = useAuth();
+  console.log(auth);
   const navigate = useNavigate();
   const accessToken = getAccessToken();
 
