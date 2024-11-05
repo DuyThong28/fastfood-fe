@@ -54,15 +54,15 @@ export default function AccountInfo() {
     }
   }, [auth]);
 
-//   const handleChangePass = () => {
-//     if (auth) {
-//       if (auth.role === UserRole.ADMIN) {
-//         navigate(routes.ADMIN.CHANGE_PASSWORD);
-//       } else if (auth.role === UserRole.CUSTOMER) {
-//         navigate(routes.CUSTOMER.CHANGE_PASSWORD);
-//       }
-//     }
-//   };
+  const handleChangePass = () => {
+    if (auth) {
+      if (auth.role === UserRole.ADMIN) {
+        navigate(routes.ADMIN.CHANGE_PASSWORD);
+      } else if (auth.role === UserRole.CUSTOMER) {
+        navigate(routes.CUSTOMER.CHANGE_PASSWORD);
+      }
+    }
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
