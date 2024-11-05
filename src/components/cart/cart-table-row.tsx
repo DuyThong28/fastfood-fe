@@ -29,17 +29,17 @@ export const CartTableRow: React.FC<CartTableRowProps> = ({
   };
 
   const handleUpdateCartItemQuantity = async (value: number) => {
-    // try {
-    //   if (value > 0)
-    //     await cartService.updateCartItemQuantity({
-    //       bookId: data.book_id,
-    //       quantity: value,
-    //     });
-    //   else await cartService.removeFromCart(data.book_id);
-    //   await onRefetch();
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      if (value > 0)
+        await cartService.updateCartItemQuantity({
+          bookId: data.book_id,
+          quantity: value,
+        });
+      else await cartService.removeFromCart(data.book_id);
+      await onRefetch();
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <TableRow className="bg-white shadow-sm">
