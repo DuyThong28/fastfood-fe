@@ -20,12 +20,12 @@ export const CartTableRow: React.FC<CartTableRowProps> = ({
   rowSelection,
 }) => {
   const handleRemove = async () => {
-    // try {
-    //   await cartService.removeFromCart(data.book_id);
-    //   await onRefetch();
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      await cartService.removeFromCart(data.book_id);
+      await onRefetch();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleUpdateCartItemQuantity = async (value: number) => {
