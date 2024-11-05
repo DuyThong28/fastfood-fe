@@ -56,14 +56,14 @@ export default function SignInRoute() {
     }
   };
 
-//   const handleSignInWithGoogle = async ()=>{
-//     try{
-//       const googleAuthUrl = `${URL_SERVER}/auth/google`
-//       window.location.href = googleAuthUrl;
-//     } catch(err){
-//       console.log(err);
-//     }
-//   }
+  const handleSignInWithGoogle = async ()=>{
+    try{
+      const googleAuthUrl = `${URL_SERVER}/auth/google`
+      window.location.href = googleAuthUrl;
+    } catch(err){
+      console.log(err);
+    }
+  }
 
   return (
     <div className="w-full grid grid-cols-2 h-screen">

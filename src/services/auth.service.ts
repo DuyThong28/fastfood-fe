@@ -26,6 +26,19 @@ class AuthService {
     return api.post("/auth/verify-email", data);
   }
 
+  
+  async forgotPassword(email: string) {
+    return api.post("/auth/forgot-password", { email: email });
+  }
+
+  async resetPassword({ email, newPassword, code }: ResetPassword) {
+    return api.post("auth/reset-password", {
+      email,
+      newPassword,
+      code,
+    });
+  }
+
   async refreshAccessToken(): Promise<string> {
     const token = getAccessToken();
     if (!token) throw new Error("No refresh token available");
