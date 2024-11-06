@@ -28,7 +28,18 @@ import reviewService from "@/services/review.service";
 import { useEffect } from "react";
 
 export default function ReviewRoute() {
- 
+  const getAllReviews = async () => {
+    try {
+      const response = await reviewService.getAllReviews();
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getAllReviews();
+  }, []);
   
   return (
     <DashBoardLayout>

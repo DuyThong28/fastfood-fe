@@ -1,11 +1,18 @@
 {
   "name": "fastfood-fe",
+  "private": true,
   "version": "0.0.0",
-  "lockfileVersion": 3,
-  "requires": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "vite test"
+  },
   "packages": {
     "": {
-      "name": "booknow-fe",
+      "name": "fastfood-fe",
       "version": "0.0.0",
       "dependencies": {
         "@headlessui/react": "^2.1.10",
@@ -30,7 +37,6 @@
         "@tanstack/react-query": "^5.56.2",
         "@tanstack/react-table": "^8.20.5",
         "axios": "^1.7.7",
-        "booknow-fe": "file:",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.1",
         "cmdk": "^1.0.0",
@@ -3478,7 +3484,7 @@
         "url": "https://github.com/sponsors/sindresorhus"
       }
     },
-    "node_modules/booknow-fe": {
+    "node_modules/fastfood-fe": {
       "resolved": "",
       "link": true
     },
@@ -6724,7 +6730,6 @@
     "@tanstack/react-query": "^5.56.2",
     "@tanstack/react-table": "^8.20.5",
     "axios": "^1.7.7",
-    "booknow-fe": "file:",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
