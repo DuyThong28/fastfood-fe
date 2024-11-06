@@ -54,11 +54,11 @@ export default function PurchaseRoute() {
     reviewDialogRef.current?.onOpen(id);
   };
 
-  // const handleEnterPress = async (event: KeyboardEvent<HTMLInputElement>) => {
-  //   if (event.key === "Enter") {
-  //     await getAllOrdersByUser();
-  //   }
-  // };
+  const handleEnterPress = async (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      await getAllOrdersByUser();
+    }
+  };
 
   return (
     <CustomerLayout>
@@ -116,7 +116,7 @@ export default function PurchaseRoute() {
               className="w-full rounded-lg bg-background pl-8"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              // onKeyDown={handleEnterPress}
+              onKeyDown={handleEnterPress}
             />
           </div>
           <Button onClick={async () => getAllOrdersByUser()}>Ap dung</Button>
