@@ -58,17 +58,7 @@ import {
         };
       }, []);
       const reviewBook = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        try {
-          await Promise.all(
-            reviews.map((reivew) => orderService.reviewBook(reivew)),
-          );
-          setIsOpen(false);
-          setReviews([]);
-          await onRefetch();
-        } catch (err) {
-          console.log(err);
-        }
+
       };
   
       const handleOnChangeInput = (
