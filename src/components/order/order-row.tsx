@@ -20,16 +20,16 @@ export const OrderRow: React.FC<OrderRowProps> = ({ data, onRefetch, onReview })
     navigate(`/customer/purchase/${data.id}`);
   };
 
-  // const handleCancelOrder = async () => {
-  //   if (data.id) {
-  //     try {
-  //       await orderService.cancelOrder(data.id);
-  //       await onRefetch();
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  // };
+  const handleCancelOrder = async () => {
+    if (data.id) {
+      try {
+        await orderService.cancelOrder(data.id);
+        await onRefetch();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
 
   return (
     <SectionCard>
@@ -48,9 +48,9 @@ export const OrderRow: React.FC<OrderRowProps> = ({ data, onRefetch, onReview })
           <div className="flex flex-row gap-4 ml-auto">
             {(data.status === OrderStatus.PENDING ||
               data.status === OrderStatus.PROCESSING) && (
-              // <Button variant="outline" onClick={handleCancelOrder}>
-              //   Huy don hang
-              // </Button>
+          <Button variant="outline" onClick={handleCancelOrder}>
+                Huy don hang
+              </Button>    
             )}
             {data.status === OrderStatus.SUCCESS && <Button onClick={()=> onReview(data.id)}>Danh gia</Button>}
             <Button variant="outline" onClick={handleShowDetail}>
