@@ -3,6 +3,13 @@
   "version": "0.0.0",
   "lockfileVersion": 3,
   "requires": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "vite test"
+  },
   "packages": {
     "": {
       "name": "booknow-fe",
