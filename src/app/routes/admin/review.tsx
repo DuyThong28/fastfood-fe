@@ -22,10 +22,8 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@radix-ui/react-label";
 import { TablePagination } from "@/components/shared/table-pagination";
-import { ReviewTableHeader } from "@/components/review/review-table-header";
 import { ReviewTableBody } from "@/components/review/review-table-body";
-import reviewService from "@/services/review.service";
-import { useEffect } from "react";
+import { ReviewTableHeader } from "@/components/review/review-table-header";
 
 export default function ReviewRoute() {
  

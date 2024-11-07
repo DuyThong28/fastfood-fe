@@ -24,6 +24,7 @@ export default function AddProductRoute() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      console.log(detailData.images);
       await bookService.createBook(detailData);
       navigate(routes.ADMIN.PRODUCT);
     } catch (err) {
