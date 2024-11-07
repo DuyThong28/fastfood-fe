@@ -22,13 +22,22 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@radix-ui/react-label";
 import { TablePagination } from "@/components/shared/table-pagination";
-import { ReviewTableHeader } from "@/components/review/review-table-header";
 import { ReviewTableBody } from "@/components/review/review-table-body";
-import reviewService from "@/services/review.service";
-import { useEffect } from "react";
+import { ReviewTableHeader } from "@/components/review/review-table-header";
 
 export default function ReviewRoute() {
- 
+  const getAllReviews = async () => {
+    try {
+      const response = await reviewService.getAllReviews();
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getAllReviews();
+  }, []);
   
   return (
     <DashBoardLayout>

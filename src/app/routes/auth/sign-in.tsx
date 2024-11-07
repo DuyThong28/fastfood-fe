@@ -49,6 +49,7 @@ export default function SignInRoute() {
         if (role === UserRole.ADMIN) {
           navigate("/dashboad");
         } else if (role === UserRole.CUSTOMER) {
+          console.log("customer");
           navigate("/");
         }
       }
