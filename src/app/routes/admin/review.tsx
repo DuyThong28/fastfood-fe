@@ -24,8 +24,6 @@ import { Label } from "@radix-ui/react-label";
 import { TablePagination } from "@/components/shared/table-pagination";
 import { ReviewTableBody } from "@/components/review/review-table-body";
 import { ReviewTableHeader } from "@/components/review/review-table-header";
-import { useEffect } from "react";
-import reviewService from "@/services/review.service";
 
 export default function ReviewRoute() {
   const getAllReviews = async () => {
