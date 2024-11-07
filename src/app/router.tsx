@@ -10,6 +10,7 @@ import ProductRoute from "./routes/admin/product";
 import OrderRoute from "./routes/admin/order";
 import IncomeReportRoute from "./routes/admin/income-report";
 import DashboardRoute from "./routes/admin/dashboard";
+import BookReportRoute from "./routes/admin/book-report";
 import AddProductRoute from "./routes/admin/add-product";
 import AdminProfileRoute from "./routes/admin/account-profile";
 import PurchaseRoute from "./routes/customers/purchase";
@@ -109,6 +110,10 @@ const createAppRouter = () =>
     {
       path: routes.ADMIN.ADD_PRODUCT,
       element: <AddProductRoute />,
+    },
+    {
+      path: routes.ADMIN.BOOK_REPORT,
+      element: <BookReportRoute />,
     },
     {
       path: routes.ADMIN.DASHBOAD,

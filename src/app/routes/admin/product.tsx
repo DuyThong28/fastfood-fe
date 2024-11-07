@@ -50,7 +50,7 @@ export default function ProductRoute() {
           page: meta.page,
           take: meta.take,
         },
-        tabState,
+        tabState
       );
 
       setBooks(response.data.data);

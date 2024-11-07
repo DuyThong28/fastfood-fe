@@ -26,7 +26,18 @@ import { ReviewTableBody } from "@/components/review/review-table-body";
 import { ReviewTableHeader } from "@/components/review/review-table-header";
 
 export default function ReviewRoute() {
- 
+  const getAllReviews = async () => {
+    try {
+      const response = await reviewService.getAllReviews();
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getAllReviews();
+  }, []);
   
   return (
     <DashBoardLayout>
