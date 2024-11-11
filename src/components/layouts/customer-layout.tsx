@@ -1,4 +1,4 @@
-import { MapPin, ShoppingCart, UserRound } from "lucide-react";
+import { ClipboardList, MapPin, UserRound } from "lucide-react";
 import { routes } from "@/config";
 import { useLocation } from "react-router-dom";
 import ProductLayout from "./product-layout";
@@ -41,7 +41,7 @@ export default function CustomerLayout({
                     : inActive
                 }
               >
-                <ShoppingCart className="h-4 w-4" />
+                <ClipboardList className="w-4 h-4" />
                 Don Mua
               </a>
               <a

@@ -2,6 +2,7 @@ import { BookStatus } from "@/common/enums";
 import { api } from "@/lib/api-client";
 import { Page } from "@/types/api";
 import {
+  BookQuery,
   CreateBookDetail,
   ResGetAllBooks,
   ResGetBookById,
@@ -28,16 +29,28 @@ class BookService {
 
   async getAllBooks(
     { page, take }: Page,
-    status: string,
-
+    query: BookQuery,
   ): Promise<ResGetAllBooks> {
-    if (status === BookStatus.ACTIVE || status === BookStatus.INACTIVE) {
-      return api.get(
-        `/books/get-all?page=${page}&take=${take}&status=${status}`,
-      );
-    } else {
-      return api.get(`/books/get-all?page=${page}&take=${take}`);
+    let url = `/books/get-all?page=${page}&take=${take}`;
+    if (query?.status && query.status in BookStatus) {
+      url += `&status=${query.status}`;
     }
+    if (query.title) {
+      url += `&title=${query.title}`
+    }
+    if (query?.order)
+      url += `&order=${query.order}`;
+    if (query?.sortBy)
+      url += `&sortBy=${query.sortBy}`;
+    if (query?.max_price)
+      url += `&max_price=${query.max_price}`;
+    if (query?.min_price)
+      url += `&min_price=${query.min_price}`;
+    if (query?.min_star)
+      url += `&min_star=${query.min_star}`;
+    if (query?.category)
+      url += `&categoryId=${query.categoryId}`;
+    return api.get(url);
   }
 
   async getBookById(id: string): Promise<ResGetBookById> {
@@ -55,7 +68,7 @@ class BookService {
     formData.append("author", "John");
     if (data.image_url && data.image_url.length > 0) {
       data.image_url.forEach((image) => {
-        formData.append("image_url", image);
+        formData.append("image_url[]", image);
       });
     }
 

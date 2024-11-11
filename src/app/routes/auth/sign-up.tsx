@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Gender } from "@/common/enums";
+import { PasswordInput } from "@/components/shared/password-input";
 
 export default function SignUpRoute() {
   const [input, setinput] = useState<User>({
@@ -144,9 +145,18 @@ export default function SignUpRoute() {
 
             <div className="grid gap-2">
               <Label htmlFor="email">Mat khau</Label>
-              <Input
+              {/* <Input
                 id="password"
                 type="password"
+                required
+                value={input.password}
+                onChange={(e) =>
+                  handleChangeInput({ name: "password", value: e.target.value })
+                }
+              /> */}
+              <PasswordInput
+                id="password"
+                name="password"
                 required
                 value={input.password}
                 onChange={(e) =>

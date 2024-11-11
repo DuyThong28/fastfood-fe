@@ -8,7 +8,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Table, TableBody } from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MoveDown, MoveUp, PlusCircle, Search } from "lucide-react";
+import { PlusCircle, Search } from "lucide-react";
 import DashBoardLayout from "@/components/layouts/dashboard-layout";
 import { TablePagination } from "@/components/shared/table-pagination";
 import { ProductTableHeader } from "@/components/product/product-table-header";
@@ -19,13 +19,6 @@ import { KeyboardEvent, useEffect, useState } from "react";
 import { Meta } from "@/types/api";
 import { ResBookDetail } from "@/types/book";
 import { BookStatus } from "@/common/enums";
-import { Select } from "@radix-ui/react-select";
-import {
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 export default function ProductRoute() {
   const [books, setBooks] = useState<ResBookDetail[]>([]);
@@ -50,7 +43,12 @@ export default function ProductRoute() {
           page: meta.page,
           take: meta.take,
         },
-        tabState
+        {
+          status: tabState,
+          order: order,
+          sortBy: sortBy,
+          title: searchText,
+        }
       );
 
       setBooks(response.data.data);
@@ -62,11 +60,21 @@ export default function ProductRoute() {
 
   useEffect(() => {
     getAllBooks();
-  }, [meta.page, tabState]);
+  }, [meta.page, tabState, sortBy, order]);
 
   const handleEnterPress = async (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       await getAllBooks();
+    }
+  };
+
+  const handleOnSort = (newOrder: string, newSort: string) => {
+    if (newSort !== sortBy || newOrder !== order) {
+      setSortBy(newSort);
+      setOrder(newOrder);
+    } else {
+      setSortBy("created_at");
+      setOrder("desc");
     }
   };
 
@@ -116,40 +124,16 @@ export default function ProductRoute() {
                 onChange={(e) => setSearchText(e.target.value)}
                 onKeyDown={handleEnterPress}
               />
-              <Select
-                value={sortBy}
-                onValueChange={(value) => setSortBy(value)}
-              >
-                <SelectTrigger className="w-[150px]">
-                  <SelectValue placeholder="Select a statetus" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="created_at">Thoi gian</SelectItem>
-                  <SelectItem value="title">Ten</SelectItem>
-                  <SelectItem value="price">Gia ban</SelectItem>
-                  <SelectItem value="entry_price">Gia nhap</SelectItem>
-                  <SelectItem value="stock_quantity">Ton kho</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select value={order} onValueChange={(value) => setOrder(value)}>
-                <SelectTrigger className="w-[50px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="desc">
-                    <MoveDown className="w-4 h-4" />
-                  </SelectItem>
-                  <SelectItem value="asc">
-                    <MoveUp className="w-4 h-4" />
-                  </SelectItem>
-                </SelectContent>
-              </Select>
               <Button onClick={async () => getAllBooks()}>Ap dung</Button>
             </div>
           </CardHeader>
           <CardContent>
             <Table>
-              <ProductTableHeader />
+              <ProductTableHeader
+                onSort={handleOnSort}
+                sortBy={sortBy}
+                order={order}
+              />
               <TableBody>
                 {books &&
                   books.map((item, index) => {

@@ -1,7 +1,7 @@
 import DashBoardLayout from "@/components/layouts/dashboard-layout";
 import { Button } from "@/components/ui/button";
 import { ProductInfoSection } from "@/components/product/product-info-section";
-// import { ProductSaleSection } from "@/components/product/product-sale-section";
+import { ProductSaleSection } from "@/components/product/product-sale-section";
 import { FormEvent, useState } from "react";
 import { CreateBookDetail } from "@/types/book";
 import bookService from "@/services/book.service";
@@ -24,7 +24,6 @@ export default function AddProductRoute() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      console.log(detailData.images);
       await bookService.createBook(detailData);
       navigate(routes.ADMIN.PRODUCT);
     } catch (err) {

@@ -36,6 +36,12 @@ import { useParams } from "react-router-dom";
 import bookService from "@/services/book.service";
 import { ResBookDetail } from "@/types/book";
 import cartService from "@/services/cart.service";
+import reviewService from "@/services/review.service";
+import { Meta } from "@/types/api";
+import { ResReview } from "@/types/review";
+import { TablePagination } from "@/components/shared/table-pagination";
+import { ReviewItem } from "@/components/product/review-item";
+import { StarButton } from "@/components/product/star-button";
 
 const OPTIONS: EmblaOptionsType = {};
 
@@ -43,13 +49,42 @@ export default function BookDetailRoute() {
   const param = useParams();
   const [detailData, setDetailData] = useState<ResBookDetail | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
+  const [reviews, setReviews] = useState<ResReview[]>([]);
+  const [rating, setRating] = useState<number[]>([1, 2, 3, 4, 5]);
+  const [meta, setMeta] = useState<Meta>({
+    page: 1,
+    take: 20,
+    itemCount: 0,
+    pageCount: 0,
+    hasPreviousPage: false,
+    hasNextPage: false,
+  });
+  const [isAllSelected, setIsAllSelected] = useState<boolean>(true);
 
   const getBookDetail = async (id: string) => {
     try {
       const response = await bookService.getBookById(id);
-      console.log(response)
-      setDetailData(response.data.data);
       console.log(response);
+      setDetailData(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getReviewByBookId = async (id: string) => {
+    try {
+      const response = await reviewService.getReivewsByBookId(
+        {
+          page: meta.page,
+          take: meta.take,
+        },
+        id,
+        { rating }
+      );
+      console.log("getReviewByBookId", response);
+
+      setMeta(response.data.meta);
+      setReviews(response.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -58,8 +93,9 @@ export default function BookDetailRoute() {
   useEffect(() => {
     if (param?.bookId) {
       getBookDetail(param.bookId);
+      getReviewByBookId(param.bookId);
     }
-  }, [param]);
+  }, [param, rating]);
 
   const handleAddToCart = async () => {
     if (
@@ -68,7 +104,7 @@ export default function BookDetailRoute() {
       quantity > 0
     ) {
       try {
-        const response = await cartService.addToCart({
+        await cartService.addToCart({
           bookId: detailData.id,
           quantity: quantity,
         });
@@ -77,6 +113,29 @@ export default function BookDetailRoute() {
       }
     }
   };
+
+  const handleCheckRate = (rate: number) => {
+    if (rating.includes(rate))
+      setRating((prevRate) => prevRate.filter((item) => item !== rate));
+    else setRating((prevRate) => prevRate.concat(rate));
+  };
+
+  const handleSelectAll = (value: boolean) => {
+    setIsAllSelected(value);
+    if (value) {
+      setRating([1, 2, 3, 4, 5]);
+    } else {
+      setRating([]);
+    }
+  };
+
+  useEffect(() => {
+    if (rating.length === 5) {
+      setIsAllSelected(true);
+    } else {
+      setIsAllSelected(false);
+    }
+  }, [rating]);
 
   return (
     detailData && (
@@ -180,6 +239,66 @@ export default function BookDetailRoute() {
           <CardHeader>
             <CardTitle>Danh Gia San Pham</CardTitle>
           </CardHeader>
+          <CardContent className="flex flex-col gap-6">
+            <div className="border border-gray-300 rounded-md p-6 w-full flex flex-row gap-10 items-start bg-muted/50">
+              <div>
+                <div className="mb-2">
+                  <span className=" text-[30px]">{detailData.avg_stars}</span>
+                  <span className="text-[20px]"> tren 5</span>
+                </div>
+                <div className="flex items-center">
+                  {[0, 1, 2, 3, 4].map((rating) => (
+                    <StarIcon
+                      key={rating}
+                      aria-hidden="true"
+                      className={(detailData.avg_stars > rating
+                        ? "text-gray-900"
+                        : "text-gray-200"
+                      ).concat(" h-5 w-5 flex-shrink-0")}
+                    />
+                  ))}
+                </div>
+              </div>
+              <div className="flex flex-row gap-4">
+                <StarButton
+                  onClick={() => handleSelectAll(!isAllSelected)}
+                  value={"Tat ca"}
+                  isActive={isAllSelected}
+                />
+                <StarButton
+                  onClick={() => handleCheckRate(5)}
+                  value={"5 sao"}
+                  isActive={rating.includes(5)}
+                />
+                <StarButton
+                  onClick={() => handleCheckRate(4)}
+                  isActive={rating.includes(4)}
+                  value={"4 sao"}
+                />
+                <StarButton
+                  onClick={() => handleCheckRate(3)}
+                  isActive={rating.includes(3)}
+                  value={"3 sao"}
+                />
+                <StarButton
+                  onClick={() => handleCheckRate(2)}
+                  isActive={rating.includes(2)}
+                  value={"2 sao"}
+                />
+                <StarButton
+                  onClick={() => handleCheckRate(1)}
+                  isActive={rating.includes(1)}
+                  value={"1 sao"}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-6">
+              {reviews.map((review, index) => {
+                return <ReviewItem data={review} key={index} />;
+              })}
+            </div>
+            <TablePagination data={meta} onChange={setMeta} />
+          </CardContent>
         </Card>
       </ProductLayout>
     )

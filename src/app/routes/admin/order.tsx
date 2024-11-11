@@ -35,8 +35,10 @@ export default function OrderRoute() {
           page: meta.page,
           take: meta.take,
         },
-        tabState,
-        searchText,
+        {
+          search: searchText,
+          status: tabState,
+        }
       );
       setOrders(response.data.data);
       setMeta(response.data.meta);
@@ -116,7 +118,7 @@ export default function OrderRoute() {
                   onKeyDown={handleEnterPress}
                 />
               </div>
-              <Button  onClick={async () => getOrdersByAdmin()}>Ap dung</Button>
+              <Button onClick={async () => getOrdersByAdmin()}>Ap dung</Button>
             </div>
             <div className="space-y-4">
               <OrderTableHeader />

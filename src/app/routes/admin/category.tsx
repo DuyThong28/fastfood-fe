@@ -120,8 +120,8 @@ export default function CategoryRoute() {
               <Input
                 type="search"
                 placeholder="Nhap ten danh muc"
-                value={textSearch}
                 className="w-full rounded-lg bg-background pl-8"
+                value={textSearch}
                 onChange={(e) => setTextSearch(e.target.value)}
                 onKeyDown={handleEnterPress}
               />

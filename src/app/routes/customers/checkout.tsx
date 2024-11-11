@@ -1,14 +1,18 @@
 import { CheckoutTableHeader } from "@/components/checkout/checkout-table-header";
 import { CheckoutTableRow } from "@/components/checkout/checkout-table-row";
+import AddressesDialog, {
+  AddressesDialogRef,
+} from "@/components/customer/addresses-dialog";
 import ProductLayout from "@/components/layouts/product-layout";
 import SectionCard from "@/components/shared/section-card";
 import { Button } from "@/components/ui/button";
 import { routes } from "@/config";
+import addressService from "@/services/address.service";
 import cartService from "@/services/cart.service";
 import orderService from "@/services/order.service";
-import { Meta } from "@/types/api";
+import { ResAddress } from "@/types/address";
 import { ResCartItem } from "@/types/cart";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function CheckOutRoute() {
@@ -19,35 +23,40 @@ export default function CheckOutRoute() {
   const [cartItemsSelected, setCartItemsSelected] = useState<
     Array<ResCartItem>
   >([]);
-  const [addressInfo, setAddressInfo] = useState({
-    fullName: "Dao Duy Thong",
-    phoneNumber: "0896423104",
-    address: "Cẩm Thanh, Hội An, Quảng Nam",
+  const [addressInfo, setAddressInfo] = useState<ResAddress>({
+    full_name: "",
+    phone_number: undefined,
+    address: "",
+    id: "",
   });
+  const dialogRef = useRef<AddressesDialogRef>(null);
   const navigate = useNavigate();
-  // const [meta, setMeta] = useState<Meta>({
-  //   page: 1,
-  //   take: 20,
-  //   itemCount: 0,
-  //   pageCount: 0,
-  //   hasPreviousPage: false,
-  //   hasNextPage: false,
-  // });
   const getCartItemsSelected = async () => {
     try {
       const response = await cartService.getCart();
       setCartItemsSelected(
         response.data.data.filter((item) =>
-          selectedBookIds.includes(item.book_id),
-        ),
+          selectedBookIds.includes(item.book_id)
+        )
       );
-      // setMeta(response.data.meta);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getAllAddress = async () => {
+    try {
+      const response = await addressService.getAllAddressByUser();
+      if (response.data.data.length > 0) {
+        setAddressInfo(response.data.data[0]);
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
+    getAllAddress();
     getCartItemsSelected();
   }, []);
 
@@ -66,9 +75,9 @@ export default function CheckOutRoute() {
     });
     try {
       await orderService.createOrder({
-        fullName: addressInfo.fullName,
+        fullName: addressInfo.full_name,
         address: addressInfo.address,
-        phoneNumber: addressInfo.phoneNumber,
+        phoneNumber: addressInfo.phone_number,
         items: items,
       });
       navigate(routes.CUSTOMER.PURCHASE);
@@ -79,25 +88,30 @@ export default function CheckOutRoute() {
 
   return (
     <ProductLayout>
+      <AddressesDialog ref={dialogRef} onSetAddress={setAddressInfo} />
       <main className="flex flex-1 flex-col gap-6 py-6 pl-6">
         <div className="space-y-4">
           <h1 className="text-lg font-semibold">Dia Chi Nhan Hang</h1>
           <SectionCard className="flex flex-row justify-between  p-4">
             <div className="flex flex-col gap-1">
-              <div>{addressInfo.fullName}</div>
+              <div>{addressInfo.full_name}</div>
               <div className="text-sm">
                 <span className="text-[#787C80]">Dia chi:</span>{" "}
                 {addressInfo.address}
               </div>
               <div className="text-sm">
                 <span className="text-[#787C80]">Dien thoai:</span>{" "}
-                {addressInfo.phoneNumber}
+                {addressInfo.phone_number}
               </div>
             </div>
-            {/* <div className="flex flex-row gap-4 items-center">
-              <Button variant="secondary">Chinh sua</Button>
-              <Button variant="outline">Xoa</Button>
-            </div> */}
+            <div className="flex flex-row gap-4 items-center">
+              <Button
+                variant="secondary"
+                onClick={() => dialogRef.current?.onOpen(addressInfo)}
+              >
+                Thay doi
+              </Button>
+            </div>
           </SectionCard>
         </div>
         <div className="space-y-4">
@@ -110,7 +124,9 @@ export default function CheckOutRoute() {
               })}
             </div>
             <div className="flex p-4">
-              <div className="ml-auto font-medium">{`Tong so tien (${cartItemsSelected.length} san pham): ${handleCountTotalPrice()}d`}</div>
+              <div className="ml-auto font-medium">{`Tong so tien (${
+                cartItemsSelected.length
+              } san pham): ${handleCountTotalPrice()}d`}</div>
             </div>
           </SectionCard>
         </div>

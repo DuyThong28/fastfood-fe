@@ -11,19 +11,21 @@ class AuthService {
       password: data.password,
     });
   }
+  async signUpByEmail(data: User) {
+    return api.post("/auth/sign-up/email", data);
+  }
+
   async singInWithPhone(data: { email_phone: string; password: string }) {
     return api.post("/auth/sign-in/phone", {
       phone: data.email_phone,
       password: data.password,
     });
   }
-
-  async signUpByEmail(data: User) {
-    return api.post("/auth/sign-up/email", data);
-  }
-
   async verificationEmail(data: { token: string }) {
     return api.post("/auth/verify-email", data);
+  }
+  async logOut() {
+    return api.delete("/auth/sign-out");
   }
 
   async forgotPassword(email: string) {
@@ -37,10 +39,7 @@ class AuthService {
       code,
     });
   }
-  async logOut() {
-    return api.delete("/auth/sign-out");
-  }
-  
+
   async refreshAccessToken(): Promise<string> {
     const token = getAccessToken();
     if (!token) throw new Error("No refresh token available");

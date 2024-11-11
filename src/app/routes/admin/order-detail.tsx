@@ -50,27 +50,27 @@ export default function AdminOrderDetailRoute() {
 
   const handleUpdateOrderStatus = async () => {
     if (orderDetail?.id) {
-        try {
-          if (orderDetail.status === OrderStatus.PENDING)
-            await orderService.updateOrderStatus({
-              id: orderDetail.id,
-              status: OrderStatus.PROCESSING,
-            });
-          else if (orderDetail.status === OrderStatus.PROCESSING)
-            await orderService.updateOrderStatus({
-              id: orderDetail.id,
-              status: OrderStatus.DELIVERED,
-            });
-          else if (orderDetail.status === OrderStatus.DELIVERED)
-            await orderService.updateOrderStatus({
-              id: orderDetail.id,
-              status: OrderStatus.SUCCESS,
-            });
-          await getOrderById(orderDetail.id);
-        } catch (err) {
-          console.log(err);
-        }
+      try {
+        if (orderDetail.status === OrderStatus.PENDING)
+          await orderService.updateOrderStatus({
+            id: orderDetail.id,
+            status: OrderStatus.PROCESSING,
+          });
+        else if (orderDetail.status === OrderStatus.PROCESSING)
+          await orderService.updateOrderStatus({
+            id: orderDetail.id,
+            status: OrderStatus.DELIVERED,
+          });
+        else if (orderDetail.status === OrderStatus.DELIVERED)
+          await orderService.updateOrderStatus({
+            id: orderDetail.id,
+            status: OrderStatus.SUCCESS,
+          });
+        await getOrderById(orderDetail.id);
+      } catch (err) {
+        console.log(err);
       }
+    }
   };
 
   return (

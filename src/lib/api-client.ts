@@ -20,6 +20,7 @@ export const setAccessToken = (token: string) => {
 export const removeAccessToken = () => {
   cookies.remove("access_token", { path: '/' });
 };
+
 const refreshAccessToken = throttle(
   async (originalRequest) => {
     try {
