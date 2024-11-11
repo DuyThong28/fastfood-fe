@@ -6,7 +6,8 @@ import {
     Package2,
     ShoppingCart,
     UserRound,
-    Users,
+  Users,
+    Users2
   } from "lucide-react";
   import { routes } from "@/config";
   import { useLocation } from "react-router-dom";
@@ -95,7 +96,15 @@ import {
                   <Users className="h-4 w-4" />
                   Quan Ly Khach Hang
                 </a>
-  
+                  <a
+                  href={routes.ADMIN.EMPLOYEE}
+                  className={
+                    pathname === routes.ADMIN.EMPLOYEE ? active : inActive
+                  }
+                >
+                  <Users2 className="h-4 w-4" />
+                  Quan Ly Nhan Vien
+                </a>
                 <a
                   href={routes.ADMIN.ACCOUNT_PROFILE}
                   className={

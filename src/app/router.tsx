@@ -32,6 +32,8 @@ import SignInRoute from "./routes/auth/sign-in";
 import CategoryRoute from "./routes/admin/category";
 import AdminOrderDetailRoute from "./routes/admin/order-detail";
 import SignInSuccess from "./routes/auth/sign-in-success";
+import AddEmployeeRoute from "./routes/admin/add-employee";
+import EmployeeRoute from "./routes/admin/employee";
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -154,6 +156,14 @@ const createAppRouter = () =>
     {
       path: routes.ADMIN.CUSTOMER,
       element: <CustomerRoute />,
+    },
+    {
+      path: routes.ADMIN.EMPLOYEE,
+      element: <EmployeeRoute />,
+    },
+    {
+      path: routes.ADMIN.ADD_EMPLOYEE,
+      element: <AddEmployeeRoute />,
     },
     {
       path: "*",
