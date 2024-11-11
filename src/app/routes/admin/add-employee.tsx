@@ -2,30 +2,28 @@ import DashBoardLayout from "@/components/layouts/dashboard-layout";
 import { Button } from "@/components/ui/button";
 // import { ProductSaleSection } from "@/components/product/product-sale-section";
 import { FormEvent, useState } from "react";
-import { CreateBookDetail } from "@/types/book";
-import bookService from "@/services/book.service";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@/config";
 import { EmployeeInfoSection } from "@/components/employee/employee-info-section";
+import { Employee } from "@/types/user";
+import { Gender } from "@/common/enums";
 
 export default function AddEmployeeRoute() {
-  const [detailData, setDetailData] = useState<CreateBookDetail>({
-    title: "",
-    author: "NXBVN",
-    categoryId: "",
-    entryPrice: 0,
-    price: 0,
-    stockQuantity: 0,
-    description: "",
-    images: [],
+  const [detailData, setDetailData] = useState<Employee>({
+    email: "",
+    gender: Gender.MALE,
+    birthday: new Date(),
+    phone: undefined,
+    full_name: "",
+    avatar_url: undefined,
+    role: "EMPLOYEE"
   });
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      console.log(detailData.images);
-      await bookService.createBook(detailData);
+    //   await bookService.createBook(detailData);
       navigate(routes.ADMIN.PRODUCT);
     } catch (err) {
       console.log(err);

@@ -18,3 +18,7 @@ export interface ResUser {
   full_name: string;
   avatar_url: string | undefined;
 }
+
+export interface Employee extends ResUser{
+  role: "EMPLOYEE"
+}
