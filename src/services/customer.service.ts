@@ -4,14 +4,14 @@ import { ResFetchAllCustomers } from "@/types/customer";
 import { ResUser } from "@/types/user";
 
 class CustomerService {
-  async getAllCusomter({page, take}: Page, disable: boolean| null): Promise<ResFetchAllCustomers> {
+  async getAllCusomter({ page, take }: Page, disable: boolean | null): Promise<ResFetchAllCustomers> {
 
-    if(disable===true || disable===false){
+    if (disable === true || disable === false) {
       return api.get(`/users/get-all?page=${page}&take=${take}&disable=${disable}`);
     } else {
       return api.get(`/users/get-all?page=${page}&take=${take}`);
     }
-    
+
   }
   async enableCustomerById(id: string) {
     return api.post(`/users/${id}/enable`);
@@ -21,11 +21,15 @@ class CustomerService {
     return api.post(`/users/${id}/disable`);
   }
 
-  async getAccountById(id: string) {
+  async getAccountById(id: string): Promise<{ data: { data: ResUser } }> {
     return api.get(`/users/get-one/${id}`);
   }
 
-  async updateAccount(data: ResUser, imageFile: File | null) {
+  async updateAccount(data: ResUser, imageFile: File | null): Promise<{
+    data: {
+      data: ResUser
+    }
+  }> {
     const formData = new FormData();
     if (data.birthday) formData.append("birthday", data.birthday?.toString());
     formData.append("email", data.email);
@@ -38,13 +42,15 @@ class CustomerService {
     return api.patch(`/users/update`, formData);
   }
 
-  async searchCustomer(disable:boolean| null, keyword: string){
-    if(disable===true || disable===false){
+  async searchCustomer(disable: boolean | null, keyword: string) {
+    if (disable === true || disable === false) {
       return api.get(`/users/search?keyword=${keyword}&disable=${disable}`);
     } else {
       return api.get(`/users/search?keyword=${keyword}`);
     }
   }
+
 }
 
 export default new CustomerService();
+

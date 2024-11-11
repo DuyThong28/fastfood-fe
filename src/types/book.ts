@@ -36,7 +36,7 @@ export interface ResBookDetail extends Book {
   sold_quantity: number;
   total_reviews: number;
   avg_stars: number;
-  Category?:Category
+  Category?: Category
 }
 
 export interface ResGetAllBooks extends Response {
@@ -50,4 +50,15 @@ export interface ResGetBookById extends Response {
   data: {
     data: ResBookDetail;
   };
+}
+
+export interface BookQuery {
+  status?: string,
+  order?: string,
+  sortBy?: string,
+  title?: string,
+  min_price?: number;
+  max_price?: number;
+  min_star?: number;
+  categoryId?: string
 }

@@ -20,7 +20,6 @@ export const ProductTableRow: React.FC<ProductTableRowProps> = ({
   data,
   onRefetch,
 }) => {
-  console.log(data)
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 

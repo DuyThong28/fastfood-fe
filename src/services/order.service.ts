@@ -13,7 +13,7 @@ class OrderService {
   async getOrdersByUser(
     { page, take }: Page,
     status: string,
-    search:string
+    search: string
   ): Promise<ResGetOrdersByUser> {
     if (status === "all")
       return api.get(`orders/get-all?page=${page}&take=${take}&search=${search}`);
@@ -29,14 +29,15 @@ class OrderService {
 
   async getOrdersByAdmin(
     { page, take }: Page,
-    status: string,
-    search: string
-  ): Promise<ResGetOrdersByUser> {
-    if (status in ORDER_STATUS) {
-      return api.get(`/orders/list?page=${page}&take=${take}&status=${status}&search=${search}`);
-    } else {
-      return api.get(`/orders/list?page=${page}&take=${take}&search=${search}`);
+    getOrdersQuery: {
+      status: string,
+      search: string,
     }
+  ): Promise<ResGetOrdersByUser> {
+    let url = `/orders/list?page=${page}&take=${take}&search=${getOrdersQuery.search}`;
+    if (getOrdersQuery.status in ORDER_STATUS)
+      url += `&status=${getOrdersQuery.status}`;
+    return api.get(url);
   }
 
   async getOrderDetailByAdMin(id: string): Promise<ResGetOrderById> {
@@ -59,14 +60,14 @@ class OrderService {
     orderId,
     orderDetailId,
     bookId,
-    star,
+    rating,
     description,
     title,
   }: Review) {
     return api.post(
       `orders/get-details/${orderId}/order-details/${orderDetailId}/${bookId}`,
       {
-        star,
+        star: rating,
         description,
         title,
       },
