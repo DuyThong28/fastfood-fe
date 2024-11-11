@@ -1,4 +1,3 @@
 export default function BookReportRoute() {
-    return <div>BookReportRoute</div>;
-  }
-  
+  return <div>BookReportRoute</div>;
+}
