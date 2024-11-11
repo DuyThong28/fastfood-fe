@@ -1,12 +1,12 @@
 import DashBoardLayout from "@/components/layouts/dashboard-layout";
 import { Button } from "@/components/ui/button";
-import { ProductInfoSection } from "@/components/product/product-info-section";
 // import { ProductSaleSection } from "@/components/product/product-sale-section";
 import { FormEvent, useState } from "react";
 import { CreateBookDetail } from "@/types/book";
 import bookService from "@/services/book.service";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@/config";
+import { EmployeeInfoSection } from "@/components/employee/employee-info-section";
 
 export default function AddEmployeeRoute() {
   const [detailData, setDetailData] = useState<CreateBookDetail>({
@@ -38,7 +38,7 @@ export default function AddEmployeeRoute() {
         className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto"
         onSubmit={handleSubmit}
       >
-        <ProductInfoSection detailData={detailData} onChange={setDetailData} />
+        <EmployeeInfoSection detailData={detailData} onChange={setDetailData} />
         {/* <ProductSaleSection /> */}
         <div className="flex flex-row gap-4 mx-auto mb-12">
           <Button

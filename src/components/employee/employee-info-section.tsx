@@ -1,12 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import image from "@/assets/placeholder.svg";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Trash2, Upload } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { CreateBookDetail, UpdateBookDetail } from "@/types/book";
-import { Combobox } from "../product/combo-box";
+import { dateToString } from "@/utils/format";
+import { Select,SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue, } from "../ui/select";
+import { Gender } from "@/common/enums";
 
 export const EmployeeInfoSection = ({
   onChange,
@@ -94,11 +99,11 @@ export const EmployeeInfoSection = ({
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Thong Tin Chi Tiet</CardTitle>
+        <CardTitle>Thông Tin Nhân viên</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         <div className="grid grid-cols-[120px_1fr]  gap-4">
-          <Label className="text-right">Ten san pham</Label>
+          <Label>Tên nhân viên</Label>
           <Input
             id="title"
             name="title"
@@ -111,7 +116,7 @@ export const EmployeeInfoSection = ({
           />
         </div>
         <div className="grid grid-cols-[120px_1fr_1fr] gap-4">
-          <Label className="text-right">Hinh anh san pham</Label>
+          <Label>Hình ảnh nhân viên</Label>
           <div className="flex flex-row gap-4">
             
           {isUpdate && (detailData as UpdateBookDetail).image_url.map((item, index) => {
@@ -121,7 +126,7 @@ export const EmployeeInfoSection = ({
                   key={index}
                 >
                   <img
-                    alt="Product image"
+                    alt="Employee image"
                     className="object-cover h-full w-full absolute"
                     src={item || image}
                   />
@@ -173,74 +178,77 @@ export const EmployeeInfoSection = ({
             )}
           </div>
         </div>
-        <div className="grid grid-cols-[120px_1fr]  gap-4">
-          <Label className="text-right">Danh muc</Label>
-          <Combobox
-            onChange={(value) =>
-              handleChangeInput({ name: "categoryId", value: value })
-            }
-            initCategory={isUpdate ? detailData.initCategory : null}
-          />
-        </div>
-        <div className="grid grid-cols-[120px_1fr]  gap-4">
-          <Label className="text-right">Mo ta san pham</Label>
-          <Textarea
-            placeholder="Mo ta san pham"
-            required
-            name="description"
-            rows={4}
-            value={detailData.description}
-            onChange={(e) =>
-              handleChangeInput({ name: "description", value: e.target.value })
-            }
-          />
-        </div>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="grid grid-cols-[120px_1fr]  gap-4">
-            <Label className="text-right">Gia dau vao</Label>
-            <Input
-              id="entryPrice"
-              name="entryPrice"
-              type="number"
-              min={0}
-              required
-              value={detailData.entryPrice}
-              onChange={(e) =>
-                handleChangeInput({ name: "entryPrice", value: e.target.value })
-              }
-            />
-          </div>
-          <div className="grid grid-cols-[120px_1fr]  gap-4 ">
-            <Label className="text-right">Gia ban</Label>
-            <Input
-              id="price"
-              name="price"
-              type="number"
-              min={0}
-              required
-              value={detailData.price}
-              onChange={(e) =>
-                handleChangeInput({ name: "price", value: e.target.value })
-              }
-            />
-          </div>
-          <div className="grid grid-cols-[120px_1fr]  gap-4">
-            <Label className="text-right">Ton kho</Label>
-            <Input
-              id="stockQuantity"
-              name="stockQuantity"
-              type="number"
-              min={0}
-              required
-              value={detailData.stockQuantity}
-              onChange={(e) =>
-                handleChangeInput({
-                  name: "stockQuantity",
-                  value: e.target.value,
-                })
-              }
-            />
-          </div>
+        <div className="grid grid-cols-[1fr_1fr] gap-4">
+            <div className="space-y-2">
+              <Label>Giới tính</Label>
+              <Select
+                // defaultValue={Gender.MALE}
+                // value={accountData?.gender}
+                onValueChange={(e) =>
+                  handleChangeInput({
+                    name: "gender",
+                    value: e,
+                  })
+                }
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Gioi tinh" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value={Gender.MALE}>Nam</SelectItem>
+                    <SelectItem value={Gender.FEMALE}>Nữ</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Số diện thoại</Label>
+              <Input
+                id="phone"
+                type="number"
+                // value={accountData.phone}
+                onChange={(e) =>
+                  handleChangeInput({
+                    name: "phone",
+                    value: e.target.value,
+                  })
+                }
+              />
+            </div>
+          <div className="space-y-2">
+              <Label>Email</Label>
+              <Input
+                id="email"
+                type="email"
+                required
+                // value={accountData?.email}
+                onChange={(e) =>
+                  handleChangeInput({
+                    name: "email",
+                    value: e.target.value,
+                  })
+                }
+              />
+                  </div>
+                  <div className="space-y-2">
+              <Label className="text-right">Ngày sinh</Label>
+              <Input
+                id="birthday"
+                type="date"
+                required
+                value={dateToString(
+                //   (accountData?.birthday && new Date(accountData?.birthday)) ||
+                    new Date(),
+                )}
+                onChange={(e) =>
+                  handleChangeInput({
+                    name: "birthday",
+                    value: e.target.value,
+                  })
+                }
+                      />
+            </div>
         </div>
       </CardContent>
     </Card>

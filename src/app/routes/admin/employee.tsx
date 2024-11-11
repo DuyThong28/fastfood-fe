@@ -14,8 +14,10 @@ import { Meta } from "@/types/api";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { KeyboardEvent } from "react";
 import { EmployeeTableRow } from "@/components/employee/employee-table-row";
+import { useNavigate } from "react-router-dom";
 
 export default function EmployeeRoute() {
+    const navigate = useNavigate()
   const [customers, setCustomers] = useState<Array<Customer>>([]);
   const [meta, setMeta] = useState<Meta>({
     page: 1,
@@ -76,7 +78,7 @@ export default function EmployeeRoute() {
                   <h1 className="text-lg font-semibold">Danh Sach Nhan vien</h1>
               <Button
             className="gap-1 ml-auto"
-            // onClick={() => navigate("/portal/book/new")}
+            onClick={() => navigate("/portal/employee/new")}
           >
             <PlusCircle className="h-3.5 w-3.5" />
             <span>Them nhan vien moi</span>
