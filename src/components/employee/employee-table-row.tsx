@@ -1,7 +1,6 @@
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { Customer } from "@/types/customer";
 import { AccountState } from "@/common/enums/customer";
 import { Badge } from "../ui/badge";
 import { Gender } from "@/common/enums";
@@ -10,16 +9,20 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import customerService from "@/services/customer.service";
 import { useState } from "react";
 import image from "@/assets/placeholder.svg";
+import { useNavigate } from "react-router-dom";
+import { routes } from "@/config";
+import { Employee } from "@/types/user";
 
-interface CustomerTableRowProps {
-  data: Customer;
+interface EmployeeTableRowProps {
+  data: Employee;
   onRefetch: () => Promise<void>;
 }
 
-export const EmployeeTableRow: React.FC<CustomerTableRowProps> = ({
+export const EmployeeTableRow: React.FC<EmployeeTableRowProps> = ({
   data,
   onRefetch,
 }) => {
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleActive = async () => {
     try {
@@ -38,6 +41,14 @@ export const EmployeeTableRow: React.FC<CustomerTableRowProps> = ({
     } catch (err) {
       console.log(err);
     }
+  };
+  const handleEditStaff = () => {
+    navigate(routes.ADMIN.ADD_EMPLOYEE, {
+      state: {
+        data,
+        isUpdate: true
+      }
+    })
   };
   return (
     <TableRow>
@@ -67,7 +78,7 @@ export const EmployeeTableRow: React.FC<CustomerTableRowProps> = ({
                   <PopoverContent className="w-max p-1">
                       <div
                 className="py-2 px-3  w-full hover:bg-[#F4F4F5]"
-                onClick={handleDisable}
+                onClick={handleEditStaff}
               >
                 Chinh sua thong tin
               </div>

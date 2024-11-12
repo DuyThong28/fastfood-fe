@@ -3,47 +3,34 @@ import image from "@/assets/placeholder.svg";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Pencil } from "lucide-react";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import { dateToString } from "@/utils/format";
+import { Dispatch, SetStateAction, useEffect, useRef} from "react";
+import { dateToString, stringToDate } from "@/utils/format";
 import { Select,SelectContent,
   SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue, } from "../ui/select";
 import { Gender } from "@/common/enums";
-import { Employee } from "@/types/user";
+import { CreateEmployee, UpdateEmployee } from "@/types/user";
 
 export const EmployeeInfoSection = ({
   onChange,
   detailData,
+  setImageFile,
+  imageFile,
+  isUpdate
 }: {
-  onChange:
-    | Dispatch<SetStateAction<Employee>>
-  detailData: Employee;
+  onChange: Dispatch<SetStateAction<CreateEmployee| UpdateEmployee>>
+    detailData: CreateEmployee | UpdateEmployee
+    setImageFile?: Dispatch<SetStateAction<File | null>>
+    imageFile?: File | null
+    isUpdate?: boolean
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null);
-//   const isUpdate = "id" in detailData;
 
   const handleUploadFile = () => {
     inputRef.current?.click();
   };
-
-//   const handleFilesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     const files = event.target.files;
-//     if (files) {
-//       const fileArray = Array.from(files);
-//       (onChange)((prevData) => {
-//         const newImages = prevData.avatar_url?.concat(fileArray);
-//         if (newImages.length > 1) {
-//           console.log("You can only upload a maximum of 1 file.");
-//           return { ...prevData, images: newImages.slice(0, 5) };
-//         }
-
-//         return { ...prevData, images: newImages };
-//       });
-//     }
-//   };
 
   const handleChangeInput = ({
     name,
@@ -52,8 +39,16 @@ export const EmployeeInfoSection = ({
     name: string;
     value: string;
   }) => {
-    (onChange as Dispatch<SetStateAction<Employee>>)(
-      (prevDetailData) => {
+    if (name === "birthday")
+    {
+      (onChange as Dispatch<SetStateAction<CreateEmployee>>)((prevDetailData) => {
+        return {
+          ...prevDetailData,
+          [name]: stringToDate(value),
+        };
+      })
+    }
+      (onChange as Dispatch<SetStateAction<CreateEmployee>>)((prevDetailData) => {
         return {
           ...prevDetailData,
           [name]: value,
@@ -64,7 +59,7 @@ export const EmployeeInfoSection = ({
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
+    if (file && setImageFile) {
       setImageFile(file);
     }
   };
@@ -80,11 +75,11 @@ export const EmployeeInfoSection = ({
     }
 
     return () => {
-      if (detailData.avatar_url) {
+      if ('avatar_url' in detailData && detailData.avatar_url) {
         URL.revokeObjectURL(detailData.avatar_url);
       }
     };
-  }, [detailData.avatar_url, imageFile, onChange]);
+  }, [detailData, imageFile, onChange]);
 
   return (
     <Card className="w-full">
@@ -95,22 +90,35 @@ export const EmployeeInfoSection = ({
         <div className="grid grid-cols-[120px_1fr]  gap-4">
           <Label>Tên nhân viên</Label>
           <Input
-            id="title"
-            name="title"
+            id="fullName"
+            name="fullName"
             placeholder="Ten nhân viên"
             required
-            value={detailData.full_name}
+            value={detailData.fullName}
             onChange={(e) =>
-              handleChangeInput({ name: "full_name", value: e.target.value })
+              handleChangeInput({ name: "fullName", value: e.target.value })
             }
           />
         </div>
-        <div className="grid grid-cols-[120px_1fr_1fr] gap-4">
+        {!isUpdate && <div className="grid grid-cols-[120px_1fr]  gap-4">
+          <Label>Mật khẩu</Label>
+          <Input
+            id="password"
+            name="password"
+            placeholder="Nhập mật khẩu"
+            required
+            value={detailData.password}
+            onChange={(e) =>
+              handleChangeInput({ name: "password", value: e.target.value })
+            }
+          />
+        </div>}
+        {isUpdate && <div className="grid grid-cols-[120px_1fr_1fr] gap-4">
           <Label>Hình ảnh nhân viên</Label>
           <div className="relative">
             <img
               className="w-28 h-28 rounded-full border-4 border-[#C2E1FF]"
-              src={detailData.avatar_url || image}
+              src={'avatar_url' in detailData && detailData.avatar_url || image}
               alt="Rounded avatar"
             />
             <div
@@ -127,7 +135,7 @@ export const EmployeeInfoSection = ({
             onChange={handleFileChange}
             style={{ display: "none" }}
           />
-        </div>
+        </div>}
         <div className="grid grid-cols-[1fr_1fr] gap-4">
             <div className="space-y-2">
               <Label>Giới tính</Label>
@@ -181,7 +189,7 @@ export const EmployeeInfoSection = ({
                 }
               />
                   </div>
-                  <div className="space-y-2">
+              <div className="space-y-2">
               <Label className="text-right">Ngày sinh</Label>
               <Input
                 id="birthday"
@@ -197,7 +205,7 @@ export const EmployeeInfoSection = ({
                     value: e.target.value,
                   })
                 }
-                      />
+                />
             </div>
         </div>
       </CardContent>

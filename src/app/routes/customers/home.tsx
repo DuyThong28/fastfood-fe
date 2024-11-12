@@ -1,6 +1,7 @@
 import { BookStatus } from "@/common/enums";
 import ProductLayout from "@/components/layouts/product-layout";
 import ProductItemCard from "@/components/product/product-item-card";
+import { Input } from "@/components/ui/input";
 import bookService from "@/services/book.service";
 import { Meta } from "@/types/api";
 import { ResBookDetail } from "@/types/book";
@@ -37,6 +38,13 @@ export default function HomeRoute() {
 
   return (
     <ProductLayout>
+      <div className="flex flex-col">
+        <div className="flex items-center">
+          <Input
+            placeholder="search..."
+          />
+        </div>
+      </div>
       <div className="w-full grid grid-cols-5 gap-4 py-4">
         {books.map((item, index) => {
           return <ProductItemCard key={index} data={item} />;

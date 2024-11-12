@@ -7,18 +7,19 @@ import { PlusCircle, Search } from "lucide-react";
 import DashBoardLayout from "@/components/layouts/dashboard-layout";
 import { TablePagination } from "@/components/shared/table-pagination";
 import { CustomerTableHeader } from "@/components/customer/customer-table-header";
-import { useEffect, useState } from "react";
-import { Customer } from "@/types/customer";
-import customerService from "@/services/customer.service";
+import { useCallback, useEffect, useState } from "react";
 import { Meta } from "@/types/api";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { KeyboardEvent } from "react";
 import { EmployeeTableRow } from "@/components/employee/employee-table-row";
 import { useNavigate } from "react-router-dom";
+import userService from "@/services/user.service";
+import { Employee } from "@/types/user";
+import { routes } from "@/config";
 
 export default function EmployeeRoute() {
     const navigate = useNavigate()
-  const [customers, setCustomers] = useState<Array<Customer>>([]);
+  const [employees, setEmployees] = useState<Array<Employee>>([]);
   const [meta, setMeta] = useState<Meta>({
     page: 1,
     take: 20,
@@ -30,7 +31,7 @@ export default function EmployeeRoute() {
   const [tabState, setTabState] = useState<string>("all");
   const [textSearch, setTextSearch] = useState<string>("");
 
-  const fetchAllCustomer = async () => {
+  const fetchAllCustomer = useCallback(async () => {
     let isDisable;
     if (tabState === "inactive") {
       isDisable = true;
@@ -43,9 +44,9 @@ export default function EmployeeRoute() {
     try {
       let response;
       if (textSearch) {
-        response = await customerService.searchCustomer(isDisable, textSearch);
+        response = await userService.searchStaff(isDisable, textSearch);
       } else {
-        response = await customerService.getAllCusomter(
+        response = await userService.getAllStaff(
           {
             page: meta.page,
             take: meta.take,
@@ -54,15 +55,15 @@ export default function EmployeeRoute() {
         );
       }
       setMeta(response.data.meta);
-      setCustomers(response.data.data);
+      setEmployees(response.data.data);
     } catch (err) {
       console.log(err);
     }
-  };
+  },[meta.page, meta.take, tabState, textSearch]);
 
   useEffect(() => {
     fetchAllCustomer();
-  }, [meta.page, tabState]);
+  }, [fetchAllCustomer, meta.page, tabState]);
 
   const handleEnterPress = async (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -78,7 +79,7 @@ export default function EmployeeRoute() {
                   <h1 className="text-lg font-semibold">Danh Sach Nhan vien</h1>
               <Button
             className="gap-1 ml-auto"
-            onClick={() => navigate("/portal/employee/new")}
+            onClick={() => navigate(routes.ADMIN.ADD_EMPLOYEE)}
           >
             <PlusCircle className="h-3.5 w-3.5" />
             <span>Them nhan vien moi</span>
@@ -121,7 +122,7 @@ export default function EmployeeRoute() {
             <Table>
               <CustomerTableHeader />
               <TableBody>
-                {customers.map((item, index) => {
+                {employees.map((item, index) => {
                   return (
                     <EmployeeTableRow
                       key={index}
