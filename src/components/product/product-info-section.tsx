@@ -5,17 +5,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Trash2, Upload } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import { CreateBookDetail, UpdateBookDetail } from "@/types/book";
 import { Combobox } from "./combo-box";
+import { CreateProductDetail, UpdateProductDetail } from "@/types/product";
 
 export const ProductInfoSection = ({
   onChange,
   detailData,
 }: {
   onChange:
-    | Dispatch<SetStateAction<CreateBookDetail>>
-    | Dispatch<SetStateAction<UpdateBookDetail>>;
-  detailData: CreateBookDetail | UpdateBookDetail;
+    | Dispatch<SetStateAction<CreateProductDetail>>
+    | Dispatch<SetStateAction<UpdateProductDetail>>;
+  detailData: CreateProductDetail | UpdateProductDetail;
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
@@ -29,7 +29,7 @@ export const ProductInfoSection = ({
     const files = event.target.files;
     if (files) {
       const fileArray = Array.from(files);
-      (onChange as Dispatch<SetStateAction<CreateBookDetail | UpdateBookDetail>>)((prevData) => {
+      (onChange as Dispatch<SetStateAction<CreateProductDetail | UpdateProductDetail>>)((prevData) => {
         const newImages = prevData.images.concat(fileArray);
         if (newImages.length > 5) {
           console.log("You can only upload a maximum of 5 files.");
@@ -48,7 +48,7 @@ export const ProductInfoSection = ({
     name: string;
     value: string;
   }) => {
-    (onChange as Dispatch<SetStateAction<CreateBookDetail | UpdateBookDetail>>)(
+    (onChange as Dispatch<SetStateAction<CreateProductDetail | UpdateProductDetail>>)(
       (prevDetailData) => {
         return {
           ...prevDetailData,
@@ -70,7 +70,7 @@ export const ProductInfoSection = ({
 
   const handleDeleteImageFile = (index: number) => {
     console.log(index);
-    (onChange as Dispatch<SetStateAction<CreateBookDetail | UpdateBookDetail>>)(
+    (onChange as Dispatch<SetStateAction<CreateProductDetail | UpdateProductDetail>>)(
       (prevData) => {
         const newImages = prevData.images.filter(
           (_: File, i: number) => i !== index,
@@ -81,7 +81,7 @@ export const ProductInfoSection = ({
   };
 
   const handleDeleteInitImage = (index: number) => {
-    (onChange as Dispatch<SetStateAction<UpdateBookDetail>>)(
+    (onChange as Dispatch<SetStateAction<UpdateProductDetail>>)(
       (prevData) => {
         const newImages = prevData.image_url.filter(
           (_: string, i: number) => i !== index,
@@ -114,7 +114,7 @@ export const ProductInfoSection = ({
           <Label className="text-right">Hinh anh san pham</Label>
           <div className="flex flex-row gap-4">
             
-          {isUpdate && (detailData as UpdateBookDetail).image_url.map((item, index) => {
+          {isUpdate && (detailData as UpdateProductDetail).image_url.map((item, index) => {
               return (
                 <div
                   className="rounded-md h-[70px] w-[70px] overflow-hidden relative"
@@ -154,7 +154,7 @@ export const ProductInfoSection = ({
                 </div>
               );
             })}
-            {(isUpdate ? detailData.images.length +(detailData as UpdateBookDetail).image_url.length < 5 :  detailData.images.length  < 5) && (
+            {(isUpdate ? detailData.images.length +(detailData as UpdateProductDetail).image_url.length < 5 :  detailData.images.length  < 5) && (
               <button
                 className="flex aspect-square h-[70px] w-[70px] items-center justify-center rounded-md border border-dashed hover:bg-muted"
                 onClick={handleUploadFile}

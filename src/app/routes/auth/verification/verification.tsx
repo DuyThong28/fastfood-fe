@@ -28,7 +28,7 @@ export default function VerificationRoute() {
       <span className="text-2xl text-[#4caf50] font-bold">
       Xác minh tài khoản
       </span>
-      <span className="font-bold">Bạn đã có tài khoản BookNow</span>
+      <span className="font-bold">Bạn đã có tài khoản ProductNow</span>
       <div className="flex flex-col items-center gap-5">
         <span>Để tiếp tục:</span>
         <Button className="h-10" onClick={handleClickVerify}>

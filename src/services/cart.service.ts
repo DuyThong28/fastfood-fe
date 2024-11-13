@@ -10,8 +10,8 @@ class CartService {
     return api.get("/carts/get-all");
   }
 
-  async removeFromCart(bookId: string) {
-    return api.delete(`/carts/remove-from-cart/${bookId}`);
+  async removeFromCart(productId: string) {
+    return api.delete(`/carts/remove-from-cart/${productId}`);
   }
 
   async updateCartItemQuantity(data: CartItem) {

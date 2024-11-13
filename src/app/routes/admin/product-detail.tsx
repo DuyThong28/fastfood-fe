@@ -1,9 +1,9 @@
 import DashBoardLayout from "@/components/layouts/dashboard-layout";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useParams } from "react-router-dom";
-import bookService from "@/services/book.service";
+import productService from "@/services/product.service";
 import { FormEvent, useEffect, useState } from "react";
-import { UpdateBookDetail } from "@/types/book";
+import { UpdateProductDetail } from "@/types/product";
 import { ProductInfoSection } from "@/components/product/product-info-section";
 import categoryService from "@/services/category.service";
 import { routes } from "@/config";
@@ -11,7 +11,7 @@ import { routes } from "@/config";
 
 export default function ProductDetailRoute() {
   const param = useParams();
-  const [detailData, setDetailData] = useState<UpdateBookDetail>({
+  const [detailData, setDetailData] = useState<UpdateProductDetail>({
     title: "",
     author: "NXBVN",
     price: 0,
@@ -27,41 +27,41 @@ export default function ProductDetailRoute() {
 
   const navigate = useNavigate();
 
-  const getBookDetail = async (id: string) => {
+  const getProductDetail = async (id: string) => {
     try {
-      const bookResponse = await bookService.getBookById(id);
-      const bookData = bookResponse.data.data;
+      const productResponse = await productService.getProductById(id);
+      const productData = productResponse.data.data;
       const categoryResponse = await categoryService.getCategoryById(
-        bookData.category_id,
+        productData.category_id,
       );
 
       setDetailData({
-        title: bookData.title,
-        author: bookData.author,
-        price: bookData.price,
-        description: bookData.description,
-        image_url: bookData.image_url,
-        id: bookData.id,
-        entryPrice: bookData.entry_price,
-        stockQuantity: bookData.stock_quantity,
-        categoryId: bookData.category_id,
+        title: productData.title,
+        author: productData.author,
+        price: productData.price,
+        description: productData.description,
+        image_url: productData.image_url,
+        id: productData.id,
+        entryPrice: productData.entry_price,
+        stockQuantity: productData.stock_quantity,
+        categoryId: productData.category_id,
         images: [],
         initCategory: categoryResponse.data.data,
       });
 
       // const imagePreview =
-      //   bookData.image_url.length > 0 && bookData.image_url[0];
+      //   productData.image_url.length > 0 && productData.image_url[0];
       // setDetailData({
-      //   title: bookData.title,
-      //   author: bookData.author,
-      //   categoryId: bookData.category_id,
-      //   entryPrice: bookData.entry_price,
-      //   price: bookData.price,
-      //   stockQuantity: bookData.stock_quantity,
-      //   description: bookData.description,
+      //   title: productData.title,
+      //   author: productData.author,
+      //   categoryId: productData.category_id,
+      //   entryPrice: productData.entry_price,
+      //   price: productData.price,
+      //   stockQuantity: productData.stock_quantity,
+      //   description: productData.description,
       //   images: [],
       //   preview: imagePreview || "",
-      //   id: bookData.id,
+      //   id: productData.id,
       // });
     } catch (err) {
       console.log(err);
@@ -69,15 +69,15 @@ export default function ProductDetailRoute() {
   };
 
   useEffect(() => {
-    if (param?.bookId) {
-      getBookDetail(param.bookId);
+    if (param?.productId) {
+      getProductDetail(param.productId);
     }
   }, [param]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await bookService.updateBookById(detailData);
+      await productService.updateProductById(detailData);
     } catch (err) {
       console.log(err);
     }

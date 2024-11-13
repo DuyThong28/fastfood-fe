@@ -19,7 +19,7 @@ export default function CheckOutRoute() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const state = queryParams.get("state") || "";
-  const selectedBookIds = state.split(",");
+  const selectedProductIds = state.split(",");
   const [cartItemsSelected, setCartItemsSelected] = useState<
     Array<ResCartItem>
   >([]);
@@ -36,7 +36,7 @@ export default function CheckOutRoute() {
       const response = await cartService.getCart();
       setCartItemsSelected(
         response.data.data.filter((item) =>
-          selectedBookIds.includes(item.book_id)
+          selectedProductIds.includes(item.product_id)
         )
       );
     } catch (err) {
@@ -62,14 +62,14 @@ export default function CheckOutRoute() {
 
   const handleCountTotalPrice = () =>
     cartItemsSelected.reduce((total, curr) => {
-      return total + curr.book.price * curr.quantity;
+      return total + curr.product.price * curr.quantity;
     }, 0);
 
   const handleOrder = async () => {
     if (cartItemsSelected.length === 0) return;
     const items = cartItemsSelected.map((item) => {
       return {
-        bookId: item.book_id,
+        productId: item.product_id,
         quantity: item.quantity,
       };
     });

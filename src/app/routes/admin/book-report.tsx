@@ -1,3 +1,3 @@
-export default function BookReportRoute() {
-  return <div>BookReportRoute</div>;
+export default function ProductReportRoute() {
+  return <div>ProductReportRoute</div>;
 }

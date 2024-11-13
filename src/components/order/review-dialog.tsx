@@ -42,11 +42,11 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
             return {
               orderId: id,
               orderDetailId: item.id,
-              bookId: item.book_id,
+              productId: item.product_id,
               rating: 0,
               description: undefined,
               title: "comment",
-              book: item.book,
+              product: item.product,
             };
           })
         );
@@ -90,11 +90,11 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
       },
       []
     );
-    const reviewBook = async (e: FormEvent<HTMLFormElement>) => {
+    const reviewProduct = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       try {
         await Promise.all(
-          (reviews as Review[]).map((reivew) => orderService.reviewBook(reivew))
+          (reviews as Review[]).map((reivew) => orderService.reviewProduct(reivew))
         );
         setIsOpen(false);
         setReviews([]);
@@ -105,13 +105,13 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
     };
 
     const handleOnChangeInput = (
-      bookId: string,
+      productId: string,
       name: string,
       value: string | number
     ) => {
       (setReviews as Dispatch<SetStateAction<Review[]>>)((preState) =>
         preState.map((review) =>
-          review.bookId === bookId ? { ...review, [name]: value } : review
+          review.productId === productId ? { ...review, [name]: value } : review
         )
       );
     };
@@ -122,7 +122,7 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
           <DialogHeader>
             <DialogTitle>Danh gia</DialogTitle>
           </DialogHeader>
-          <form className="space-y-6" onSubmit={reviewBook}>
+          <form className="space-y-6" onSubmit={reviewProduct}>
             {reviews.map((item, index) => {
               return (
                 <ReviewPerProduct

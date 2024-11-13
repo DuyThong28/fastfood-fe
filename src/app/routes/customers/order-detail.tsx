@@ -92,7 +92,7 @@ export default function OrderDetailRoute() {
                   <ProductOrderDetailRow
                     key={index}
                     data={item}
-                    onShowBookDetail={() => navigate(`/book/${item.book_id}`)}
+                    onShowProductDetail={() => navigate(`/product/${item.product_id}`)}
                   />
                 );
               })}

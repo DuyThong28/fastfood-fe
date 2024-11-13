@@ -35,7 +35,7 @@ export default function DashBoardLayout({
               className="flex items-center gap-2 font-semibold"
             >
               <Package2 className="h-6 w-6" />
-              <span className="">Book Now</span>
+              <span className="">Product Now</span>
             </a>
           </div>
           <div className="flex-1">

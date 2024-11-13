@@ -127,7 +127,7 @@ export default function AdminOrderDetailRoute() {
                   <ProductOrderDetailRow
                     key={index}
                     data={item}
-                    onShowBookDetail={() => navigate(`/book/${item.book_id}`)}
+                    onShowProductDetail={() => navigate(`/product/${item.product_id}`)}
                   />
                 );
               })}

@@ -73,7 +73,7 @@ const ProductLayout = forwardRef<ProductLayoutRef, ProductLayoutProps>(
       <div className="h-screen w-full grid grid-rows-[96px_1fr]">
         <div className="px-40 h-full w-full flex flex-row items-center bg-black gap-16">
           <a href="/" className="text-white text-nowrap  text-2xl font-bold">
-            Book Now
+            Product Now
           </a>
 
           <div className="flex  w-full rounded-sm items-center space-x-2 bg-white p-[2px]">

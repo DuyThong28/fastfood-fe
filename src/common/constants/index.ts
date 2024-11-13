@@ -1,2 +1,2 @@
-export * from "./book";
+export * from "./product";
 export * from "./review";

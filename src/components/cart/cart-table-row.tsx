@@ -21,7 +21,7 @@ export const CartTableRow: React.FC<CartTableRowProps> = ({
 }) => {
   const handleRemove = async () => {
     try {
-      await cartService.removeFromCart(data.book_id);
+      await cartService.removeFromCart(data.product_id);
       await onRefetch();
     } catch (err) {
       console.log(err);
@@ -32,10 +32,10 @@ export const CartTableRow: React.FC<CartTableRowProps> = ({
     try {
       if (value > 0)
         await cartService.updateCartItemQuantity({
-          bookId: data.book_id,
+          productId: data.product_id,
           quantity: value,
         });
-      else await cartService.removeFromCart(data.book_id);
+      else await cartService.removeFromCart(data.product_id);
       await onRefetch();
     } catch (err) {
       console.log(err);
@@ -45,9 +45,9 @@ export const CartTableRow: React.FC<CartTableRowProps> = ({
     <TableRow className="bg-white shadow-sm">
       <TableCell>
         <Checkbox
-          checked={rowSelection.includes(data.book_id)}
+          checked={rowSelection.includes(data.product_id)}
           onCheckedChange={() => {
-            onCheck(data.book_id);
+            onCheck(data.product_id);
           }}
         />
       </TableCell>
@@ -56,22 +56,22 @@ export const CartTableRow: React.FC<CartTableRowProps> = ({
           alt="Product image"
           className="aspect-square rounded-md object-cover"
           height="64"
-          src={data.book.image_url.length > 0 ? data.book.image_url[0] : image}
+          src={data.product.image_url.length > 0 ? data.product.image_url[0] : image}
           width="64"
         />
         <div className="w-full flex flex-col justify-center">
-          <div className="font-medium">{data.book.title}</div>
+          <div className="font-medium">{data.product.title}</div>
         </div>
       </TableCell>
-      <TableCell>{data.book.price}</TableCell>
+      <TableCell>{data.product.price}</TableCell>
       <TableCell>
         <CartCounterInput
-          max={data.book.stock_quantity}
+          max={data.product.stock_quantity}
           value={data.quantity}
           onChange={handleUpdateCartItemQuantity}
         />
       </TableCell>
-      <TableCell>{data.quantity * data.book.price}</TableCell>
+      <TableCell>{data.quantity * data.product.price}</TableCell>
       <TableCell>
         <Button variant="outline" onClick={handleRemove}>
           Xoa

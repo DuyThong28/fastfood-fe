@@ -1,9 +1,9 @@
 import image from "@/assets/placeholder.svg";
-import { ResBookDetail } from "@/types/book";
+import { ResProductDetail } from "@/types/product";
 import { useNavigate } from "react-router-dom";
 
 interface ProductItemCardProps {
-  data: ResBookDetail;
+  data: ResProductDetail;
 }
 
 export default function ProductItemCard({ data }: ProductItemCardProps) {
@@ -12,7 +12,7 @@ export default function ProductItemCard({ data }: ProductItemCardProps) {
   return (
     <div
       className="h-fit p-2 space-y-2 bg-white shadow-sm hover:shadow-md hover:-translate-y-[2px]"
-      onClick={() => navigate(`/book/${data.id}`)}
+      onClick={() => navigate(`/product/${data.id}`)}
     >
       <div className="aspect-square rounded-md overflow-hidden ">
         <img

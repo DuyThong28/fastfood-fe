@@ -33,8 +33,6 @@ import EmblaCarousel from "@/components/shared/embla-carousel";
 import { CounterInput } from "@/components/shared/counter-input";
 import { ProductVariation } from "@/components/product/product-variation";
 import { useParams } from "react-router-dom";
-import bookService from "@/services/book.service";
-import { ResBookDetail } from "@/types/book";
 import cartService from "@/services/cart.service";
 import reviewService from "@/services/review.service";
 import { Meta } from "@/types/api";
@@ -42,12 +40,14 @@ import { ResReview } from "@/types/review";
 import { TablePagination } from "@/components/shared/table-pagination";
 import { ReviewItem } from "@/components/product/review-item";
 import { StarButton } from "@/components/product/star-button";
+import { ResProductDetail } from "@/types/product";
+import productService from "@/services/product.service";
 
 const OPTIONS: EmblaOptionsType = {};
 
-export default function BookDetailRoute() {
+export default function PublicProductDetailRoute() {
   const param = useParams();
-  const [detailData, setDetailData] = useState<ResBookDetail | null>(null);
+  const [detailData, setDetailData] = useState<ResProductDetail | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const [reviews, setReviews] = useState<ResReview[]>([]);
   const [rating, setRating] = useState<number[]>([1, 2, 3, 4, 5]);
@@ -61,9 +61,9 @@ export default function BookDetailRoute() {
   });
   const [isAllSelected, setIsAllSelected] = useState<boolean>(true);
 
-  const getBookDetail = async (id: string) => {
+  const getProductDetail = async (id: string) => {
     try {
-      const response = await bookService.getBookById(id);
+      const response = await productService.getProductById(id);
       console.log(response);
       setDetailData(response.data.data);
     } catch (err) {
@@ -71,9 +71,9 @@ export default function BookDetailRoute() {
     }
   };
 
-  const getReviewByBookId = async (id: string) => {
+  const getReviewByProductId = async (id: string) => {
     try {
-      const response = await reviewService.getReivewsByBookId(
+      const response = await reviewService.getReivewsByProductId(
         {
           page: meta.page,
           take: meta.take,
@@ -81,7 +81,7 @@ export default function BookDetailRoute() {
         id,
         { rating }
       );
-      console.log("getReviewByBookId", response);
+      console.log("getReviewByProductId", response);
 
       setMeta(response.data.meta);
       setReviews(response.data.data);
@@ -91,9 +91,9 @@ export default function BookDetailRoute() {
   };
 
   useEffect(() => {
-    if (param?.bookId) {
-      getBookDetail(param.bookId);
-      getReviewByBookId(param.bookId);
+    if (param?.productId) {
+      getProductDetail(param.productId);
+      getReviewByProductId(param.productId);
     }
   }, [param, rating]);
 
@@ -105,7 +105,7 @@ export default function BookDetailRoute() {
     ) {
       try {
         await cartService.addToCart({
-          bookId: detailData.id,
+          productId: detailData.id,
           quantity: quantity,
         });
       } catch (err) {

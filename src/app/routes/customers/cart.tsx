@@ -59,14 +59,14 @@ export default function CartRoute() {
 
   const handleCountTotalPrice = () =>
     cart.reduce((total, curr) => {
-      if (rowSelection.includes(curr.book_id)) {
-        return total + curr.book.price * curr.quantity;
+      if (rowSelection.includes(curr.product_id)) {
+        return total + curr.product.price * curr.quantity;
       } else return total;
     }, 0);
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setRowSelection(cart.map((item) => item.book_id));
+      setRowSelection(cart.map((item) => item.product_id));
     } else {
       setRowSelection([]);
     }

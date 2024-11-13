@@ -1,7 +1,7 @@
 import { ReviewStatus } from "@/common/enums";
 import { api } from "@/lib/api-client";
 import { Page } from "@/types/api";
-import { GetAllReviewQueries, GetAllReviews, GetReviewByBookId, ResReview } from "@/types/review";
+import { GetAllReviewQueries, GetAllReviews, GetReviewByProductId, ResReview } from "@/types/review";
 
 class ReviewService {
   async getAllReviews(
@@ -54,8 +54,8 @@ class ReviewService {
     return api.get(`reviews/get-review-by-order-id/${orderId}`)
   }
 
-  async getReivewsByBookId({ page, take }: Page, bookId: string, query: { rating: number[] }): Promise<GetReviewByBookId> {
-    let url = `reviews/get-review-by-book-id/${bookId}?page=${page}&take=${take}`;
+  async getReivewsByProductId({ page, take }: Page, productId: string, query: { rating: number[] }): Promise<GetReviewByProductId> {
+    let url = `reviews/get-review-by-product-id/${productId}?page=${page}&take=${take}`;
     if (query.rating.length > 0) {
       const ratingParams = query.rating
         .map((rating) => `rating[]=${rating}`)

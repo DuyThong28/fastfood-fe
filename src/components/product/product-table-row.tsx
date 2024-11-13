@@ -3,16 +3,16 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import image from "@/assets/placeholder.svg";
-import { ResBookDetail } from "@/types/book";
 import React, { useState } from "react";
-import { BOOK_STATUS } from "@/common/constants";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { useNavigate } from "react-router-dom";
-import bookService from "@/services/book.service";
-import { BookStatus } from "@/common/enums";
+import { ProductStatus } from "@/common/enums";
+import { ResProductDetail } from "@/types/product";
+import productService from "@/services/product.service";
+import { PRODUCT_STATUS } from "@/common/constants/product";
 
 interface ProductTableRowProps {
-  data: ResBookDetail;
+  data: ResProductDetail;
   onRefetch: () => Promise<void>;
 }
 
@@ -24,12 +24,12 @@ export const ProductTableRow: React.FC<ProductTableRowProps> = ({
   const navigate = useNavigate();
 
   const handleUpdate = () => {
-    navigate(`/portal/book/${data.id}`);
+    navigate(`/portal/product/${data.id}`);
   };
 
   const handleActive = async () => {
     try {
-      await bookService.activeBookById(data.id);
+      await productService.activeProductById(data.id);
       await onRefetch();
     } catch (err) {
       console.log(err);
@@ -39,7 +39,7 @@ export const ProductTableRow: React.FC<ProductTableRowProps> = ({
 
   const handleHide = async () => {
     try {
-      await bookService.inactiveBookById(data.id);
+      await productService.inactiveProductById(data.id);
       await onRefetch();
     } catch (err) {
       console.log(err);
@@ -66,7 +66,7 @@ export const ProductTableRow: React.FC<ProductTableRowProps> = ({
       </TableCell>
       <TableCell>{data.Category?.name}</TableCell>
       <TableCell>
-        <Badge variant="outline">{BOOK_STATUS[data.status]}</Badge>
+        <Badge variant="outline">{PRODUCT_STATUS[data.status]}</Badge>
       </TableCell>
       <TableCell>{data.entry_price}</TableCell>
       <TableCell>{data.price}</TableCell>
@@ -85,7 +85,7 @@ export const ProductTableRow: React.FC<ProductTableRowProps> = ({
             >
               Chinh sua
             </div>
-            {data.status === BookStatus.INACTIVE ? (
+            {data.status === ProductStatus.INACTIVE ? (
               <div
                 className="py-2 px-3  w-full hover:bg-[#F4F4F5]"
                 onClick={handleActive}

@@ -84,7 +84,7 @@ import {
                         src={image}
                       />
                     </div>
-                    <div>{review.book_id}</div>
+                    <div>{review.product_id}</div>
                   </div>
                   <div className="flex items-center">
                     <div>Chat luong san pham: </div>

@@ -56,16 +56,16 @@ class OrderService {
     return api.post(`orders/status/update/${id}`, { status: status });
   }
 
-  async reviewBook({
+  async reviewProduct({
     orderId,
     orderDetailId,
-    bookId,
+    productId,
     rating,
     description,
     title,
   }: Review) {
     return api.post(
-      `orders/get-details/${orderId}/order-details/${orderDetailId}/${bookId}`,
+      `orders/get-details/${orderId}/order-details/${orderDetailId}/${productId}`,
       {
         star: rating,
         description,

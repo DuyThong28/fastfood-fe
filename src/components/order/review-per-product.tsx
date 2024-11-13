@@ -9,7 +9,7 @@ import { DEFAULT_AVATAR_URL } from "@/common/constants/user";
 
 interface ReviewPerProductProps {
   data: Review | ResReview;
-  onChange: (bookId: string, name: string, value: string | number) => void;
+  onChange: (productId: string, name: string, value: string | number) => void;
   action: ReviewStatus;
 }
 
@@ -29,13 +29,13 @@ export default function ReviewPerProduct({
             alt="Product image"
             className="object-cover w-full h-full"
             src={
-              data?.book && data.book.image_url.length > 0
-                ? data.book.image_url[0]
+              data?.product && data.product.image_url.length > 0
+                ? data.product.image_url[0]
                 : image
             }
           />
         </div>
-        <div>{(data?.book && data?.book.title) || ""}</div>
+        <div>{(data?.product && data?.product.title) || ""}</div>
       </div>
       {action === ReviewStatus.UNREVIEW && (
         <>
@@ -54,7 +54,7 @@ export default function ReviewPerProduct({
                     onMouseEnter={() => setHoveredStar(rating + 1)}
                     onMouseLeave={() => setHoveredStar(null)}
                     onClick={() =>
-                      onChange((data as Review).bookId, "rating", rating + 1)
+                      onChange((data as Review).productId, "rating", rating + 1)
                     }
                   />
                 );
@@ -65,7 +65,7 @@ export default function ReviewPerProduct({
             placeholder="Hay chia se nhung gi ban thich ve san pham."
             value={data.description}
             onChange={(e) =>
-              onChange((data as Review).bookId, "description", e.target.value)
+              onChange((data as Review).productId, "description", e.target.value)
             }
             disabled={action !== ReviewStatus.UNREVIEW}
           />

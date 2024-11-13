@@ -11,8 +11,8 @@ import { Label } from "@/components/ui/label";
 import authService from "@/services/auth.service";
 import { FormEvent, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import InputOTPPattern from "./input-otp-pattern";
 import { routes } from "@/config";
+import InputOTPPattern from "./Input-otp-pattern";
 
 export default function ResetPasswordRoute() {
   const location = useLocation();

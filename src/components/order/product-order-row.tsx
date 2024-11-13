@@ -4,29 +4,29 @@ import React from "react";
 
 interface ProductOrderRowProps {
   data: OrderItem;
-  onShowBookDetail?: () => void;
+  onShowProductDetail?: () => void;
 }
 
 export const ProductOrderRow: React.FC<ProductOrderRowProps> = ({
   data,
-  onShowBookDetail,
+  onShowProductDetail,
 }) => {
   return (
     <div
       className="flex flex-row p-4 border-y border-grey-100 gap-4 hover:cursor-pointer"
-      onClick={onShowBookDetail}
+      onClick={onShowProductDetail}
     >
       <div className="overflow-hidden aspect-square rounded-md h-[64px]">
         <img
           alt="Product image"
           className="object-cover w-full h-full"
           src={
-            (data.book.image_url.length > 0 && data.book.image_url[0]) || image
+            (data.product.image_url.length > 0 && data.product.image_url[0]) || image
           }
         />
       </div>
       <div className="flex flex-col gap-1">
-        <div>{data.book.title}</div>
+        <div>{data.product.title}</div>
         <div className="text-sm">
           <span className="text-[#787C80]">So luong: </span>
           {data.quantity}

@@ -1,16 +1,11 @@
-import { BookStatus } from "@/common/enums";
+import { ProductStatus } from "@/common/enums";
 import { api } from "@/lib/api-client";
 import { Page } from "@/types/api";
-import {
-  BookQuery,
-  CreateBookDetail,
-  ResGetAllBooks,
-  ResGetBookById,
-  UpdateBookDetail,
-} from "@/types/book";
+import { CreateProductDetail, ProductQuery, ResGetAllProducts, ResGetProductById, UpdateProductDetail } from "@/types/product";
 
-class BookService {
-  async createBook(data: CreateBookDetail) {
+
+class ProductService {
+  async createProduct(data: CreateProductDetail) {
     const formData = new FormData();
     formData.append("description", data.description);
     formData.append("categoryId", data.categoryId);
@@ -24,15 +19,15 @@ class BookService {
         formData.append("images", image);
       });
     }
-    return api.post("/books/create", formData);
+    return api.post("/products/create", formData);
   }
 
-  async getAllBooks(
+  async getAllProducts(
     { page, take }: Page,
-    query: BookQuery,
-  ): Promise<ResGetAllBooks> {
-    let url = `/books/get-all?page=${page}&take=${take}`;
-    if (query?.status && query.status in BookStatus) {
+    query: ProductQuery,
+  ): Promise<ResGetAllProducts> {
+    let url = `/products/get-all?page=${page}&take=${take}`;
+    if (query?.status && query.status in ProductStatus) {
       url += `&status=${query.status}`;
     }
     if (query.title) {
@@ -48,16 +43,16 @@ class BookService {
       url += `&min_price=${query.min_price}`;
     if (query?.min_star)
       url += `&min_star=${query.min_star}`;
-    if (query?.category)
+    if (query?.categoryId)
       url += `&categoryId=${query.categoryId}`;
     return api.get(url);
   }
 
-  async getBookById(id: string): Promise<ResGetBookById> {
-    return api.get(`books/get-one/${id}`);
+  async getProductById(id: string): Promise<ResGetProductById> {
+    return api.get(`products/get-one/${id}`);
   }
 
-  async updateBookById(data: UpdateBookDetail) {
+  async updateProductById(data: UpdateProductDetail) {
     const formData = new FormData();
     formData.append("description", data.description);
     formData.append("categoryId", data.categoryId);
@@ -77,16 +72,16 @@ class BookService {
         formData.append("images_update", image);
       });
     }
-    return api.patch(`/books/update/${data.id}`, formData);
+    return api.patch(`/products/update/${data.id}`, formData);
   }
 
-  async activeBookById(id: string) {
-    return api.post(`/books/active/${id}`);
+  async activeProductById(id: string) {
+    return api.post(`/products/active/${id}`);
   }
 
-  async inactiveBookById(id: string) {
-    return api.post(`/books/inactive/${id}`);
+  async inactiveProductById(id: string) {
+    return api.post(`/products/inactive/${id}`);
   }
 }
 
-export default new BookService();
+export default new ProductService();

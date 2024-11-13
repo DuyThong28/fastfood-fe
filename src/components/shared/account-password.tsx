@@ -8,8 +8,6 @@ import {
 } from "@/components/ui/card";
 
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import InputOTPPattern from "@/app/routes/auth/Input-otp-pattern";
 import { PasswordInput } from "./password-input";
 import { FormEvent, useEffect, useState } from "react";
 import { routes } from "@/config";
@@ -20,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { Gender, UserRole } from "@/common/enums";
 import { ResUser } from "@/types/user";
 import useAuth from "@/hooks/useAuth";
+import InputOTPPattern from "@/app/routes/auth/Input-otp-pattern";
 
 export default function AccountPassword() {
   const [auth, setAuth] = useAuth();
@@ -98,13 +97,6 @@ export default function AccountPassword() {
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            {/* <Input
-        id="password"
-        type="password"
-        value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
-        required
-      /> */}
             <PasswordInput
               id="password"
               name="password"
