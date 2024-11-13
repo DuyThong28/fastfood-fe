@@ -1,7 +1,7 @@
 import { api } from "@/lib/api-client";
 import { Page } from "@/types/api";
 import { ResFetchAllCustomers } from "@/types/customer";
-import { CreateEmployee } from "@/types/user";
+import { CreateEmployee, UpdateEmployee } from "@/types/user";
 
 class UserService {
   async createEmployee(data: CreateEmployee) {
@@ -24,6 +24,9 @@ class UserService {
     } else {
       return api.get(`/users/search?keyword=${keyword}&role=${role}`);
     }
+  }
+  async updateStaff(data: UpdateEmployee) {
+    return api.put(`/users/update-by-admin`, data);
   }
 }
 

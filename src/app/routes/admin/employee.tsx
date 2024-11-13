@@ -14,12 +14,12 @@ import { KeyboardEvent } from "react";
 import { EmployeeTableRow } from "@/components/employee/employee-table-row";
 import { useNavigate } from "react-router-dom";
 import userService from "@/services/user.service";
-import { Employee } from "@/types/user";
+import { resEmployee } from "@/types/user";
 import { routes } from "@/config";
 
 export default function EmployeeRoute() {
     const navigate = useNavigate()
-  const [employees, setEmployees] = useState<Array<Employee>>([]);
+  const [employees, setEmployees] = useState<Array<resEmployee>>([]);
   const [meta, setMeta] = useState<Meta>({
     page: 1,
     take: 20,

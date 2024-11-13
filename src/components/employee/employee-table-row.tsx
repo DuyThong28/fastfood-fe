@@ -11,10 +11,10 @@ import { useState } from "react";
 import image from "@/assets/placeholder.svg";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@/config";
-import { Employee } from "@/types/user";
+import { resEmployee } from "@/types/user";
 
 interface EmployeeTableRowProps {
-  data: Employee;
+  data: resEmployee;
   onRefetch: () => Promise<void>;
 }
 

@@ -25,11 +25,16 @@ export interface Employee {
   email: string;
   full_name: string;
   phone?: string;
-  birthday: Date;
+  birthday: Date | null;
   gender: Gender;
-  is_disable: boolean;
   avatar_url?: string;
   role: "STAFF"
+  password: string
+}
+
+export interface resEmployee extends Employee {
+  is_disable: boolean;
+  birthday: Date;
 }
 
 export interface CreateEmployee{
@@ -37,7 +42,7 @@ export interface CreateEmployee{
   password: string;
   email: string;
   gender: Gender;
-  birthday: Date | null;
+  birthday: Date;
   phone: string | undefined;
   fullName: string;
 }
@@ -45,13 +50,11 @@ export interface CreateEmployee{
 export interface UpdateEmployee{
   id: string;
   role: "STAFF";
-  password: string;
   email: string;
   gender: Gender;
-  birthday: Date | null;
+  birthday: Date;
   phone: string | undefined;
   fullName: string;
-  avatar_url: string | null;
 }
 export interface ResFetchAllEmployees extends Respone {
   data: {
