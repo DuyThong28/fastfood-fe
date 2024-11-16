@@ -7,6 +7,7 @@ import {
   ShoppingCart,
   UserRound,
   Users,
+  ChartColumnIncreasing,
 } from "lucide-react";
 import { routes } from "@/config";
 import { useLocation } from "react-router-dom";
@@ -95,7 +96,24 @@ export default function DashBoardLayout({
                 <Users className="h-4 w-4" />
                 Quan Ly Khach Hang
               </a>
-
+              <a
+                href={routes.ADMIN.INCOME_REPORT}
+                className={
+                  pathname === routes.ADMIN.INCOME_REPORT ? active : inActive
+                }
+              >
+                <ChartColumnIncreasing className="h-4 w-4" />
+                Báo cáo doanh thu
+              </a>
+              <a
+                href={routes.ADMIN.PRODUCT_REPORT}
+                className={
+                  pathname === routes.ADMIN.PRODUCT_REPORT ? active : inActive
+                }
+              >
+                <ChartColumnIncreasing className="h-4 w-4" />
+                Báo cáo sản phẩm
+              </a>
               <a
                 href={routes.ADMIN.ACCOUNT_PROFILE}
                 className={
