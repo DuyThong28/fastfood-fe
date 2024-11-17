@@ -97,22 +97,11 @@ export default function DashBoardLayout({
                 Quan Ly Khach Hang
               </a>
               <a
-                href={routes.ADMIN.INCOME_REPORT}
-                className={
-                  pathname === routes.ADMIN.INCOME_REPORT ? active : inActive
-                }
+                href={routes.ADMIN.REPORT}
+                className={pathname === routes.ADMIN.REPORT ? active : inActive}
               >
                 <ChartColumnIncreasing className="h-4 w-4" />
-                Báo cáo doanh thu
-              </a>
-              <a
-                href={routes.ADMIN.PRODUCT_REPORT}
-                className={
-                  pathname === routes.ADMIN.PRODUCT_REPORT ? active : inActive
-                }
-              >
-                <ChartColumnIncreasing className="h-4 w-4" />
-                Báo cáo sản phẩm
+                Báo cáo
               </a>
               <a
                 href={routes.ADMIN.ACCOUNT_PROFILE}

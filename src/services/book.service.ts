@@ -29,27 +29,21 @@ class BookService {
 
   async getAllBooks(
     { page, take }: Page,
-    query: BookQuery,
+    query: BookQuery
   ): Promise<ResGetAllBooks> {
     let url = `/books/get-all?page=${page}&take=${take}`;
     if (query?.status && query.status in BookStatus) {
       url += `&status=${query.status}`;
     }
     if (query.title) {
-      url += `&title=${query.title}`
+      url += `&title=${query.title}`;
     }
-    if (query?.order)
-      url += `&order=${query.order}`;
-    if (query?.sortBy)
-      url += `&sortBy=${query.sortBy}`;
-    if (query?.max_price)
-      url += `&max_price=${query.max_price}`;
-    if (query?.min_price)
-      url += `&min_price=${query.min_price}`;
-    if (query?.min_star)
-      url += `&min_star=${query.min_star}`;
-    if (query?.category)
-      url += `&categoryId=${query.categoryId}`;
+    if (query?.order) url += `&order=${query.order}`;
+    if (query?.sortBy) url += `&sortBy=${query.sortBy}`;
+    if (query?.max_price) url += `&max_price=${query.max_price}`;
+    if (query?.min_price) url += `&min_price=${query.min_price}`;
+    if (query?.min_star) url += `&min_star=${query.min_star}`;
+    if (query?.categoryId) url += `&categoryId=${query.categoryId}`;
     return api.get(url);
   }
 

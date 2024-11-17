@@ -8,11 +8,11 @@ import {
   YAxis,
 } from "recharts";
 
-type RevenueByDayProps = {
-  data: { date: string; revenue: number }[];
+type ProductByDayProps = {
+  data: { date: string; numberOfProducts: number }[];
 };
 
-export function RevenueByDay({ data }: RevenueByDayProps) {
+export function ProductByDay({ data }: ProductByDayProps) {
   return (
     <ResponsiveContainer width="100%" minHeight={300}>
       <LineChart data={data}>
@@ -20,7 +20,11 @@ export function RevenueByDay({ data }: RevenueByDayProps) {
         <XAxis dataKey="date" stroke="hsl(var(--primary))" />
         <YAxis stroke="hsl(var(--primary))" />
         <Tooltip />
-        <Line dataKey="revenue" type="monotone" stroke="hsl(var(--primary))" />
+        <Line
+          dataKey="numberOfProducts"
+          type="monotone"
+          stroke="hsl(var(--primary))"
+        />
       </LineChart>
     </ResponsiveContainer>
   );

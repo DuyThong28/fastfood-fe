@@ -8,7 +8,6 @@ import ProductDetailRoute from "./routes/admin/product-detail";
 import AdminPasswordRoute from "./routes/admin/account-password";
 import ProductRoute from "./routes/admin/product";
 import OrderRoute from "./routes/admin/order";
-import IncomeReportRoute from "./routes/admin/income-report";
 import DashboardRoute from "./routes/admin/dashboard";
 import AddProductRoute from "./routes/admin/add-product";
 import AdminProfileRoute from "./routes/admin/account-profile";
@@ -31,7 +30,7 @@ import SignInRoute from "./routes/auth/sign-in";
 import CategoryRoute from "./routes/admin/category";
 import AdminOrderDetailRoute from "./routes/admin/order-detail";
 import SignInSuccess from "./routes/auth/sign-in-success";
-import ProductReportRoute from "./routes/admin/product-report";
+import ReportRoute from "./routes/admin/report";
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -112,20 +111,13 @@ const createAppRouter = () =>
       element: <AddProductRoute />,
     },
     {
-      path: routes.ADMIN.PRODUCT_REPORT,
-      element: <ProductReportRoute />,
+      path: routes.ADMIN.REPORT,
+      element: <ReportRoute />,
     },
-    {
-      path: routes.ADMIN.INCOME_REPORT,
-      element: <IncomeReportRoute />,
-    },
+
     {
       path: routes.ADMIN.DASHBOAD,
       element: <DashboardRoute />,
-    },
-    {
-      path: routes.ADMIN.INCOME_REPORT,
-      element: <IncomeReportRoute />,
     },
     {
       path: routes.ADMIN.ORDER,
