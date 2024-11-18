@@ -25,7 +25,7 @@ export const OrderTableRow: React.FC<OrderTableRowProps> = ({ data }) => {
     <div className="flex flex-col text-sm border border-gray-300 rounded-md">
       <div className="flex flex-row justify-between py-2 px-4 bg-muted">
         <span>{data.user.full_name}</span>
-        <span>{`Ma don hang: ${data.id}`}</span>
+        <span>{`Mã đơn hàng: ${data.id}`}</span>
       </div>
       <div className="w-full flex flex-row items-center p-4">
         <div className="basis-[55%] space-y-4">
@@ -58,10 +58,10 @@ export const OrderTableRow: React.FC<OrderTableRowProps> = ({ data }) => {
                 className="py-2 px-3 w-full hover:bg-[#F4F4F5]"
                 onClick={() => navigate(`/portal/order/${data.id}`)}
               >
-                Xem chi tiet
+                Xem chi tiết
               </div>
               <div className="py-2 px-3 w-full hover:bg-[#F4F4F5]">
-                In phieu giao
+                In phiếu giao
               </div>
             </PopoverContent>
           </Popover>

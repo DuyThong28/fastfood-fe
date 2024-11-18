@@ -1,9 +1,11 @@
 import image from "@/assets/placeholder.svg";
-import { ResBookDetail } from "@/types/book";
+import { ResProductDetail } from "@/types/product";
+import { formatNumber } from "@/utils/format";
 import { useNavigate } from "react-router-dom";
+import { StarIcon } from "@heroicons/react/20/solid";
 
 interface ProductItemCardProps {
-  data: ResBookDetail;
+  data: ResProductDetail;
 }
 
 export default function ProductItemCard({ data }: ProductItemCardProps) {
@@ -12,7 +14,7 @@ export default function ProductItemCard({ data }: ProductItemCardProps) {
   return (
     <div
       className="h-fit p-2 space-y-2 bg-white shadow-sm hover:shadow-md hover:-translate-y-[2px]"
-      onClick={() => navigate(`/book/${data.id}`)}
+      onClick={() => navigate(`/product/${data.id}`)}
     >
       <div className="aspect-square rounded-md overflow-hidden ">
         <img
@@ -24,9 +26,13 @@ export default function ProductItemCard({ data }: ProductItemCardProps) {
         <p className="overflow-hidden text-ellipsis line-clamp-2">
           {data.title}
         </p>
+        <p>{formatNumber(data.price)}</p>
         <div className="flex flex-row justify-between">
-          <span>{data.stock_quantity}</span>
-          <span>{`Da ban: ${data.sold_quantity}`}</span>
+          <span className="flex flex-row">
+            <StarIcon className="text-gray-900  h-4 w-4 flex-shrink-0" />
+            {data.avg_stars}
+          </span>
+          <span>{`Đã bán: ${data.sold_quantity}`}</span>
         </div>
       </div>
     </div>

@@ -35,7 +35,6 @@ export const CartCounterInput: React.FC<CounterInputProps> = ({
   const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      await onChange(inputValue);
       if (inputRef.current) {
         inputRef.current.blur();
       }
@@ -44,6 +43,9 @@ export const CartCounterInput: React.FC<CounterInputProps> = ({
 
   const handleBlur = async () => {
     await onChange(inputValue);
+    if (inputValue === 0) {
+      setInputValue(value);
+    }
   };
 
   useEffect(() => {

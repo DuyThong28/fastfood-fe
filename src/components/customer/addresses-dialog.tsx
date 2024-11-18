@@ -16,9 +16,10 @@ import {
 import { Button } from "../ui/button";
 import { ResAddress } from "@/types/address";
 import addressService from "@/services/address.service";
-// import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { PlusCircle } from "lucide-react";
 import AddressDialog, { AddressDialogRef } from "./address-dialog";
+import { toastWarning } from "@/utils/toast";
 
 export interface AddressesDialogRef {
   onOpen: (data?: ResAddress) => void;
@@ -26,7 +27,7 @@ export interface AddressesDialogRef {
 }
 
 interface AddressesDialogProps {
-  onSetAddress: Dispatch<SetStateAction<ResAddress>>;
+  onSetAddress: Dispatch<SetStateAction<ResAddress | null>>;
 }
 
 const AddressesDialog = forwardRef<AddressesDialogRef, AddressesDialogProps>(
@@ -58,6 +59,8 @@ const AddressesDialog = forwardRef<AddressesDialogRef, AddressesDialogProps>(
         onOpen(data?: ResAddress) {
           if (data) {
             setAddressId(data.id);
+          } else {
+            setAddressId("");
           }
           setIsOpen(true);
         },
@@ -69,20 +72,24 @@ const AddressesDialog = forwardRef<AddressesDialogRef, AddressesDialogProps>(
 
     const handleSetAddress = () => {
       const selectedAddress = addresses.find((item) => item.id === addressId);
-      if (selectedAddress) onSetAddress(selectedAddress);
-      setIsOpen(false);
+      if (selectedAddress) {
+        onSetAddress(selectedAddress);
+        setIsOpen(false);
+      } else {
+        toastWarning("Vui lòng chọn địa chỉ");
+      }
     };
 
     return (
       <>
         <AddressDialog ref={dialogRef} onRefetch={getAllAddress} />
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogContent className="max-w-[425px] h-[80%]">
-            <DialogHeader>
-              <DialogTitle>Dia chi cua toi</DialogTitle>
+          <DialogContent className="max-w-[425px] max-h-[80%] flex flex-col">
+            <DialogHeader className="flex-none">
+              <DialogTitle>Địa chỉ của tôi</DialogTitle>
             </DialogHeader>
             <RadioGroup
-              className="overflow-y-auto no-scrollbar"
+              className="overflow-y-auto flex-1"
               defaultValue={addressId}
               onValueChange={(value) => {
                 const selectedAddress = addresses.find(
@@ -104,11 +111,11 @@ const AddressesDialog = forwardRef<AddressesDialogRef, AddressesDialogProps>(
                       <div className="flex flex-col gap-1">
                         <div>{item.full_name}</div>
                         <div className="text-sm">
-                          <span className="text-[#787C80]">Dia chi: </span>
+                          <span className="text-[#787C80]">Địa chỉ: </span>
                           {item.address}
                         </div>
                         <div className="text-sm">
-                          <span className="text-[#787C80]">Dien thoai: </span>
+                          <span className="text-[#787C80]">Điện thoại: </span>
                           {item.phone_number}
                         </div>
                       </div>
@@ -119,7 +126,7 @@ const AddressesDialog = forwardRef<AddressesDialogRef, AddressesDialogProps>(
                         variant="secondary"
                         onClick={() => dialogRef.current?.onOpen(item)}
                       >
-                        Chinh sua
+                        Chỉnh sửa
                       </Button>
                     </div>
                   </div>
@@ -132,20 +139,20 @@ const AddressesDialog = forwardRef<AddressesDialogRef, AddressesDialogProps>(
               >
                 <PlusCircle className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  Them dia chi moi
+                  Thêm địa chỉ mới
                 </span>
               </Button>
             </RadioGroup>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 flex-none">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => setIsOpen(false)}
               >
-                Huy
+                Hủy
               </Button>
-              <Button onClick={handleSetAddress}>Xac nhan</Button>
+              <Button onClick={handleSetAddress}>Xác nhận</Button>
             </div>
           </DialogContent>
         </Dialog>

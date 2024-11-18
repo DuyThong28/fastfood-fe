@@ -22,4 +22,5 @@ export interface ResUser {
 export interface UserBasicInfo {
   full_name: string;
   avatar_url: string | undefined;
+  email: string
 }

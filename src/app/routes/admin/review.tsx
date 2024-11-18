@@ -103,18 +103,18 @@ export default function ReviewRoute() {
     <DashBoardLayout>
       <ReplyDialog ref={replyDialogRef} onRefetch={getAllReviews} />
       <main className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto w-full">
-        <h1 className="text-lg font-semibold ">Danh Sach Danh Gia</h1>
+        <h1 className="text-lg font-semibold ">Danh Sách Đánh Giá</h1>
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader className="flex flex-col gap-4">
             <div className="flex flex-row gap-6">
-              <Label className="font-medium">So sao danh gia</Label>
+              <Label className="font-medium">Số sao đánh giá</Label>
               <div className="flex items-center space-x-2">
                 <Checkbox
                   id="terms"
                   checked={isAllSelected}
                   onCheckedChange={handleSelectAll}
                 />
-                <span>Tat ca</span>
+                <span>Tất cả</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Checkbox
@@ -162,7 +162,7 @@ export default function ReviewRoute() {
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Nhap ten san pham"
+                  placeholder="Nhập tên sản phẩm"
                   className="w-full rounded-lg bg-background pl-8"
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
@@ -182,10 +182,10 @@ export default function ReviewRoute() {
                 onValueChange={(value) => serReviewState(value)}
               >
                 <SelectTrigger className="w-[200px]">
-                  <SelectValue placeholder="Select a statetus" />
+                  <SelectValue placeholder="Chọn trạng thái" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Tat ca</SelectItem>
+                  <SelectItem value="all">Tất cả</SelectItem>
                   <SelectItem value={ReviewStatus.UNREVIEW}>
                     {REVIEW_sTATUS[ReviewStatus.UNREVIEW]}
                   </SelectItem>
@@ -194,7 +194,7 @@ export default function ReviewRoute() {
                   </SelectItem>
                 </SelectContent>
               </Select>
-              <Button onClick={async () => getAllReviews()}>Ap dung</Button>
+              <Button onClick={async () => getAllReviews()}>Áp dụng</Button>
             </div>
           </CardHeader>
           <CardContent className="w-full">

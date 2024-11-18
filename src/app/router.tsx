@@ -4,7 +4,6 @@ import { routes } from "@/config";
 import CustomerRoute from "./routes/admin/customer";
 import NotFoundRoute from "./routes/not-found";
 import ReviewRoute from "./routes/admin/review";
-import ProductDetailRoute from "./routes/admin/product-detail";
 import AdminPasswordRoute from "./routes/admin/account-password";
 import ProductRoute from "./routes/admin/product";
 import OrderRoute from "./routes/admin/order";
@@ -16,7 +15,6 @@ import OrderDetailRoute from "./routes/customers/order-detail";
 import CheckOutRoute from "./routes/customers/checkout";
 import AccountPasswordRoute from "./routes/customers/account-password";
 import CartRoute from "./routes/customers/cart";
-import BookDetailRoute from "./routes/customers/book-detail";
 import AccountProfileRoute from "./routes/customers/account-profile";
 import AccountAddressRoute from "./routes/customers/account-address";
 import HomeRoute from "./routes/customers/home";
@@ -30,7 +28,9 @@ import SignInRoute from "./routes/auth/sign-in";
 import CategoryRoute from "./routes/admin/category";
 import AdminOrderDetailRoute from "./routes/admin/order-detail";
 import SignInSuccess from "./routes/auth/sign-in-success";
-import ReportRoute from "./routes/admin/report";
+import ProductDetailRoute from "./routes/customers/product-detail";
+import ProductReportRoute from "./routes/admin/product-report";
+import PublicProductDetailRoute from "./routes/customers/product-detail";
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -79,8 +79,8 @@ const createAppRouter = () =>
       element: <AccountProfileRoute />,
     },
     {
-      path: routes.CUSTOMER.BOOK_DETAIL,
-      element: <BookDetailRoute />,
+      path: routes.CUSTOMER.PRODUCT_DETAIL,
+      element: <PublicProductDetailRoute />,
     },
     {
       path: routes.CUSTOMER.CART,
@@ -111,8 +111,8 @@ const createAppRouter = () =>
       element: <AddProductRoute />,
     },
     {
-      path: routes.ADMIN.REPORT,
-      element: <ReportRoute />,
+      path: routes.ADMIN.PRODUCT_REPORT,
+      element: <ProductReportRoute />,
     },
 
     {

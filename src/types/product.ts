@@ -1,33 +1,33 @@
-import { BookStatus } from "@/common/enums";
+import { ProductStatus } from "@/common/enums";
 import { Meta } from "./api";
 import { Category } from "./category";
 
-export interface Book {
+export interface Product {
   title: string;
   price: number;
   description: string;
   author?: string;
 }
 
-export interface BookDetail extends Book {
+export interface ProductDetail extends Product {
   entryPrice: number;
   description: string;
   stockQuantity: number;
   categoryId: string;
 }
 
-export interface CreateBookDetail extends BookDetail {
+export interface CreateProductDetail extends ProductDetail {
   images: Array<File>;
 }
 
-export interface UpdateBookDetail extends CreateBookDetail {
+export interface UpdateProductDetail extends CreateProductDetail {
   id: string;
   image_url: string[];
   initCategory: Category | null
 }
 
-export interface ResBookDetail extends Book {
-  status: BookStatus;
+export interface ResProductDetail extends Product {
+  status: ProductStatus;
   image_url: string[];
   id: string;
   entry_price: number;
@@ -39,20 +39,20 @@ export interface ResBookDetail extends Book {
   Category?: Category
 }
 
-export interface ResGetAllBooks extends Response {
+export interface ResGetAllProducts extends Response {
   data: {
-    data: Array<ResBookDetail>;
+    data: Array<ResProductDetail>;
     meta: Meta;
   };
 }
 
-export interface ResGetBookById extends Response {
+export interface ResGetProductById extends Response {
   data: {
-    data: ResBookDetail;
+    data: ResProductDetail;
   };
 }
 
-export interface BookQuery {
+export interface ProductQuery {
   status?: string,
   order?: string,
   sortBy?: string,
@@ -61,4 +61,5 @@ export interface BookQuery {
   max_price?: number;
   min_star?: number;
   categoryId?: string
+  categoryStatus?: boolean
 }

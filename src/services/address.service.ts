@@ -1,9 +1,11 @@
 import { api } from "@/lib/api-client";
 import { Address, ResAddress } from "@/types/address";
+import { trimObjectAttributes } from "@/utils/format";
 
 class AddressService {
     async createAddress(data: Address) {
-        return api.post('address/create', data)
+        const trimmedData = trimObjectAttributes(data);
+        return api.post('address/create', trimmedData)
     }
 
     async getAllAddressByUser(): Promise<{ data: { data: ResAddress[] } }> {
@@ -15,7 +17,8 @@ class AddressService {
     }
 
     async updateAddressById(data: Address) {
-        return api.post(`address/update/${data.id}`, { address: data.address, phoneNumber: data.phoneNumber, fullName: data.fullName })
+        const trimmedData = trimObjectAttributes(data);
+        return api.post(`address/update/${trimmedData.id}`, { address: trimmedData.address, phoneNumber: trimmedData.phoneNumber, fullName: trimmedData.fullName })
     }
 }
 

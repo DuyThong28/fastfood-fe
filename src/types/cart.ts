@@ -1,17 +1,17 @@
 import { Meta } from "./api";
-import { ResBookDetail } from "./book";
+import { ResProductDetail } from "./product";
 
 export interface CartItem {
-  bookId: string;
+  productId: string;
   quantity: number;
 }
 
 export interface ResCartItem {
-  book_id: string;
+  product_id: string;
   cart_id: number;
   id: number;
   quantity: number;
-  book: ResBookDetail;
+  product: ResProductDetail;
 }
 
 export interface ResGetCart {
