@@ -19,7 +19,7 @@ export default function OrderRoute() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [meta, setMeta] = useState<Meta>({
     page: 1,
-    take: 2,
+    take: 10,
     itemCount: 0,
     pageCount: 0,
     hasPreviousPage: false,
@@ -40,6 +40,7 @@ export default function OrderRoute() {
           status: tabState,
         }
       );
+
       setOrders(response.data.data);
       setMeta(response.data.meta);
     } catch (err) {
@@ -60,11 +61,11 @@ export default function OrderRoute() {
   return (
     <DashBoardLayout>
       <main className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto">
-        <h1 className="text-lg font-semibold">Danh Sach Don Hang</h1>
+        <h1 className="text-lg font-semibold">Danh Sách Đơn Hàng</h1>
         <Tabs value={tabState}>
           <TabsList>
             <TabsTrigger value="all" onClick={() => setTabState("all")}>
-              Tat ca
+              Tất cả
             </TabsTrigger>
             <TabsTrigger
               value={OrderStatus.PENDING}
@@ -111,14 +112,14 @@ export default function OrderRoute() {
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Nhap ma don hang"
+                  placeholder="Nhập mã đơn hàng"
                   className="w-full rounded-lg bg-background pl-8"
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
                   onKeyDown={handleEnterPress}
                 />
               </div>
-              <Button onClick={async () => getOrdersByAdmin()}>Ap dung</Button>
+              <Button onClick={async () => getOrdersByAdmin()}>Áp dụng</Button>
             </div>
             <div className="space-y-4">
               <OrderTableHeader />

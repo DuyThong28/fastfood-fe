@@ -6,10 +6,10 @@ import {
 } from "@/components/ui/dialog";
 import {
   Dispatch,
-  FormEvent,
   forwardRef,
   SetStateAction,
   useImperativeHandle,
+  useRef,
   useState,
 } from "react";
 import { Button } from "../ui/button";
@@ -18,6 +18,10 @@ import orderService from "@/services/order.service";
 import { ResReview, Review } from "@/types/review";
 import reviewService from "@/services/review.service";
 import { ReviewStatus } from "@/common/enums";
+import CustomAlertDialog, {
+  CustomAlertDialogRef,
+} from "../shared/alert-dialog";
+import { toastSuccess, toastWarning } from "@/utils/toast";
 
 export interface ReviewDialogRef {
   onOpen: (id: string, action: ReviewStatus) => Promise<void>;
@@ -33,6 +37,7 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [reviews, setReviews] = useState<Review[] | ResReview[]>([]);
     const [action, setAction] = useState<ReviewStatus>(ReviewStatus.UNREVIEW);
+    const alertDialogRef = useRef<CustomAlertDialogRef | null>(null);
 
     const getOrderById = async (id: string) => {
       try {
@@ -59,8 +64,7 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
     const getReviewsByOrderId = async (id: string) => {
       try {
         const response = await reviewService.getReviewsByOrderId(id);
-        console.log("getReviewsByOrderId", response);
-
+        console.log(response);
         (setReviews as Dispatch<SetStateAction<ResReview[]>>)(
           response.data.data
         );
@@ -84,24 +88,48 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
           },
           onClose() {
             setIsOpen(false);
-            setReviews([]);
           },
         };
       },
       []
     );
-    const reviewProduct = async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      try {
-        await Promise.all(
-          (reviews as Review[]).map((reivew) => orderService.reviewProduct(reivew))
-        );
-        setIsOpen(false);
-        setReviews([]);
-        await onRefetch();
-      } catch (err) {
-        console.log(err);
+
+    const reviewProduct = async () => {
+      const unreviewItem = reviews.find(
+        (item) => item.rating < 1 || !item.description?.trim()
+      );
+      if (unreviewItem) {
+        if (unreviewItem.rating < 1 && !unreviewItem.description?.trim())
+          toastWarning("Vui lòng đánh giá sản phẩm");
+        else if (unreviewItem.rating < 1)
+          toastWarning("Vui lòng chọn sao đánh giá");
+        else if (!unreviewItem.description?.trim())
+          toastWarning("Vui lòng đánh giá sản phẩm");
+        return;
       }
+
+      alertDialogRef.current?.onOpen(
+        {
+          title: `Xác nhận đánh giá?`,
+          description:
+            "Một khi đã xác nhận, bạn sẽ không thể chỉnh sửa đánh giá này.",
+        },
+        async () => {
+          try {
+            await Promise.all(
+              (reviews as Review[]).map((reivew) =>
+                orderService.reviewProduct(reivew)
+              )
+            );
+            toastSuccess("Đánh giá thành công");
+            setIsOpen(false);
+            setReviews([]);
+            await onRefetch();
+          } catch (err) {
+            console.log(err);
+          }
+        }
+      );
     };
 
     const handleOnChangeInput = (
@@ -117,23 +145,26 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
     };
 
     return (
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Danh gia</DialogTitle>
-          </DialogHeader>
-          <form className="space-y-6" onSubmit={reviewProduct}>
-            {reviews.map((item, index) => {
-              return (
-                <ReviewPerProduct
-                  key={index}
-                  data={item}
-                  onChange={handleOnChangeInput}
-                  action={action}
-                />
-              );
-            })}
-            <div className="flex flex-row gap-4 justify-end">
+      <>
+        <CustomAlertDialog ref={alertDialogRef} />
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogContent className="max-w-[425px] max-h-[80%] flex flex-col">
+            <DialogHeader className="flex-none">
+              <DialogTitle>Đánh Giá</DialogTitle>
+            </DialogHeader>
+            <div className="overflow-y-auto flex-1 flex flex-col gap-6 p-1">
+              {reviews.map((item, index) => {
+                return (
+                  <ReviewPerProduct
+                    key={index}
+                    data={item}
+                    onChange={handleOnChangeInput}
+                    action={action}
+                  />
+                );
+              })}
+            </div>
+            <div className="flex flex-row gap-4 justify-end flex-none">
               <Button
                 type="button"
                 variant="outline"
@@ -143,18 +174,17 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
                   setIsOpen(false);
                 }}
               >
-                Tro lai
+                Trở lại
               </Button>
-
               {action === ReviewStatus.UNREVIEW && (
-                <Button type="submit" className="w-1/2">
-                  Hoan thanh
+                <Button type="button" onClick={reviewProduct} className="w-1/2">
+                  Hoàn thành
                 </Button>
               )}
             </div>
-          </form>
-        </DialogContent>
-      </Dialog>
+          </DialogContent>
+        </Dialog>
+      </>
     );
   }
 );

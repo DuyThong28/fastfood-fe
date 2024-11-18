@@ -1,6 +1,7 @@
 import { OrderItem } from "@/types/order";
 import image from "@/assets/placeholder.svg";
 import React from "react";
+import { formatNumber } from "@/utils/format";
 
 interface ProductOrderRowProps {
   data: OrderItem;
@@ -28,11 +29,11 @@ export const ProductOrderRow: React.FC<ProductOrderRowProps> = ({
       <div className="flex flex-col gap-1">
         <div>{data.product.title}</div>
         <div className="text-sm">
-          <span className="text-[#787C80]">So luong: </span>
+          <span className="text-[#787C80]">Số lượng: </span>
           {data.quantity}
         </div>
       </div>
-      <div className="my-auto ml-auto">{data.price}</div>
+      <div className="my-auto ml-auto">{formatNumber(data.price)}</div>
     </div>
   );
 };

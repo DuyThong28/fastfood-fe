@@ -33,6 +33,8 @@ import EmblaCarousel from "@/components/shared/embla-carousel";
 import { CounterInput } from "@/components/shared/counter-input";
 import { ProductVariation } from "@/components/product/product-variation";
 import { useParams } from "react-router-dom";
+import productService from "@/services/product.service";
+import { ResProductDetail } from "@/types/product";
 import cartService from "@/services/cart.service";
 import reviewService from "@/services/review.service";
 import { Meta } from "@/types/api";
@@ -40,12 +42,12 @@ import { ResReview } from "@/types/review";
 import { TablePagination } from "@/components/shared/table-pagination";
 import { ReviewItem } from "@/components/product/review-item";
 import { StarButton } from "@/components/product/star-button";
-import { ResProductDetail } from "@/types/product";
-import productService from "@/services/product.service";
+import { formatNumber } from "@/utils/format";
+import { toastSuccess } from "@/utils/toast";
 
 const OPTIONS: EmblaOptionsType = {};
 
-export default function PublicProductDetailRoute() {
+export default function ProductDetailRoute() {
   const param = useParams();
   const [detailData, setDetailData] = useState<ResProductDetail | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
@@ -81,7 +83,6 @@ export default function PublicProductDetailRoute() {
         id,
         { rating }
       );
-      console.log("getReviewByProductId", response);
 
       setMeta(response.data.meta);
       setReviews(response.data.data);
@@ -108,6 +109,7 @@ export default function PublicProductDetailRoute() {
           productId: detailData.id,
           quantity: quantity,
         });
+        toastSuccess("Thêm vào giỏ hàng thành công");
       } catch (err) {
         console.log(err);
       }
@@ -158,7 +160,7 @@ export default function PublicProductDetailRoute() {
 
             <div>
               <div className="flex items-center ">
-                <p className=" text-sm">{detailData.avg_stars}</p>
+                <p className=" text-sm">{detailData.avg_stars} </p>
                 <div className="flex items-center">
                   {[0, 1, 2, 3, 4].map((rating) => (
                     <StarIcon
@@ -172,11 +174,13 @@ export default function PublicProductDetailRoute() {
                   ))}
                 </div>
                 <p className="ml-3 text-sm">
-                  {detailData.total_reviews} danh gia
+                  {detailData.total_reviews} đánh giá
                 </p>
               </div>
             </div>
-            <p className="text-xl text-gray-900">{`${detailData.price} d`}</p>
+            <p className="text-xl text-gray-900">{`${formatNumber(
+              detailData.price
+            )}`}</p>
             <section aria-labelledby="options-heading">
               <div className="space-y-6">
                 {/* <fieldset
@@ -213,15 +217,19 @@ export default function PublicProductDetailRoute() {
                   aria-label="Choose a size"
                   className="grid grid-cols-[100px_1fr]"
                 >
-                  <div className="text-gray-900">So luong</div>
+                  <div className="text-gray-900">Số lượng</div>
                   <CounterInput
                     max={detailData.stock_quantity}
                     value={quantity}
                     onChange={setQuantity}
                   />
                 </fieldset>
-                <Button onClick={handleAddToCart} type="button">
-                  Them vao gio hang
+                <Button
+                  onClick={handleAddToCart}
+                  type="button"
+                  disabled={detailData.stock_quantity === 0}
+                >
+                  Thêm vào giỏ hàng
                 </Button>
               </div>
             </section>
@@ -229,7 +237,7 @@ export default function PublicProductDetailRoute() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Mo Ta San Pham</CardTitle>
+            <CardTitle>Mô Tả Sản Phẩm</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-justify indent-4">{detailData.description}</p>
@@ -237,14 +245,14 @@ export default function PublicProductDetailRoute() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Danh Gia San Pham</CardTitle>
+            <CardTitle>Đánh Giá Sản Phẩm</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-6">
             <div className="border border-gray-300 rounded-md p-6 w-full flex flex-row gap-10 items-start bg-muted/50">
               <div>
                 <div className="mb-2">
                   <span className=" text-[30px]">{detailData.avg_stars}</span>
-                  <span className="text-[20px]"> tren 5</span>
+                  <span className="text-[20px]"> trên 5</span>
                 </div>
                 <div className="flex items-center">
                   {[0, 1, 2, 3, 4].map((rating) => (
@@ -262,7 +270,7 @@ export default function PublicProductDetailRoute() {
               <div className="flex flex-row gap-4">
                 <StarButton
                   onClick={() => handleSelectAll(!isAllSelected)}
-                  value={"Tat ca"}
+                  value={"Tất cả"}
                   isActive={isAllSelected}
                 />
                 <StarButton

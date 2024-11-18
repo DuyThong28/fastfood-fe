@@ -6,16 +6,12 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import categoryService from "@/services/category.service";
-import {
-  FormEvent,
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useState,
-} from "react";
+import { FormEvent, forwardRef, useImperativeHandle, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Category } from "@/types/category";
+import { toastSuccess } from "@/utils/toast";
+import { AxiosError } from "axios";
 
 export interface CategoryDialogRef {
   onOpen: (id?: string) => Promise<void>;
@@ -26,6 +22,10 @@ interface CategoryDialogProps {
   onRefetch: () => Promise<void>;
 }
 
+type ErrorState = {
+  input?: string;
+};
+
 const CategoryDialog = forwardRef<CategoryDialogRef, CategoryDialogProps>(
   function CategoryDialog({ onRefetch }, ref) {
     const [input, setInput] = useState<string>("");
@@ -35,61 +35,83 @@ const CategoryDialog = forwardRef<CategoryDialogRef, CategoryDialogProps>(
       name: "",
       is_disable: false,
     });
+    const [errors, setErrors] = useState<ErrorState>({});
 
-    useImperativeHandle(ref, () => {
-      return {
-        async onOpen(id?: string) {
-          if (id) {
-            try {
-              const response = await categoryService.getCategoryById(id);
-              setCategory(response.data.data);
-              setInput(response.data.data.name);
-              setIsOpen(true);
-            } catch (err) {
-              console.log(err);
-            }
-          } else {
-            setIsOpen(true);
-          }
-        },
-        onClose() {
-          setIsOpen(false);
-        },
-      };
-    }, []);
+    const validateInputs = () => {
+      const newErrors: ErrorState = {};
 
-    useEffect(() => {
-      if (!isOpen) {
-        setInput("");
+      if (!input.trim()) {
+        newErrors.input = "Tên danh mục không được để trống";
       }
-    }, [isOpen]);
+
+      setErrors(newErrors);
+
+      return Object.keys(newErrors).length === 0;
+    };
+
+    useImperativeHandle(
+      ref,
+      () => {
+        return {
+          async onOpen(id?: string) {
+            if (id) {
+              try {
+                const response = await categoryService.getCategoryById(id);
+                setCategory(response.data.data);
+                setInput(response.data.data.name);
+                setErrors({});
+                setIsOpen(true);
+              } catch (err) {
+                console.log(err);
+              }
+            } else {
+              setCategory({
+                id: "",
+                name: "",
+                is_disable: false,
+              });
+              setInput("");
+              setErrors({});
+              setIsOpen(true);
+            }
+          },
+          onClose() {
+            setErrors({});
+            setIsOpen(false);
+          },
+        };
+      },
+      []
+    );
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      if (category.id) {
-        try {
+      if (!validateInputs()) return;
+      try {
+        if (category.id) {
           await categoryService.upDateCategory({
             id: category.id,
             name: input,
           });
-          await onRefetch();
-        } catch (err) {
-          console.log(err);
-        }
-      } else {
-        try {
+          toastSuccess("Cập nhật danh mục thành công");
+        } else {
           await categoryService.createCategory({ name: input });
-          await onRefetch();
-        } catch (err) {
-          console.log(err);
+          toastSuccess("Tạo mới danh mục thành công");
+        }
+        await onRefetch();
+        setIsOpen(false);
+      } catch (err) {
+        console.log(err);
+        if (err instanceof AxiosError && err.response?.status === 400) {
+          setErrors({
+            input: "Danh mục đã tồn tại",
+          });
+        } else if (err instanceof AxiosError && err.response?.status === 500) {
+          setErrors({
+            input: "Danh mục đã tồn tại",
+          });
         }
       }
-      setIsOpen(false);
-      setCategory({
-        id: "",
-        name: "",
-        is_disable: false,
-      });
     };
 
     return (
@@ -97,19 +119,21 @@ const CategoryDialog = forwardRef<CategoryDialogRef, CategoryDialogProps>(
         <DialogContent className="max-w-[425px]">
           <DialogHeader>
             <DialogTitle>
-              {category.id ? "Chinh sua danh muc" : "Them danh muc moi"}
+              {category.id ? "Chỉnh sửa danh mục" : "Thêm danh mục mới"}
             </DialogTitle>
           </DialogHeader>
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-6" onSubmit={handleSubmit} noValidate>
             <div className="flex flex-col gap-4">
-              <Label htmlFor="name">Ten danh muc</Label>
+              <Label htmlFor="name">Tên danh mục</Label>
               <Input
                 id="name"
-                placeholder="Ten danh muc"
+                placeholder="Tên danh mục"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                required
               />
+              {errors?.input && (
+                <p className="text-red-500 text-xs">{errors.input}</p>
+              )}
             </div>
             <div className="grid grid-cols-2 gap-4">
               <Button
@@ -117,15 +141,15 @@ const CategoryDialog = forwardRef<CategoryDialogRef, CategoryDialogProps>(
                 variant="outline"
                 onClick={() => setIsOpen(false)}
               >
-                Huy
+                Hủy
               </Button>
-              <Button type="submit">Luu</Button>
+              <Button type="submit">Lưu</Button>
             </div>
           </form>
         </DialogContent>
       </Dialog>
     );
-  },
+  }
 );
 
 export default CategoryDialog;

@@ -1,6 +1,7 @@
 import { OrderItem } from "@/types/order";
 import image from "@/assets/placeholder.svg";
 import React from "react";
+import { formatNumber } from "@/utils/format";
 
 interface ProductOrderDetailRowProps {
   data: OrderItem;
@@ -28,9 +29,13 @@ export const ProductOrderDetailRow: React.FC<ProductOrderDetailRowProps> = ({
           <div className="font-medium">{data.product.title}</div>
         </div>
       </div>
-      <div className="basis-[15%] px-2 text-right">{data.price}</div>
+      <div className="basis-[15%] px-2 text-right">
+        {formatNumber(data.price)}
+      </div>
       <div className="basis-[15%] px-2 text-right">{data.quantity}</div>
-      <div className="basis-[15%] px-2 text-right ">{data.total_price}</div>
+      <div className="basis-[15%] px-2 text-right ">
+        {formatNumber(data.total_price)}
+      </div>
     </div>
   );
 };

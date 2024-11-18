@@ -21,7 +21,7 @@ export default function HomeRoute() {
       const response = await productService.getAllProducts({
         page: meta.page,
         take: meta.take,
-      }, ProductStatus.ACTIVE);
+      }, {status: ProductStatus.ACTIVE});
 
       setProducts(response.data.data);
       setMeta(response.data.meta);

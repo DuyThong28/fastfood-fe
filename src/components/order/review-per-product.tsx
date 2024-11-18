@@ -40,7 +40,7 @@ export default function ReviewPerProduct({
       {action === ReviewStatus.UNREVIEW && (
         <>
           <div className="flex items-center">
-            <div>Chat luong san pham: </div>
+            <div>Chất lượng sản phẩm: </div>
             <div className="flex items-center">
               {[0, 1, 2, 3, 4].map((rating) => {
                 return (
@@ -62,7 +62,7 @@ export default function ReviewPerProduct({
             </div>
           </div>
           <Textarea
-            placeholder="Hay chia se nhung gi ban thich ve san pham."
+            placeholder="Hãy chia sẻ những gì bạn thích về sản phẩm."
             value={data.description}
             onChange={(e) =>
               onChange((data as Review).productId, "description", e.target.value)
@@ -82,7 +82,7 @@ export default function ReviewPerProduct({
               />
             </div>
             <div className="flex flex-col gap-1">
-              <div>Duy Thong</div>
+              <div>{user?.full_name}</div>
               <div className="flex">
                 {[0, 1, 2, 3, 4].map((rating) => {
                   return (
@@ -104,7 +104,7 @@ export default function ReviewPerProduct({
       )}
       {(data as ResReview).ReplyReviews && (
         <div className="bg-muted p-4 rounded-md">
-          <p className="mb-2">Phan hoi cua nguoi ban</p>
+          <p className="mb-2">Phản hồi của người bán</p>
           <div>
             {(data as ResReview).ReplyReviews &&
               (data as ResReview).ReplyReviews?.reply}

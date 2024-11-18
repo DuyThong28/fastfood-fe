@@ -1,7 +1,7 @@
 import { ReviewStatus } from "@/common/enums";
+import { ResProductDetail } from "./product";
 import { Meta } from "./api";
 import { ResUser } from "./user";
-import { ResProductDetail } from "./product";
 
 export interface Review {
   product?: ResProductDetail;

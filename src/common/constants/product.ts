@@ -1,5 +1,5 @@
 export const PRODUCT_STATUS = {
-    INACTIVE: "Da an",
-    ACTIVE: "Dang ban",
+  INACTIVE: "Chưa được đăng",
+  ACTIVE: "Đang hoạt động",
   };
   

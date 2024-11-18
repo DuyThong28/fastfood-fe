@@ -2,15 +2,17 @@ import { ReviewStatus } from "@/common/enums";
 import { api } from "@/lib/api-client";
 import { Page } from "@/types/api";
 import { GetAllReviewQueries, GetAllReviews, GetReviewByProductId, ResReview } from "@/types/review";
+import { trimObjectAttributes } from "@/utils/format";
 
 class ReviewService {
   async getAllReviews(
     { page, take }: Page,
     query: GetAllReviewQueries,
   ): Promise<GetAllReviews> {
+    const trimmedData = trimObjectAttributes(query);
     let url = `reviews/get-all?page=${page}&take=${take}`;
-    if (query.rating.length > 0) {
-      const ratingParams = query.rating
+    if (trimmedData.rating.length > 0) {
+      const ratingParams = trimmedData.rating
         .map((rating) => `rating[]=${rating}`)
         .join("&");
       url += `&${ratingParams}`;
@@ -30,14 +32,14 @@ class ReviewService {
         }
       }
     }
-    if (query.date) {
-      url += `&date=${query.date}`;
+    if (trimmedData.date) {
+      url += `&date=${trimmedData.date}`;
     }
-    if (query.search) {
-      url += `&search=${query.search}`;
+    if (trimmedData.search) {
+      url += `&search=${trimmedData.search}`;
     }
-    if (query.state in ReviewStatus) {
-      url += `&state=${query.state}`;
+    if (trimmedData.state in ReviewStatus) {
+      url += `&state=${trimmedData.state}`;
     }
     return api.get(url);
   }
@@ -47,7 +49,7 @@ class ReviewService {
   }
 
   async reply(id: string, reply: string) {
-    return api.post(`reviews/${id}/reply`, { reply: reply });
+    return api.post(`reviews/${id}/reply`, { reply: reply.trim() });
   }
 
   async getReviewsByOrderId(orderId: string): Promise<{ data: { data: ResReview[] } }> {

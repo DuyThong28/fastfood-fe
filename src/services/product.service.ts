@@ -1,21 +1,28 @@
 import { ProductStatus } from "@/common/enums";
 import { api } from "@/lib/api-client";
 import { Page } from "@/types/api";
-import { CreateProductDetail, ProductQuery, ResGetAllProducts, ResGetProductById, UpdateProductDetail } from "@/types/product";
-
+import {
+  ProductQuery,
+  CreateProductDetail,
+  ResGetAllProducts,
+  ResGetProductById,
+  UpdateProductDetail,
+} from "@/types/product";
+import { trimObjectAttributes } from "@/utils/format";
 
 class ProductService {
   async createProduct(data: CreateProductDetail) {
+    const trimmedData = trimObjectAttributes(data);
     const formData = new FormData();
-    formData.append("description", data.description);
-    formData.append("categoryId", data.categoryId);
-    formData.append("title", data.title);
-    formData.append("price", data.price.toString());
-    formData.append("stockQuantity", data.stockQuantity.toString());
-    formData.append("entryPrice", data?.entryPrice.toString());
+    formData.append("description", trimmedData.description);
+    formData.append("categoryId", trimmedData.categoryId);
+    formData.append("title", trimmedData.title);
+    formData.append("price", trimmedData.price.toString());
+    formData.append("stockQuantity", trimmedData.stockQuantity.toString());
+    formData.append("entryPrice", trimmedData?.entryPrice.toString());
     formData.append("author", "John");
-    if (data.images && data.images.length > 0) {
-      data.images.forEach((image) => {
+    if (trimmedData.images && trimmedData.images.length > 0) {
+      trimmedData.images.forEach((image) => {
         formData.append("images", image);
       });
     }
@@ -27,24 +34,27 @@ class ProductService {
     query: ProductQuery,
   ): Promise<ResGetAllProducts> {
     let url = `/products/get-all?page=${page}&take=${take}`;
-    if (query?.status && query.status in ProductStatus) {
-      url += `&status=${query.status}`;
+    const trimmedData = trimObjectAttributes(query);
+    if (trimmedData?.status && trimmedData.status in ProductStatus) {
+      url += `&status=${trimmedData.status}`;
     }
-    if (query.title) {
-      url += `&title=${query.title}`
+    if (trimmedData.title) {
+      url += `&title=${trimmedData.title}`
     }
-    if (query?.order)
-      url += `&order=${query.order}`;
-    if (query?.sortBy)
-      url += `&sortBy=${query.sortBy}`;
-    if (query?.max_price)
-      url += `&max_price=${query.max_price}`;
-    if (query?.min_price)
-      url += `&min_price=${query.min_price}`;
-    if (query?.min_star)
-      url += `&min_star=${query.min_star}`;
-    if (query?.categoryId)
-      url += `&categoryId=${query.categoryId}`;
+    if (trimmedData?.order)
+      url += `&order=${trimmedData.order}`;
+    if (trimmedData?.sortBy)
+      url += `&sortBy=${trimmedData.sortBy}`;
+    if (trimmedData?.max_price)
+      url += `&max_price=${trimmedData.max_price}`;
+    if (trimmedData?.min_price)
+      url += `&min_price=${trimmedData.min_price}`;
+    if (trimmedData?.min_star)
+      url += `&min_star=${trimmedData.min_star}`;
+    if (trimmedData?.categoryId)
+      url += `&categoryId=${trimmedData.categoryId}`;
+    if ("categoryStatus" in trimmedData)
+      url += `&categoryStatus=${trimmedData.categoryStatus}`
     return api.get(url);
   }
 
@@ -54,25 +64,26 @@ class ProductService {
 
   async updateProductById(data: UpdateProductDetail) {
     const formData = new FormData();
-    formData.append("description", data.description);
-    formData.append("categoryId", data.categoryId);
-    formData.append("title", data.title);
-    formData.append("price", data.price.toString());
-    formData.append("stockQuantity", data.stockQuantity.toString());
-    formData.append("entryPrice", data.entryPrice.toString());
+    const trimmedData = trimObjectAttributes(data);
+    formData.append("description", trimmedData.description);
+    formData.append("categoryId", trimmedData.categoryId);
+    formData.append("title", trimmedData.title);
+    formData.append("price", trimmedData.price.toString());
+    formData.append("stockQuantity", trimmedData.stockQuantity.toString());
+    formData.append("entryPrice", trimmedData.entryPrice.toString());
     formData.append("author", "John");
-    if (data.image_url && data.image_url.length > 0) {
-      data.image_url.forEach((image) => {
+    if (trimmedData.image_url && trimmedData.image_url.length > 0) {
+      trimmedData.image_url.forEach((image) => {
         formData.append("image_url[]", image);
       });
     }
 
-    if (data.images && data.images.length > 0) {
-      data.images.forEach((image) => {
+    if (trimmedData.images && trimmedData.images.length > 0) {
+      trimmedData.images.forEach((image) => {
         formData.append("images_update", image);
       });
     }
-    return api.patch(`/products/update/${data.id}`, formData);
+    return api.patch(`/products/update/${trimmedData.id}`, formData);
   }
 
   async activeProductById(id: string) {

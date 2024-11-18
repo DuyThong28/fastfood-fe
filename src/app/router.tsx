@@ -30,7 +30,7 @@ import CategoryRoute from "./routes/admin/category";
 import AdminOrderDetailRoute from "./routes/admin/order-detail";
 import SignInSuccess from "./routes/auth/sign-in-success";
 import ProductDetailRoute from "./routes/customers/product-detail";
-import ProductReportRoute from "./routes/admin/book-report";
+import ProductReportRoute from "./routes/admin/product-report";
 import PublicProductDetailRoute from "./routes/customers/product-detail";
 
 const createAppRouter = () =>

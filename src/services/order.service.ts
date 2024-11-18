@@ -8,6 +8,7 @@ import {
   ResGetOrdersByUser,
 } from "@/types/order";
 import { Review } from "@/types/review";
+import { trimObjectAttributes } from "@/utils/format";
 
 class OrderService {
   async getOrdersByUser(
@@ -15,12 +16,10 @@ class OrderService {
     status: string,
     search: string
   ): Promise<ResGetOrdersByUser> {
-    if (status === "all")
-      return api.get(`orders/get-all?page=${page}&take=${take}&search=${search}`);
-    else
-      return api.get(
-        `orders/get-all?page=${page}&take=${take}&status=${status}&search=${search}`,
-      );
+    let url = `orders/get-all?page=${page}&take=${take}&search=${search.trim()}&sortBy=created_at&order=desc`
+    if (status !== "all")
+      url += `&status=${status}`;
+    return api.get(url);
   }
 
   async getOrderDetail(id: string): Promise<ResGetOrderById> {
@@ -34,7 +33,7 @@ class OrderService {
       search: string,
     }
   ): Promise<ResGetOrdersByUser> {
-    let url = `/orders/list?page=${page}&take=${take}&search=${getOrdersQuery.search}`;
+    let url = `/orders/list?page=${page}&take=${take}&search=${getOrdersQuery.search.trim()}&sortBy=created_at&order=desc`;
     if (getOrdersQuery.status in ORDER_STATUS)
       url += `&status=${getOrdersQuery.status}`;
     return api.get(url);
@@ -49,7 +48,8 @@ class OrderService {
   }
 
   async createOrder(data: CreateOrder) {
-    return api.post("orders/create", data);
+    const trimmedData = trimObjectAttributes(data);
+    return api.post("orders/create", trimmedData);
   }
 
   async updateOrderStatus({ id, status }: { id: string; status: OrderStatus }) {

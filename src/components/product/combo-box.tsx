@@ -88,7 +88,7 @@ export function Combobox({ onChange, initCategory }: ComboboxProps) {
           aria-expanded={open}
           className="justify-between font-medium"
         >
-          {selectedCategory ? selectedCategory.name : "Chon mot danh muc..."}
+          {selectedCategory ? selectedCategory.name : "Chọn một danh mục..."}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -110,7 +110,7 @@ export function Combobox({ onChange, initCategory }: ComboboxProps) {
             />
           </div>
           <CommandList>
-            <CommandEmpty>Khong tim thay danh muc</CommandEmpty>
+            <CommandEmpty>Không tìm thấy danh mục</CommandEmpty>
             <CommandGroup>
               {categories.map((category) => (
                 <CommandItem

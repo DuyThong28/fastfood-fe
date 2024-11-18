@@ -61,4 +61,5 @@ export interface ProductQuery {
   max_price?: number;
   min_star?: number;
   categoryId?: string
+  categoryStatus?: boolean
 }

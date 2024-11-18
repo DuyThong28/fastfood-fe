@@ -48,7 +48,7 @@ export default function CustomerRoute() {
             page: meta.page,
             take: meta.take,
           },
-          isDisable,
+          isDisable
         );
       }
       setMeta(response.data.meta);
@@ -68,25 +68,24 @@ export default function CustomerRoute() {
     }
   };
 
-
   return (
     <DashBoardLayout>
       <main className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto">
-        <h1 className="text-lg font-semibold">Danh Sach Khach Hang</h1>
+        <h1 className="text-lg font-semibold">Danh sách khách hàng</h1>
         <Tabs value={tabState}>
           <div className="flex items-center">
             <TabsList>
               <TabsTrigger value="all" onClick={() => setTabState("all")}>
-                Tat ca
+                Tất cả
               </TabsTrigger>
               <TabsTrigger value="active" onClick={() => setTabState("active")}>
-                Hoat dong
+                Hoạt động
               </TabsTrigger>
               <TabsTrigger
                 value="inactive"
                 onClick={() => setTabState("inactive")}
               >
-                Da khoa
+                Đã khóa
               </TabsTrigger>
             </TabsList>
           </div>
@@ -98,14 +97,14 @@ export default function CustomerRoute() {
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Nhap ten khach hang"
+                  placeholder="Nhập tên khách hàng"
                   className="w-full rounded-lg bg-background pl-8"
                   value={textSearch}
                   onChange={(e) => setTextSearch(e.target.value)}
                   onKeyDown={handleEnterPress}
                 />
               </div>
-              <Button>Ap dung</Button>
+              <Button>Áp dụng</Button>
             </div>
             <Table>
               <CustomerTableHeader />

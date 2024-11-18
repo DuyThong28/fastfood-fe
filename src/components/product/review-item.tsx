@@ -37,7 +37,7 @@ export const ReviewItem: React.FC<ReviewItemProps> = ({ data }) => {
         <div>{data.description}</div>
         {(data as ResReview).ReplyReviews && (
           <div className="bg-muted p-4 rounded-md">
-            <p className="mb-2">Phan hoi cua nguoi ban</p>
+            <p className="mb-2">Phản hồi của người bán</p>
             <div>
               {(data as ResReview).ReplyReviews &&
                 (data as ResReview).ReplyReviews?.reply}
