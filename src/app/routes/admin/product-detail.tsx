@@ -11,7 +11,7 @@ import { AddProductErrorState } from "./add-product";
 import { toastSuccess } from "@/utils/toast";
 // import { ProductInfoSection } from "@/components/product/product-info-section";
 
-export default function ProductDetailRoute() {
+export default function AdminProductDetailRoute() {
   const param = useParams();
   const [detailData, setDetailData] = useState<UpdateProductDetail>({
     title: "",
