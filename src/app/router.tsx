@@ -30,6 +30,7 @@ import AdminOrderDetailRoute from "./routes/admin/order-detail";
 import SignInSuccess from "./routes/auth/sign-in-success";
 import ProductDetailRoute from "./routes/customers/product-detail";
 import PublicProductDetailRoute from "./routes/customers/product-detail";
+import AdminProductDetailRoute from "./routes/admin/product-detail";
 import ReportRoute from "./routes/admin/report";
 
 const createAppRouter = () =>
@@ -141,7 +142,7 @@ const createAppRouter = () =>
     },
     {
       path: routes.ADMIN.PRODUCT_DETAIL,
-      element: <ProductDetailRoute />,
+      element: <AdminProductDetailRoute />,
     },
     {
       path: routes.ADMIN.REVIEW,
