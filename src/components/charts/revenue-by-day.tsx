@@ -1,11 +1,12 @@
 import {
+  Bar,
   CartesianGrid,
-  Line,
-  LineChart,
+  BarChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
+  Legend,
 } from "recharts";
 
 type RevenueByDayProps = {
@@ -15,13 +16,13 @@ type RevenueByDayProps = {
 export function RevenueByDay({ data }: RevenueByDayProps) {
   return (
     <ResponsiveContainer width="100%" minHeight={300}>
-      <LineChart data={data}>
-        <CartesianGrid stroke="hsl(var(--muted))" />
+      <BarChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" stroke="hsl(var(--primary))" />
         <YAxis stroke="hsl(var(--primary))" />
         <Tooltip />
-        <Line dataKey="revenue" type="monotone" stroke="hsl(var(--primary))" />
-      </LineChart>
+        <Bar dataKey="revenue" type="monotone" fill="#82ca9d" barSize={10} />
+      </BarChart>
     </ResponsiveContainer>
   );
 }

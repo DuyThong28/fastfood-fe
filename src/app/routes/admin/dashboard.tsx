@@ -73,10 +73,10 @@ export default function DashboardRoute() {
       );
       setRecentOrders(recentResponse.data.data);
 
-      const total = ordersData.reduce(
-        (acc: number, order: Order) => acc + order.total_price,
-        0
-      );
+      const total = ordersData.reduce((acc: number, order: Order) => {
+        return acc + Number(order.total_price);
+      }, 0);
+
       setTotalPrice(total);
     } catch (err) {
       console.log(err);
