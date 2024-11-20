@@ -95,6 +95,13 @@ export default function DashBoardLayout({
                 Quản Lý Khách Hàng
               </button>
               <button
+                onClick={() => navigate(routes.ADMIN.REPORT)}
+                className={pathname === routes.ADMIN.REPORT ? active : inActive}
+              >
+                <ChartColumnIncreasing className="h-4 w-4" />
+                Báo Cáo
+              </button>
+              <button
                 onClick={() => navigate(routes.ADMIN.ACCOUNT_PROFILE)}
                 className={
                   pathname === routes.ADMIN.ACCOUNT_PROFILE ? active : inActive

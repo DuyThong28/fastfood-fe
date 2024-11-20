@@ -15,14 +15,19 @@ import orderService from "@/services/order.service";
 import customerService from "@/services/customer.service";
 import { useEffect, useState } from "react";
 import { Customer } from "@/types/customer";
+import { Product } from "@/types/product";
+import { api } from "@/lib/api-client";
+import { formatNumber } from "@/utils/format";
 
 export default function DashboardRoute() {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [recentOrders, setRecentOrders] = useState<Order[]>([]);
   const [customers, setCustomers] = useState<Customer[]>([]);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
   const [meta, setMeta] = useState<Meta>({
     page: 1,
-    take: 2,
+    take: 5,
     itemCount: 0,
     pageCount: 0,
     hasPreviousPage: false,
@@ -44,36 +49,45 @@ export default function DashboardRoute() {
     }
   };
 
-  const getOrdersByAdmin = async () => {
+  const getAllProducts = async () => {
     try {
-      const response = await orderService.getOrdersByAdmin(
-        {
-          page: meta.page,
-          take: meta.take,
-        },
-        {
-          search: "searchText",
-          status: "all",
-        }
-      );
-      setOrders(response.data.data);
-      setMeta(response.data.meta);
+      const response = await api.get("/products/get-all");
+      setProducts(response.data.data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const calculateOrdersRevenue = () => {
-    orders.map((order) =>
-      setTotalPrice((prevTotal) => prevTotal + order.total_price)
-    );
+  const getOrdersByAdmin = async () => {
+    try {
+      const response = await api.get("/orders/list?status=SUCCESS");
+      const ordersData = response.data.data;
+      setOrders(ordersData);
+
+      const recentResponse = await orderService.getOrdersByAdmin(
+        {
+          page: meta.page,
+          take: meta.take,
+        },
+        { status: "", search: "" }
+      );
+      setRecentOrders(recentResponse.data.data);
+
+      const total = ordersData.reduce(
+        (acc: number, order: Order) => acc + order.total_price,
+        0
+      );
+      setTotalPrice(total);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
+    getAllProducts();
     getAllCustomers();
     getOrdersByAdmin();
-    calculateOrdersRevenue();
-  }, [meta.page]);
+  }, []);
 
   return (
     <DashBoardLayout>
@@ -85,7 +99,9 @@ export default function DashboardRoute() {
               <div className="flex flex-row justify-between">
                 <div className="flex flex-col">
                   <h2 className="text-lg font-semibold">Tổng doanh thu</h2>
-                  <p className="text-lg font-bold text-primary">{totalPrice}</p>
+                  <p className="text-lg font-bold text-primary">
+                    {formatNumber(totalPrice)}
+                  </p>
                   <p className="text-sm font-bold text-primary mt-2">
                     Tổng số tiền thu được từ các đơn hàng
                   </p>
@@ -173,7 +189,9 @@ export default function DashboardRoute() {
               <div className="flex flex-row justify-between">
                 <div className="flex flex-col">
                   <h2 className="text-lg font-semibold">Tổng sản phẩm</h2>
-                  <p className="text-lg font-bold text-primary">0</p>
+                  <p className="text-lg font-bold text-primary">
+                    {products.length}
+                  </p>
                   <p className="text-sm font-bold text-primary mt-2">
                     Số lượng sản phẩm
                   </p>
@@ -232,7 +250,7 @@ export default function DashboardRoute() {
           <CardContent className="flex flex-col gap-6">
             <div className="space-y-4">
               <OrderTableHeader />
-              {orders.map((item, index) => {
+              {recentOrders.map((item, index) => {
                 return <OrderTableRow key={index} data={item} />;
               })}
             </div>

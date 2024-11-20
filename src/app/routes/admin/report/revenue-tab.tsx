@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TablePagination } from "@/components/shared/table-pagination";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
@@ -20,6 +20,8 @@ import {
 
 import { RevenueByDay } from "@/components/charts/revenue-by-day";
 import { ChartCard } from "@/components/charts/chart-card";
+import { api } from "@/lib/api-client";
+import { Statistic } from "@/types/statistics";
 
 export default function RevenueTab() {
   const [meta, setMeta] = useState<Meta>({
@@ -30,13 +32,42 @@ export default function RevenueTab() {
     hasPreviousPage: false,
     hasNextPage: false,
   });
+  const [statistics, setStatistics] = useState<Statistic[]>([]);
+  const [selectedDate, setSelectedDate] = useState("");
+
+  const extractDateParts = (date: string) => {
+    const [year, month, day] = date.split("-").map(Number);
+    return { day, month, year };
+  };
+
+  const getStatistics = async () => {
+    if (!selectedDate) return;
+    try {
+      const response = await api.get("/statistics");
+      setStatistics(response.data.data);
+    } catch (error) {
+      console.error("Error fetching statistics:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedDate) {
+      getStatistics();
+      console.log(statistics);
+    }
+  }, [selectedDate]);
 
   return (
     <>
       <Card className="flex-1" x-chunk="dashboard-06-chunk-0">
         <CardContent className="flex flex-col gap-6 mt-6">
           <div className="flex gap-x-5 items-center mb-4">
-            <Input type="date" className="border rounded p-2 w-fit" />
+            <Input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="border rounded p-2 w-fit"
+            />
             <Select defaultValue="week">
               <SelectTrigger className="border rounded p-2 w-20">
                 <SelectValue placeholder="Tuần" />
@@ -58,12 +89,14 @@ export default function RevenueTab() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>1</TableCell>
-                <TableCell>5/11/2024</TableCell>
-                <TableCell>100</TableCell>
-                <TableCell>100</TableCell>
-              </TableRow>
+              {statistics.map((stat, index) => (
+                <TableRow key={index}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{stat.day}</TableCell>
+                  <TableCell>{stat.total_order}</TableCell>
+                  <TableCell>{stat.total_revenue}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </CardContent>

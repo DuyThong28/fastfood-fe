@@ -29,8 +29,8 @@ import CategoryRoute from "./routes/admin/category";
 import AdminOrderDetailRoute from "./routes/admin/order-detail";
 import SignInSuccess from "./routes/auth/sign-in-success";
 import ProductDetailRoute from "./routes/customers/product-detail";
-import ProductReportRoute from "./routes/admin/product-report";
 import PublicProductDetailRoute from "./routes/customers/product-detail";
+import ReportRoute from "./routes/admin/report";
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -111,8 +111,8 @@ const createAppRouter = () =>
       element: <AddProductRoute />,
     },
     {
-      path: routes.ADMIN.PRODUCT_REPORT,
-      element: <ProductReportRoute />,
+      path: routes.ADMIN.REPORT,
+      element: <ReportRoute />,
     },
 
     {
