@@ -74,7 +74,7 @@ export default function RevenueTab() {
   const fetchData = async () => {
     if (selectedDate) {
       const year = selectedDate.year();
-      const month = selectedDate.month() + 1; // Month is 0-indexed
+      const month = selectedDate.month() + 1;
       const day = selectedDate.date();
 
       try {

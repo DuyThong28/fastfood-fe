@@ -12,7 +12,6 @@ import { TablePagination } from "@/components/shared/table-pagination";
 import { Order } from "@/types/order";
 import { Meta } from "@/types/api";
 import orderService from "@/services/order.service";
-import customerService from "@/services/customer.service";
 import { useEffect, useState } from "react";
 import { Customer } from "@/types/customer";
 import { Product } from "@/types/product";
@@ -22,7 +21,7 @@ import { formatNumber } from "@/utils/format";
 export default function DashboardRoute() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [recentOrders, setRecentOrders] = useState<Order[]>([]);
-  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [numberOfCustomers, setNumberOfCustomers] = useState<number>(0);
   const [products, setProducts] = useState<Product[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [meta, setMeta] = useState<Meta>({
@@ -36,14 +35,8 @@ export default function DashboardRoute() {
 
   const getAllCustomers = async () => {
     try {
-      const response = await customerService.getAllCusomter(
-        {
-          page: meta.page,
-          take: meta.take,
-        },
-        null
-      );
-      setCustomers(response.data.data);
+      const response = await api.get("/statistics/totalCustomerBought");
+      setNumberOfCustomers(response.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -158,12 +151,12 @@ export default function DashboardRoute() {
             <CardContent className="flex flex-col gap-4">
               <div className="flex flex-row justify-between">
                 <div className="flex flex-col">
-                  <h2 className="text-lg font-semibold">Tổng người dùng</h2>
+                  <h2 className="text-lg font-semibold">Tổng khách hàng</h2>
                   <p className="text-lg font-bold text-primary">
-                    {customers.length}
+                    {numberOfCustomers}
                   </p>
                   <p className="text-sm font-bold text-primary mt-2">
-                    Số lượng người dùng
+                    Số lượng người dùng đã đặt hàng
                   </p>
                 </div>
                 <svg
