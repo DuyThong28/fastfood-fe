@@ -158,12 +158,12 @@ export default function DashboardRoute() {
             <CardContent className="flex flex-col gap-4">
               <div className="flex flex-row justify-between">
                 <div className="flex flex-col">
-                  <h2 className="text-lg font-semibold">Tổng khách hàng</h2>
+                  <h2 className="text-lg font-semibold">Tổng người dùng</h2>
                   <p className="text-lg font-bold text-primary">
                     {customers.length}
                   </p>
                   <p className="text-sm font-bold text-primary mt-2">
-                    Số lượng khách hàng đã mua hàng
+                    Số lượng người dùng
                   </p>
                 </div>
                 <svg

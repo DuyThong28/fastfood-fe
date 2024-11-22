@@ -1,7 +1,7 @@
 import {
   CartesianGrid,
-  Line,
-  LineChart,
+  Bar,
+  BarChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -9,23 +9,24 @@ import {
 } from "recharts";
 
 type ProductByDayProps = {
-  data: { date: string; numberOfProducts: number }[];
+  data: { name: string; numberOfProducts: number }[];
 };
 
 export function ProductByDay({ data }: ProductByDayProps) {
   return (
     <ResponsiveContainer width="100%" minHeight={300}>
-      <LineChart data={data}>
-        <CartesianGrid stroke="hsl(var(--muted))" />
-        <XAxis dataKey="date" stroke="hsl(var(--primary))" />
+      <BarChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" stroke="hsl(var(--primary))" />
         <YAxis stroke="hsl(var(--primary))" />
         <Tooltip />
-        <Line
+        <Bar
           dataKey="numberOfProducts"
           type="monotone"
-          stroke="hsl(var(--primary))"
+          fill="#82ca9d"
+          barSize={10}
         />
-      </LineChart>
+      </BarChart>
     </ResponsiveContainer>
   );
 }

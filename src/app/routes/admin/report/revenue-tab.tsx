@@ -74,66 +74,86 @@ export default function RevenueTab() {
   const fetchData = async () => {
     if (selectedDate) {
       const year = selectedDate.year();
-      const month = selectedDate.month() + 1;
+      const month = selectedDate.month() + 1; // Month is 0-indexed
       const day = selectedDate.date();
 
-      if (selectedView === "week") {
-        const startOfWeek = selectedDate.startOf("week").add(1, "day");
-        const weekStatistics: Statistic[] = [];
+      try {
+        if (selectedView === "week") {
+          const startOfWeek = selectedDate.startOf("week").add(1, "day");
+          const weekStatistics: Statistic[] = [];
 
-        for (let i = 0; i < 7; i++) {
-          const currentDay = startOfWeek.add(i, "day");
-          const response = await api.get(
-            `/statistics?year=${currentDay.year()}&month=${currentDay.month() + 1}&day=${currentDay.date()}`
+          for (let i = 0; i < 7; i++) {
+            const currentDay = startOfWeek.add(i, "day");
+            const response = await api.get(
+              `/statistics?year=${currentDay.year()}&month=${currentDay.month() + 1}&day=${currentDay.date()}`
+            );
+            weekStatistics.push(...response.data.data);
+          }
+
+          setStatistics(weekStatistics);
+
+          const total = weekStatistics.reduce(
+            (sum: number, stat: Statistic) => {
+              return sum + stat.total_revenue;
+            },
+            0
           );
-          weekStatistics.push(...response.data.data);
+          setTotalRevenue(total);
+        } else if (selectedView === "month") {
+          const response = await api.get(
+            `/statistics?year=${year}&month=${month}`
+          );
+          setStatistics(response.data.data);
+
+          const total = response.data.data.reduce(
+            (sum: number, stat: Statistic) => {
+              return sum + stat.total_revenue;
+            },
+            0
+          );
+          setTotalRevenue(total);
+        } else if (selectedView === "year") {
+          const response = await api.get(`/statistics?year=${year}`);
+          setStatistics(response.data.data);
+
+          const total = response.data.data.reduce(
+            (sum: number, stat: Statistic) => {
+              return sum + stat.total_revenue;
+            },
+            0
+          );
+          setTotalRevenue(total);
         }
-
-        setStatistics(weekStatistics);
-
-        const total = weekStatistics.reduce((sum: number, stat: Statistic) => {
-          return sum + stat.total_revenue;
-        }, 0);
-        setTotalRevenue(total);
-      } else if (selectedView === "month") {
-        const response = await api.get(
-          `/statistics?year=${year}&month=${month}`
-        );
-        setStatistics(response.data.data);
-
-        const total = response.data.data.reduce(
-          (sum: number, stat: Statistic) => {
-            return sum + stat.total_revenue;
-          },
-          0
-        );
-        setTotalRevenue(total);
-      } else if (selectedView === "year") {
-        const response = await api.get(`/statistics?year=${year}`);
-        setStatistics(response.data.data);
-
-        const total = response.data.data.reduce(
-          (sum: number, stat: Statistic) => {
-            return sum + stat.total_revenue;
-          },
-          0
-        );
-        setTotalRevenue(total);
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
     }
   };
 
   const handleViewChange = (value: string) => {
     setSelectedView(value);
-    setSelectedDate(null);
     setInputValue(getCurrentDateRange(dayjs()));
+    fetchData();
   };
+
+  useEffect(() => {
+    const currentDate = dayjs();
+    setSelectedDate(currentDate);
+    setInputValue(getCurrentDateRange(currentDate));
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (selectedDate) {
       fetchData();
     }
   }, [selectedDate]);
+
+  useEffect(() => {
+    if (selectedView) {
+      fetchData();
+    }
+  }, [selectedView]);
 
   useEffect(() => {
     setInputValue(getCurrentDateRange(dayjs()));
@@ -150,7 +170,6 @@ export default function RevenueTab() {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Bảng Báo Cáo");
 
-    // Header title
     worksheet.mergeCells("A2:D2");
     const reportCell2 = worksheet.getCell("A2");
     if (selectedView === "month") {
@@ -164,7 +183,6 @@ export default function RevenueTab() {
     reportCell2.font = { bold: true };
     reportCell2.alignment = { vertical: "middle", horizontal: "center" };
 
-    // Table headers
     worksheet.getRow(3).values = ["STT", "Ngày", "Số đơn hàng", "Doanh thu"];
     const headerRow = worksheet.getRow(3);
     headerRow.eachCell((cell) => {
@@ -183,17 +201,15 @@ export default function RevenueTab() {
       };
     });
 
-    // Add data rows
     statistics.forEach((stat, index) => {
       worksheet.addRow([
-        index + 1, // STT
-        `${stat.day}/${stat.month}/${stat.year}`, // Ngày
-        stat.total_order, // Số đơn hàng
-        stat.total_revenue, // Doanh thu
+        index + 1,
+        `${stat.day}/${stat.month}/${stat.year}`,
+        stat.total_order,
+        stat.total_revenue,
       ]);
     });
 
-    // Adjust column widths
     worksheet.columns = [
       { key: "no", width: 5 },
       { key: "date", width: 20 },
@@ -201,7 +217,6 @@ export default function RevenueTab() {
       { key: "total_revenue", width: 25 },
     ];
 
-    // Export file
     const fileName = `Báo_Cáo_Doanh_Thu_${dayjs().format("YYYYMMDD")}.xlsx`;
     workbook.xlsx.writeBuffer().then((buffer) => {
       saveAs(new Blob([buffer]), fileName);
