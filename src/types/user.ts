@@ -62,3 +62,10 @@ export interface ResFetchAllEmployees extends Respone {
     meta: Meta;
   };
 }
+
+
+export interface UserBasicInfo {
+  full_name: string;
+  avatar_url: string | undefined;
+  email: string
+}

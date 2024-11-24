@@ -35,7 +35,6 @@ export const CartCounterInput: React.FC<CounterInputProps> = ({
   const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      await onChange(inputValue);
       if (inputRef.current) {
         inputRef.current.blur();
       }
@@ -44,6 +43,9 @@ export const CartCounterInput: React.FC<CounterInputProps> = ({
 
   const handleBlur = async () => {
     await onChange(inputValue);
+    if (inputValue === 0) {
+      setInputValue(value);
+    }
   };
 
   useEffect(() => {
@@ -69,9 +71,9 @@ export const CartCounterInput: React.FC<CounterInputProps> = ({
           >
             <path
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M1 1h16"
             />
           </svg>
@@ -104,9 +106,9 @@ export const CartCounterInput: React.FC<CounterInputProps> = ({
           >
             <path
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M9 1v16M1 9h16"
             />
           </svg>

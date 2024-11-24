@@ -1,14 +1,14 @@
-import { BookStatus } from "@/common/enums";
+import { ProductStatus } from "@/common/enums";
 import ProductLayout from "@/components/layouts/product-layout";
 import ProductItemCard from "@/components/product/product-item-card";
 import { Input } from "@/components/ui/input";
-import bookService from "@/services/book.service";
+import productService from "@/services/product.service";
 import { Meta } from "@/types/api";
-import { ResBookDetail } from "@/types/book";
+import { ResProductDetail } from "@/types/product";
 import {  useEffect, useState } from "react";
 
 export default function HomeRoute() {
-  const [books, setBooks] = useState<ResBookDetail[]>([]);
+  const [products, setProducts] = useState<ResProductDetail[]>([]);
   const [meta, setMeta] = useState<Meta>({
     page: 1,
     take: 20,
@@ -17,14 +17,14 @@ export default function HomeRoute() {
     hasPreviousPage: false,
     hasNextPage: false,
   });
-  const getAllBooks = async () => {
+  const getAllProducts = async () => {
     try {
-      const response = await bookService.getAllBooks({
+      const response = await productService.getAllProducts({
         page: meta.page,
         take: meta.take,
-      }, BookStatus.ACTIVE);
+      }, {status: ProductStatus.ACTIVE});
 
-      setBooks(response.data.data);
+      setProducts(response.data.data);
       setMeta(response.data.meta);
    
     } catch (err) {
@@ -33,7 +33,7 @@ export default function HomeRoute() {
   };
 
   useEffect(() => {
-    getAllBooks();
+    getAllProducts();
   }, [meta.page]);
 
   return (
@@ -46,7 +46,7 @@ export default function HomeRoute() {
         </div>
       </div>
       <div className="w-full grid grid-cols-5 gap-4 py-4">
-        {books.map((item, index) => {
+        {products.map((item, index) => {
           return <ProductItemCard key={index} data={item} />;
         })}
       </div>

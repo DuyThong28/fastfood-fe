@@ -26,13 +26,13 @@ export default function VerificationRoute() {
     <div className="flex flex-col justify-center items-center h-[100vh] gap-10">
       <MdMarkEmailUnread size={48} color="#4caf50" />
       <span className="text-2xl text-[#4caf50] font-bold">
-        Account verification
+      Xác minh tài khoản
       </span>
-      <span className="font-bold">You're already have a BookNow account</span>
+      <span className="font-bold">Bạn đã có tài khoản</span>
       <div className="flex flex-col items-center gap-5">
-        <span>To continue:</span>
+        <span>Để tiếp tục:</span>
         <Button className="h-10" onClick={handleClickVerify}>
-          Verify your email here
+        Xác minh email của bạn tại đây
         </Button>
       </div>
     </div>

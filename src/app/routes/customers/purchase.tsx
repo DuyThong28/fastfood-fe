@@ -9,7 +9,7 @@ import { TablePagination } from "@/components/shared/table-pagination";
 import { Meta } from "@/types/api";
 import { Order } from "@/types/order";
 import { OrderRow } from "@/components/order/order-row";
-import { OrderStatus } from "@/common/enums";
+import { OrderStatus, ReviewStatus } from "@/common/enums";
 import { ORDER_STATUS } from "@/common/constants/order";
 import ReviewDialog, {
   ReviewDialogRef,
@@ -37,7 +37,7 @@ export default function PurchaseRoute() {
           take: meta.take,
         },
         tabState,
-        searchText,
+        searchText.trim()
       );
       setOrders(response.data.data);
       setMeta(response.data.meta);
@@ -50,8 +50,8 @@ export default function PurchaseRoute() {
     getAllOrdersByUser();
   }, [meta.page, tabState]);
 
-  const handleRevieww = (id: string) => {
-    reviewDialogRef.current?.onOpen(id);
+  const handleReview = (id: string, action: ReviewStatus) => {
+    reviewDialogRef.current?.onOpen(id, action);
   };
 
   const handleEnterPress = async (event: KeyboardEvent<HTMLInputElement>) => {
@@ -67,7 +67,7 @@ export default function PurchaseRoute() {
         <Tabs value={tabState} className="mx-auto">
           <TabsList>
             <TabsTrigger value="all" onClick={() => setTabState("all")}>
-              Tat ca
+              Tất cả
             </TabsTrigger>
             <TabsTrigger
               value={OrderStatus.PENDING}
@@ -112,14 +112,14 @@ export default function PurchaseRoute() {
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Nhap ID don hang hoac ten san pham"
+              placeholder="Nhập mã đơn hàng"
               className="w-full rounded-lg bg-background pl-8"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               onKeyDown={handleEnterPress}
             />
           </div>
-          <Button onClick={async () => getAllOrdersByUser()}>Ap dung</Button>
+          <Button onClick={async () => getAllOrdersByUser()}>Áp dụng</Button>
         </div>
         <div className="flex flex-col gap-3">
           {orders.map((item, index) => {
@@ -128,7 +128,7 @@ export default function PurchaseRoute() {
                 key={index}
                 data={item}
                 onRefetch={getAllOrdersByUser}
-                onReview={handleRevieww}
+                onReview={handleReview}
               />
             );
           })}

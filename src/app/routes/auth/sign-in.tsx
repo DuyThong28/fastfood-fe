@@ -2,22 +2,39 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import authService from "@/services/auth.service";
 import { jwtDecode } from "jwt-decode";
 import { JWTDecode } from "@/context/auth";
 import { UserRole } from "@/common/enums";
 import useAuth from "@/hooks/useAuth";
 import { setAccessToken } from "@/lib/api-client";
+import { PasswordInput } from "@/components/shared/password-input";
+import { AxiosError } from "axios";
+import { toastSuccess } from "@/utils/toast";
+import { routes } from "@/config";
 const URL_SERVER = import.meta.env.VITE_URL_SERVER;
 
+type ErrorState = {
+  email?: string;
+  password?: string;
+  general?: string;
+};
+
 export default function SignInRoute() {
-  const [input, setinput] = useState({ email_phone: "", password: "" });
   const [auth, setAuth] = useAuth();
-  console.log(auth);
+  const [input, setinput] = useState({ email_phone: "", password: "" });
+  const [errors, setErrors] = useState<ErrorState>({});
+
   const navigate = useNavigate();
 
-  const handleChangeInput = ({name,value,}: {name: string;value: string;}) => {
+  const handleChangeInput = ({
+    name,
+    value,
+  }: {
+    name: string;
+    value: string;
+  }) => {
     setinput((currentInfo) => {
       const newInfo = {
         ...currentInfo,
@@ -27,45 +44,73 @@ export default function SignInRoute() {
     });
   };
 
+  const validateInputs = () => {
+    const newErrors: ErrorState = {};
+
+    if (!input.email_phone.trim()) {
+      newErrors.email = "Email không được để trống";
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (
+        !emailRegex.test(input.email_phone) 
+      ) {
+        newErrors.email = "Email chưa đúng định dạng";
+      }
+    }
+
+    if (!input.password.trim()) {
+      newErrors.password = "Mật khẩu không được để trống";
+    } else if (input.password.trim().length < 8) {
+      newErrors.password = "Mật khẩu phải tối thiểu 8 ký tự";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      let response;
-      if (/^\d+$/.test(input.email_phone)) {
-        response = await authService.singInWithPhone(input);
-      } else {
-        response = await authService.signInWithEmail(input);
-      }
 
+    if (!validateInputs()) return;
+    try {
+      const response= await authService.signInWithEmail(input);
       if (response.data) {
         const accessToken: string = response.data.access_token;
         setAccessToken(accessToken);
         setinput({ email_phone: "", password: "" });
         const { id, role }: JWTDecode = jwtDecode(accessToken);
+
         setAuth({
           userId: id,
           role,
         });
+        toastSuccess("Đăng nhập thành công");
         if (role === UserRole.ADMIN) {
           navigate("/dashboad");
         } else if (role === UserRole.CUSTOMER) {
-          console.log("customer");
           navigate("/");
         }
       }
     } catch (err) {
+      if (err instanceof AxiosError && err.response?.status === 400) {
+        setErrors({
+          general: "Email hoặc mật khẩu chưa đúng",
+        });
+      }
       console.log(err);
     }
   };
 
-  const handleSignInWithGoogle = async ()=>{
-    try{
-      const googleAuthUrl = `${URL_SERVER}/auth/google`
+  const handleSignInWithGoogle = async () => {
+    try {
+      const googleAuthUrl = `${URL_SERVER}/auth/google`;
       window.location.href = googleAuthUrl;
-    } catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <div className="w-full grid grid-cols-2 h-screen">
@@ -73,55 +118,70 @@ export default function SignInRoute() {
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
-            <h1 className="text-3xl font-bold">Dang Nhap</h1>
+            <h1 className="text-3xl font-bold">Đăng Nhập</h1>
           </div>
-          <form className="grid gap-4" onSubmit={handleSubmit}>
+          <form className="grid gap-4" onSubmit={handleSubmit} noValidate>
             <div className="grid gap-2">
-              <Label htmlFor="phone-email">Email hoac So dien thoai</Label>
+              <Label htmlFor="phone-email">Email </Label>
               <Input
                 id="phone-email"
                 type="text"
                 name="phone-email"
-                placeholder="Email hoac So dien thoai"
-                required
+                placeholder="Email "
                 value={input.email_phone}
                 onChange={(e) =>
-                  handleChangeInput({ name: "email_phone", value: e.target.value })
+                  handleChangeInput({
+                    name: "email_phone",
+                    value: e.target.value,
+                  })
                 }
               />
+              {errors?.email && (
+                <p className="text-red-500 text-xs">{errors.email}</p>
+              )}
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="password">Mat khau</Label>
-              <Input
+              <Label htmlFor="password">Mật khẩu</Label>
+              <PasswordInput
                 id="password"
-                type="password"
                 name="password"
-                required
+                placeholder="Mật khẩu"
                 value={input.password}
                 onChange={(e) =>
                   handleChangeInput({ name: "password", value: e.target.value })
                 }
               />
+              {errors?.password && (
+                <p className="text-red-500 text-xs">{errors.password}</p>
+              )}
+              {errors?.general && (
+                <p className="text-red-500 text-xs">{errors.general}</p>
+              )}
             </div>
-            <a
-              href="./forgot-password"
+            <Link
+              to={routes.AUTH.FORGOT_PASSWORD}
               className="ml-auto inline-block text-sm underline"
             >
-              Quen mat khau?
-            </a>
+              Quên mật khẩu?
+            </Link>
             <Button className="w-full" type="submit">
-              Dang Nhap
+              Đăng nhập
             </Button>
-            <Button variant="outline" type='button' className="w-full" onClick={handleSignInWithGoogle}>
-              Dang Nhap voi Google
+            <Button
+              variant="outline"
+              type="button"
+              className="w-full"
+              onClick={handleSignInWithGoogle}
+            >
+              Đăng nhập với Google
             </Button>
           </form>
 
           <div className="mt-4 text-center text-sm">
-            Chua co tai khoan?{" "}
-            <a href="./sign-up" className="underline">
-              Dang Ky
-            </a>
+            Chưa có tài khoản?{" "}
+            <Link to={routes.AUTH.SIGN_UP} className="underline">
+              Đăng ký
+            </Link>
           </div>
         </div>
       </div>

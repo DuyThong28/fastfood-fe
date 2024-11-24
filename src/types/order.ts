@@ -1,10 +1,10 @@
 import { OrderStatus } from "@/common/enums";
 import { Meta } from "./api";
-import { ResBookDetail } from "./book";
+import { ResProductDetail } from "./product";
 
 export interface OrderItem {
-  book: ResBookDetail;
-  book_id: string;
+  product: ResProductDetail;
+  product_id: string;
   id: string;
   order_id: string;
   price: number;
@@ -26,6 +26,7 @@ export interface Order {
     full_name: string;
     id: string;
   };
+  review_state: string;
 }
 
 export interface ResGetOrdersByUser {
@@ -43,7 +44,7 @@ export interface ResGetOrderById {
 
 export interface CreateOrder {
   fullName: string;
-  phoneNumber: string;
+  phoneNumber: number | undefined;
   address: string;
-  items: { bookId: string; quantity: number }[];
+  items: { productId: string; quantity: number }[];
 }

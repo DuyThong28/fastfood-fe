@@ -11,11 +11,22 @@ import { Select,SelectContent,
 import { Gender } from "@/common/enums";
 import { Employee } from "@/types/user";
 
+type ErrorState = {
+  email?: string;
+  gender?: string;
+  birthday?: string;
+  phone?: string;
+  full_name?: string;
+  password?: string;
+};
+
 export const EmployeeInfoSection = ({
+  errors,
   onChange,
   detailData,
   isUpdate
 }: {
+  errors: ErrorState
   onChange: Dispatch<SetStateAction<Employee>>
     detailData: Employee
     isUpdate?: boolean
@@ -87,12 +98,14 @@ export const EmployeeInfoSection = ({
             id="full_name"
             name="full_name"
             placeholder="Ten nhân viên"
-            required
             value={detailData.full_name}
             onChange={(e) =>
               handleChangeInput({ name: "full_name", value: e.target.value })
             }
           />
+          {errors?.full_name && (
+                <p className="text-red-500 text-xs">{errors.full_name}</p>
+              )}
         </div>
         {!isUpdate && <div className="grid grid-cols-[120px_1fr]  gap-4">
           <Label>Mật khẩu</Label>
@@ -100,12 +113,14 @@ export const EmployeeInfoSection = ({
             id="password"
             name="password"
             placeholder="Nhập mật khẩu"
-            required
             value={'password' in detailData && detailData.password || ""}
             onChange={(e) =>
               handleChangeInput({ name: "password", value: e.target.value })
             }
           />
+          {errors?.password && (
+                <p className="text-red-500 text-xs">{errors.password}</p>
+              )}
         </div>}
         {/* {isUpdate && <div className="grid grid-cols-[120px_1fr_1fr] gap-4">
           <Label>Hình ảnh nhân viên</Label>
@@ -166,14 +181,16 @@ export const EmployeeInfoSection = ({
                     value: e.target.value,
                   })
                 }
-              />
+            />
+            {errors?.phone && (
+                <p className="text-red-500 text-xs">{errors.phone}</p>
+              )}
             </div>
           <div className="space-y-2">
               <Label>Email</Label>
               <Input
                 id="email"
                 type="email"
-                required
                 value={detailData?.email}
                 onChange={(e) =>
                   handleChangeInput({
@@ -181,7 +198,10 @@ export const EmployeeInfoSection = ({
                     value: e.target.value,
                   })
                 }
-              />
+            />
+            {errors?.email && (
+                <p className="text-red-500 text-xs">{errors.email}</p>
+              )}
                   </div>
               <div className="space-y-2">
               <Label className="text-right">Ngày sinh</Label>

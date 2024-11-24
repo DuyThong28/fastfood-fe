@@ -4,13 +4,11 @@ import { routes } from "@/config";
 import CustomerRoute from "./routes/admin/customer";
 import NotFoundRoute from "./routes/not-found";
 import ReviewRoute from "./routes/admin/review";
-import ProductDetailRoute from "./routes/admin/product-detail";
 import AdminPasswordRoute from "./routes/admin/account-password";
 import ProductRoute from "./routes/admin/product";
 import OrderRoute from "./routes/admin/order";
 import IncomeReportRoute from "./routes/admin/income-report";
 import DashboardRoute from "./routes/admin/dashboard";
-import BookReportRoute from "./routes/admin/book-report";
 import AddProductRoute from "./routes/admin/add-product";
 import AdminProfileRoute from "./routes/admin/account-profile";
 import PurchaseRoute from "./routes/customers/purchase";
@@ -18,7 +16,6 @@ import OrderDetailRoute from "./routes/customers/order-detail";
 import CheckOutRoute from "./routes/customers/checkout";
 import AccountPasswordRoute from "./routes/customers/account-password";
 import CartRoute from "./routes/customers/cart";
-import BookDetailRoute from "./routes/customers/book-detail";
 import AccountProfileRoute from "./routes/customers/account-profile";
 import AccountAddressRoute from "./routes/customers/account-address";
 import HomeRoute from "./routes/customers/home";
@@ -34,6 +31,10 @@ import AdminOrderDetailRoute from "./routes/admin/order-detail";
 import SignInSuccess from "./routes/auth/sign-in-success";
 import AddEmployeeRoute from "./routes/admin/add-employee";
 import EmployeeRoute from "./routes/admin/employee";
+import ProductDetailRoute from "./routes/customers/product-detail";
+import ProductReportRoute from "./routes/admin/product-report";
+import PublicProductDetailRoute from "./routes/customers/product-detail";
+import AdminProductDetailRoute from "./routes/admin/product-detail";
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -82,8 +83,8 @@ const createAppRouter = () =>
       element: <AccountProfileRoute />,
     },
     {
-      path: routes.CUSTOMER.BOOK_DETAIL,
-      element: <BookDetailRoute />,
+      path: routes.CUSTOMER.PRODUCT_DETAIL,
+      element: <PublicProductDetailRoute />,
     },
     {
       path: routes.CUSTOMER.CART,
@@ -114,8 +115,8 @@ const createAppRouter = () =>
       element: <AddProductRoute />,
     },
     {
-      path: routes.ADMIN.BOOK_REPORT,
-      element: <BookReportRoute />,
+      path: routes.ADMIN.PRODUCT_REPORT,
+      element: <ProductReportRoute />,
     },
     {
       path: routes.ADMIN.DASHBOAD,
@@ -147,7 +148,7 @@ const createAppRouter = () =>
     },
     {
       path: routes.ADMIN.PRODUCT_DETAIL,
-      element: <ProductDetailRoute />,
+      element: <AdminProductDetailRoute />,
     },
     {
       path: routes.ADMIN.REVIEW,

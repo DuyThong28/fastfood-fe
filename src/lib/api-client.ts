@@ -20,6 +20,7 @@ export const setAccessToken = (token: string) => {
 export const removeAccessToken = () => {
   cookies.remove("access_token", { path: '/' });
 };
+
 const refreshAccessToken = throttle(
   async (originalRequest) => {
     try {
@@ -77,7 +78,7 @@ api.interceptors.response.use(
     };
 
     if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // Prevent infinite retry loops
+      originalRequest._retry = true;
       await refreshAccessToken(originalRequest);
     }
 
