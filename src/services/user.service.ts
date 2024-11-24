@@ -11,14 +11,15 @@ class UserService {
   async getAllStaff({page, take}: Page, disable: boolean| null, role = "STAFF"): Promise<ResFetchAllCustomers> {
 
     if(disable===true || disable===false){
-      return api.get(`/users/get-all?page=${page}&take=${take}&disable=${disable}}&role=${role}`);
+      return api.get(`/users/get-all?page=${page}&take=${take}&disable=${disable}&role=${role}`);
     } else {
       return api.get(`/users/get-all?page=${page}&take=${take}&role=${role}`);
     }
     
     }
     
-    async searchStaff(disable:boolean| null, keyword: string, role = "STAFF"){
+  async searchStaff(disable: boolean | null, keyword: string, role = "STAFF") {
+    console.log("searchStaff",disable)
     if(disable===true || disable===false){
       return api.get(`/users/search?keyword=${keyword}&disable=${disable}&role=${role}`);
     } else {

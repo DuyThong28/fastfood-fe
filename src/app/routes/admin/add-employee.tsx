@@ -47,6 +47,7 @@ export default function AddEmployeeRoute() {
         }
         console.log("updateData", updateData);
         await userService.updateStaff(finalUpdateData)
+        navigate(routes.ADMIN.EMPLOYEE)
       } else {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password, ...updateData } = detailData;
@@ -60,6 +61,7 @@ export default function AddEmployeeRoute() {
           password: detailData.password
         }
         await userService.createEmployee(finalUpdateData)
+        navigate(routes.ADMIN.EMPLOYEE)
       }
       // navigate(routes.ADMIN.EMPLOYEE);
     } catch (err) {
