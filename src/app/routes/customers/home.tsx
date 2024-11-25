@@ -27,6 +27,7 @@ type ErrorState = {
 export default function HomeRoute() {
   const [products, setProducts] = useState<ResProductDetail[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [querySearch, setQuerySearch] = useState<string | undefined>()
   const [categorySelect, setCategorySelect] = useState<string[]>([])
   const [priceFilter, setPriceFilter] = useState<PriceFilter>({
     from: undefined,
@@ -82,12 +83,16 @@ export default function HomeRoute() {
     getAllProducts();
     getAllCategories();
   }, [meta.page]);
-
+  console.log("PriceFilter",priceFilter.from,priceFilter.to,priceFilter.enable)
   console.log("categorySelect", categorySelect)
   
   const filterProducts = useMemo(() => {
     const newErrors: ErrorState = {};
     let fakeProducts = products;
+    if (querySearch)
+    {
+      fakeProducts = fakeProducts.filter((product)=> product.title.includes(querySearch))
+    }
     if (categorySelect.length > 0)
     {
      fakeProducts = fakeProducts.filter((product)=> categorySelect.includes(product?.Category?.id || ""))
@@ -102,34 +107,41 @@ export default function HomeRoute() {
       }
       if (priceFilter.from !== undefined)
       {
-          fakeProducts = fakeProducts.filter((product)=> product.price.toLocaleString() >= priceFilter.from!)
+        fakeProducts = fakeProducts.filter((product) => {
+          console.log("CheckGia",product.price.toLocaleString() >= priceFilter.from!,product.price.toLocaleString(), priceFilter.from)
+          return product.price.toLocaleString() >= priceFilter.from!
+        })
       }
       if (priceFilter.to !== undefined)
       {
         fakeProducts = fakeProducts.filter((product)=> product.price.toLocaleString() <= priceFilter.to!)
       }
+      setPriceFilter((prev) => { return { ...prev, enable:false } })
     }
     if (rating)
     {
-      fakeProducts = fakeProducts.filter((product)=> Math.floor(product.avg_stars).toLocaleString() === rating)
+      fakeProducts = fakeProducts.filter((product) => {
+        if(rating === "all") return true
+        return Math.floor(product.avg_stars).toLocaleString() === rating
+      })
     }
     if (checkQuantity)
     {
       fakeProducts = fakeProducts.filter((product)=> product.stock_quantity > 0)
     }
+    console.log("fakeProducts",fakeProducts)
     return fakeProducts
-  },[categorySelect, priceFilter, products, rating, checkQuantity])
-
+  },[categorySelect, priceFilter, products, rating, checkQuantity, querySearch])
   return (
     <ProductLayout>
-      <div className="grid grid-cols-5">
+      <div className="grid grid-cols-5 gap-5">
         <div className="col-span-1 py-4 flex flex-col">
           <Accordion type="single" collapsible className="w-full rounded-none border-b-[1px] border-black text-xl">
             <AccordionItem value="item-1">
-              <AccordionTrigger className="bg-white px-[41px] py-[22px] font-semibold text-black">
+              <AccordionTrigger className="bg-white px-5 py-4 font-semibold text-black">
                 Danh mục
               </AccordionTrigger>
-              <AccordionContent className="bg-white px-[41px] py-[11px] font-normal text-black">
+              <AccordionContent className="bg-white px-5 py-4 font-normal text-black">
                 {categories && categories.map((val) => (
                   <div key={val.id} className="flex w-full items-center space-x-2">
                 <Checkbox
@@ -154,12 +166,12 @@ export default function HomeRoute() {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
-              <AccordionTrigger className="bg-white px-[41px] py-[22px] font-semibold text-black">
+              <AccordionTrigger className="bg-white px-5 py-4 font-semibold text-black">
                 Gia ban
               </AccordionTrigger>
-              <AccordionContent className="bg-white px-[41px] py-[11px] font-normal text-black">
-                <div className="flex flex-col">
-                  <div className="w-full flex items-center justify-between">
+              <AccordionContent className="bg-white px-5 py-4 font-normal text-black">
+                <div className="flex flex-col gap-2">
+                  <div className="w-full flex items-center justify-between gap-2">
                     <Input value={priceFilter.from} onChange={(e) => setPriceFilter((prev) => {
                       return { ...prev, from: e.target.value }
                     })}
@@ -178,41 +190,47 @@ export default function HomeRoute() {
                 </div>
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger className="bg-white px-[41px] py-[22px] font-semibold text-black">
+            <AccordionItem value="item-3">
+              <AccordionTrigger className="bg-white px-5 py-4 font-semibold text-black">
                 Đánh giá
               </AccordionTrigger>
-              <AccordionContent className="bg-white px-[41px] py-[11px] font-normal text-black">
+              <AccordionContent className="bg-white px-5 py-4 font-normal text-black">
                 <div className="flex flex-col">
-                  <RadioGroup onValueChange={(value)=>setRating(value)} defaultValue="option-one">
+                  <RadioGroup className="text-base" onValueChange={(value) => setRating(value)} defaultValue="option-one">
+                    <div className="flex w-full items-center space-x-2">
+                    <RadioGroupItem value="all" id="all"/>
+                    <label htmlFor="all" className="text-left text-base text-black flex item-center gap-2">
+                      <span>Tất cả</span>
+                    </label>
+                  </div>
                     <div className="flex w-full items-center space-x-2">
                     <RadioGroupItem value="1" id="1"/>
-                    <label htmlFor="1" className="text-left text-2xl text-black">
-                      1 <Star/>
+                    <label htmlFor="1" className="text-left text-base text-black flex item-center gap-2">
+                      <span>1</span> <Star/>
                     </label>
                   </div>
                   <div className="flex w-full items-center space-x-2">
                     <RadioGroupItem value="2" id="2"/>
-                    <label htmlFor="2" className="text-left text-2xl text-black">
-                      2 <Star/>
+                    <label htmlFor="2" className="text-left text-base text-black flex item-center gap-2">
+                      <span>2</span> <Star/>
                     </label>
                   </div>
                   <div className="flex w-full items-center space-x-2">
                     <RadioGroupItem value="3" id="3"/>
-                    <label htmlFor="3" className="text-left text-2xl text-black">
-                      3 <Star/>
+                    <label htmlFor="3" className="text-left text-base text-black flex item-center gap-2">
+                      <span>3</span> <Star/>
                     </label>
                   </div>
                   <div className="flex w-full items-center space-x-2">
                     <RadioGroupItem value="4" id="4"/>
-                    <label htmlFor="4" className="text-left text-2xl text-black">
-                      4 <Star/>
+                    <label htmlFor="4" className="text-left text-base text-black flex item-center gap-2">
+                      <span>4</span> <Star/>
                     </label>
                   </div>
                   <div className="flex w-full items-center space-x-2">
                     <RadioGroupItem value="5" id="5"/>
-                    <label htmlFor="5" className="text-left text-2xl text-black">
-                      5 <Star/>
+                    <label htmlFor="5" className="text-left text-base text-black flex item-center gap-2">
+                      <span>5</span> <Star/>
                     </label>
                   </div>
                   </RadioGroup>
@@ -221,19 +239,21 @@ export default function HomeRoute() {
             </AccordionItem>
           </Accordion>
         </div>
-        <div className="flex flex-col w-full col-span-2">
-          <div className="flex items-center gap-2">
-            <Input className="w-full text-black text-base bg-white rounded-lg" />
-            <Checkbox
-                  className="bg-white p-0"
-                      id="quantity"
-                      checked={checkQuantity}
-                      onCheckedChange={() => setCheckQuantity(!checkQuantity)}
-                      onClick={(e) => e.stopPropagation()}
-                />
-                <label htmlFor="quantity" className="text-left text-base text-black">
-                  Còn hàng
-                </label>
+        <div className="flex flex-col w-full col-span-2 py-4">
+          <div className="flex items-center w-full gap-2">
+            <Input value={querySearch} onChange={(e)=>setQuerySearch(e.target.value)} placeholder="Tìm tên món ăn" className="w-full text-black text-base bg-white rounded-lg" />
+            <div className="flex items-center w-full gap-2">
+              <Checkbox
+                    className="bg-white p-0"
+                        id="quantity"
+                        checked={checkQuantity}
+                        onCheckedChange={() => setCheckQuantity(!checkQuantity)}
+                        onClick={(e) => e.stopPropagation()}
+                  />
+                  <label htmlFor="quantity" className="w-full text-base text-black">
+                    Còn hàng
+                  </label>
+            </div>
           </div>
           <div className="w-full grid grid-cols-3 gap-4 py-4">
             {filterProducts.map((item, index) => {
