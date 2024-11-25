@@ -2,7 +2,9 @@ import { ProductStatus } from "@/common/enums";
 import ProductLayout from "@/components/layouts/product-layout";
 import ProductItemCard from "@/components/product/product-item-card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/shared/accordion";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import categoryService from "@/services/category.service";
 import productService from "@/services/product.service";
 import { Meta } from "@/types/api";
@@ -10,10 +12,26 @@ import { Category } from "@/types/category";
 import { ResProductDetail } from "@/types/product";
 import {  useEffect, useMemo, useState } from "react";
 
+interface PriceFilter {
+  from: string | undefined
+  to: string | undefined
+  enable: boolean
+}
+
+type ErrorState = {
+  price?: string;
+};
+
 export default function HomeRoute() {
   const [products, setProducts] = useState<ResProductDetail[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [categorySelect, setCategorySelect]=useState<string[]>([])
+  const [categorySelect, setCategorySelect] = useState<string[]>([])
+  const [priceFilter, setPriceFilter] = useState<PriceFilter>({
+    from: undefined,
+    to: undefined,
+    enable: false
+  })
+  const [errors, setErrors] = useState<ErrorState>({});
   const [meta, setMeta] = useState<Meta>({
     page: 1,
     take: 20,
@@ -64,13 +82,31 @@ export default function HomeRoute() {
   console.log("categorySelect", categorySelect)
   
   const filterProducts = useMemo(() => {
+    const newErrors: ErrorState = {};
     let fakeProducts = products;
     if (categorySelect.length > 0)
     {
      fakeProducts = fakeProducts.filter((product)=> categorySelect.includes(product?.Category?.id || ""))
     }
+    if (priceFilter.enable)
+    {
+      if (priceFilter.from !== undefined && priceFilter.to !== undefined && priceFilter.from > priceFilter.to)
+      {
+        newErrors.price = "Giá sau phải nhỏ hơn giá trước"
+        setErrors(newErrors)
+        return fakeProducts
+      }
+      if (priceFilter.from !== undefined)
+      {
+          fakeProducts = fakeProducts.filter((product)=> product.price.toLocaleString() >= priceFilter.from!)
+      }
+      if (priceFilter.to !== undefined)
+      {
+        fakeProducts = fakeProducts.filter((product)=> product.price.toLocaleString() <= priceFilter.to!)
+      }
+    }
     return fakeProducts
-  },[categorySelect, products])
+  },[categorySelect, priceFilter, products])
 
   return (
     <ProductLayout>
@@ -110,7 +146,49 @@ export default function HomeRoute() {
                 Gia ban
               </AccordionTrigger>
               <AccordionContent className="bg-white px-[41px] py-[11px] font-normal text-black">
-                
+                <div className="flex flex-col">
+                  <div className="w-full flex items-center justify-between">
+                    <Input value={priceFilter.from} onChange={(e) => setPriceFilter((prev) => {
+                      return { ...prev, from: e.target.value }
+                    })}
+                      placeholder="Từ vnđ" />
+                    <span>-</span>
+                    <Input value={priceFilter.to} onChange={(e) => setPriceFilter((prev) => {
+                      return { ...prev, to: e.target.value }
+                    })} placeholder="Đến vnđ"/>
+                  </div>
+                  <Button onClick={() => setPriceFilter((prev) => {
+                    return {...prev, enable: true}
+                  })} className="text-white font-semibold text-base rounded-md bg-black w-full py-[10px] text-center">Áp dụng</Button>
+                  {errors?.price && (
+                <p className="text-red-500 text-xs">{errors.price}</p>
+              )}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger className="bg-white px-[41px] py-[22px] font-semibold text-black">
+                Đánh giá
+              </AccordionTrigger>
+              <AccordionContent className="bg-white px-[41px] py-[11px] font-normal text-black">
+                <div className="flex flex-col">
+                  <div className="w-full flex items-center justify-between">
+                    <Input value={priceFilter.from} onChange={(e) => setPriceFilter((prev) => {
+                      return { ...prev, from: e.target.value }
+                    })}
+                      placeholder="Từ vnđ" />
+                    <span>-</span>
+                    <Input value={priceFilter.to} onChange={(e) => setPriceFilter((prev) => {
+                      return { ...prev, to: e.target.value }
+                    })} placeholder="Đến vnđ"/>
+                  </div>
+                  <Button onClick={() => setPriceFilter((prev) => {
+                    return {...prev, enable: true}
+                  })} className="text-white font-semibold text-base rounded-md bg-black w-full py-[10px] text-center">Áp dụng</Button>
+                  {errors?.price && (
+                <p className="text-red-500 text-xs">{errors.price}</p>
+              )}
+                </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
