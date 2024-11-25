@@ -5,11 +5,13 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import categoryService from "@/services/category.service";
 import productService from "@/services/product.service";
 import { Meta } from "@/types/api";
 import { Category } from "@/types/category";
 import { ResProductDetail } from "@/types/product";
+import { Star } from "lucide-react";
 import {  useEffect, useMemo, useState } from "react";
 
 interface PriceFilter {
@@ -31,6 +33,8 @@ export default function HomeRoute() {
     to: undefined,
     enable: false
   })
+  const [rating, setRating] = useState<string | null>()
+  const [checkQuantity, setCheckQuantity] = useState<boolean|undefined>()
   const [errors, setErrors] = useState<ErrorState>({});
   const [meta, setMeta] = useState<Meta>({
     page: 1,
@@ -105,8 +109,16 @@ export default function HomeRoute() {
         fakeProducts = fakeProducts.filter((product)=> product.price.toLocaleString() <= priceFilter.to!)
       }
     }
+    if (rating)
+    {
+      fakeProducts = fakeProducts.filter((product)=> Math.floor(product.avg_stars).toLocaleString() === rating)
+    }
+    if (checkQuantity)
+    {
+      fakeProducts = fakeProducts.filter((product)=> product.stock_quantity > 0)
+    }
     return fakeProducts
-  },[categorySelect, priceFilter, products])
+  },[categorySelect, priceFilter, products, rating, checkQuantity])
 
   return (
     <ProductLayout>
@@ -172,31 +184,62 @@ export default function HomeRoute() {
               </AccordionTrigger>
               <AccordionContent className="bg-white px-[41px] py-[11px] font-normal text-black">
                 <div className="flex flex-col">
-                  <div className="w-full flex items-center justify-between">
-                    <Input value={priceFilter.from} onChange={(e) => setPriceFilter((prev) => {
-                      return { ...prev, from: e.target.value }
-                    })}
-                      placeholder="Từ vnđ" />
-                    <span>-</span>
-                    <Input value={priceFilter.to} onChange={(e) => setPriceFilter((prev) => {
-                      return { ...prev, to: e.target.value }
-                    })} placeholder="Đến vnđ"/>
+                  <RadioGroup onValueChange={(value)=>setRating(value)} defaultValue="option-one">
+                    <div className="flex w-full items-center space-x-2">
+                    <RadioGroupItem value="1" id="1"/>
+                    <label htmlFor="1" className="text-left text-2xl text-black">
+                      1 <Star/>
+                    </label>
                   </div>
-                  <Button onClick={() => setPriceFilter((prev) => {
-                    return {...prev, enable: true}
-                  })} className="text-white font-semibold text-base rounded-md bg-black w-full py-[10px] text-center">Áp dụng</Button>
-                  {errors?.price && (
-                <p className="text-red-500 text-xs">{errors.price}</p>
-              )}
+                  <div className="flex w-full items-center space-x-2">
+                    <RadioGroupItem value="2" id="2"/>
+                    <label htmlFor="2" className="text-left text-2xl text-black">
+                      2 <Star/>
+                    </label>
+                  </div>
+                  <div className="flex w-full items-center space-x-2">
+                    <RadioGroupItem value="3" id="3"/>
+                    <label htmlFor="3" className="text-left text-2xl text-black">
+                      3 <Star/>
+                    </label>
+                  </div>
+                  <div className="flex w-full items-center space-x-2">
+                    <RadioGroupItem value="4" id="4"/>
+                    <label htmlFor="4" className="text-left text-2xl text-black">
+                      4 <Star/>
+                    </label>
+                  </div>
+                  <div className="flex w-full items-center space-x-2">
+                    <RadioGroupItem value="5" id="5"/>
+                    <label htmlFor="5" className="text-left text-2xl text-black">
+                      5 <Star/>
+                    </label>
+                  </div>
+                  </RadioGroup>
                 </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
         </div>
-        <div className="w-full grid grid-cols-3 col-span-2 gap-4 py-4">
-          {filterProducts.map((item, index) => {
-            return <ProductItemCard key={index} data={item} />;
-          })}
+        <div className="flex flex-col w-full col-span-2">
+          <div className="flex items-center gap-2">
+            <Input className="w-full text-black text-base bg-white rounded-lg" />
+            <Checkbox
+                  className="bg-white p-0"
+                      id="quantity"
+                      checked={checkQuantity}
+                      onCheckedChange={() => setCheckQuantity(!checkQuantity)}
+                      onClick={(e) => e.stopPropagation()}
+                />
+                <label htmlFor="quantity" className="text-left text-base text-black">
+                  Còn hàng
+                </label>
+          </div>
+          <div className="w-full grid grid-cols-3 gap-4 py-4">
+            {filterProducts.map((item, index) => {
+              return <ProductItemCard key={index} data={item} />;
+            })}
+          </div>
         </div>
       </div>
     </ProductLayout>
