@@ -2,10 +2,10 @@ import { ProductStatus } from "@/common/enums";
 import ProductLayout from "@/components/layouts/product-layout";
 import ProductItemCard from "@/components/product/product-item-card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/shared/accordion";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import categoryService from "@/services/category.service";
 import productService from "@/services/product.service";
 import { Meta } from "@/types/api";
@@ -15,9 +15,8 @@ import { Star } from "lucide-react";
 import {  useEffect, useMemo, useState } from "react";
 
 interface PriceFilter {
-  from: string | undefined
-  to: string | undefined
-  enable: boolean
+  from: string
+  to: string
 }
 
 type ErrorState = {
@@ -30,10 +29,10 @@ export default function HomeRoute() {
   const [querySearch, setQuerySearch] = useState<string | undefined>()
   const [categorySelect, setCategorySelect] = useState<string[]>([])
   const [priceFilter, setPriceFilter] = useState<PriceFilter>({
-    from: undefined,
-    to: undefined,
-    enable: false
+    from: "",
+    to: "",
   })
+  const [sortPrice, setSortPrice] = useState<string>("asc")
   const [rating, setRating] = useState<string | null>()
   const [checkQuantity, setCheckQuantity] = useState<boolean|undefined>()
   const [errors, setErrors] = useState<ErrorState>({});
@@ -83,7 +82,7 @@ export default function HomeRoute() {
     getAllProducts();
     getAllCategories();
   }, [meta.page]);
-  console.log("PriceFilter",priceFilter.from,priceFilter.to,priceFilter.enable)
+  console.log("PriceFilter",priceFilter.from,priceFilter.to)
   console.log("categorySelect", categorySelect)
   
   const filterProducts = useMemo(() => {
@@ -97,46 +96,59 @@ export default function HomeRoute() {
     {
      fakeProducts = fakeProducts.filter((product)=> categorySelect.includes(product?.Category?.id || ""))
     }
-    if (priceFilter.enable)
-    {
-      if (priceFilter.from !== undefined && priceFilter.to !== undefined && priceFilter.from > priceFilter.to)
+    console.log("Pricefilter",priceFilter, priceFilter.to === undefined)
+      if (priceFilter.from !== "" && priceFilter.to !== "" && Number(priceFilter.from) > Number(priceFilter.to))
       {
         newErrors.price = "Giá sau phải nhỏ hơn giá trước"
         setErrors(newErrors)
         return fakeProducts
       }
-      if (priceFilter.from !== undefined)
+      if (priceFilter.from !== "")
       {
         fakeProducts = fakeProducts.filter((product) => {
           console.log("CheckGia",product.price.toLocaleString() >= priceFilter.from!,product.price.toLocaleString(), priceFilter.from)
-          return product.price.toLocaleString() >= priceFilter.from!
+          const convertPrice = Number(priceFilter.from)
+          setErrors({})
+          return product.price >= convertPrice
         })
       }
-      if (priceFilter.to !== undefined)
+      if (priceFilter.to !== "")
       {
-        fakeProducts = fakeProducts.filter((product)=> product.price.toLocaleString() <= priceFilter.to!)
+        fakeProducts = fakeProducts.filter((product) => {
+          const convertPrice = Number(priceFilter.to)
+          return product.price <= convertPrice
+        })
+        setErrors({})
       }
-      setPriceFilter((prev) => { return { ...prev, enable:false } })
-    }
     if (rating)
     {
       fakeProducts = fakeProducts.filter((product) => {
-        if(rating === "all") return true
-        return Math.floor(product.avg_stars).toLocaleString() === rating
+        if (rating === "all") return true
+        const convertRating = Number(rating)
+        return Math.floor(product.avg_stars) === convertRating
       })
     }
     if (checkQuantity)
     {
       fakeProducts = fakeProducts.filter((product)=> product.stock_quantity > 0)
     }
+    if (sortPrice === "asc")
+    {
+      fakeProducts = fakeProducts.sort((a,b)=> a.price - b.price)
+    }
+    if (sortPrice === "des")
+    {
+      fakeProducts = fakeProducts.sort((a, b) => b.price - a.price)
+    }
     console.log("fakeProducts",fakeProducts)
     return fakeProducts
-  },[categorySelect, priceFilter, products, rating, checkQuantity, querySearch])
+  },[categorySelect, priceFilter, products, rating, checkQuantity, querySearch, sortPrice])
+  
   return (
     <ProductLayout>
       <div className="grid grid-cols-5 gap-5">
         <div className="col-span-1 py-4 flex flex-col">
-          <Accordion type="single" collapsible className="w-full rounded-none border-b-[1px] border-black text-xl">
+          <Accordion type="multiple" className="w-full rounded-none border-b-[1px] border-black text-xl">
             <AccordionItem value="item-1">
               <AccordionTrigger className="bg-white px-5 py-4 font-semibold text-black">
                 Danh mục
@@ -167,7 +179,7 @@ export default function HomeRoute() {
             </AccordionItem>
             <AccordionItem value="item-2">
               <AccordionTrigger className="bg-white px-5 py-4 font-semibold text-black">
-                Gia ban
+                Giá bán
               </AccordionTrigger>
               <AccordionContent className="bg-white px-5 py-4 font-normal text-black">
                 <div className="flex flex-col gap-2">
@@ -181,9 +193,6 @@ export default function HomeRoute() {
                       return { ...prev, to: e.target.value }
                     })} placeholder="Đến vnđ"/>
                   </div>
-                  <Button onClick={() => setPriceFilter((prev) => {
-                    return {...prev, enable: true}
-                  })} className="text-white font-semibold text-base rounded-md bg-black w-full py-[10px] text-center">Áp dụng</Button>
                   {errors?.price && (
                 <p className="text-red-500 text-xs">{errors.price}</p>
               )}
@@ -239,9 +248,19 @@ export default function HomeRoute() {
             </AccordionItem>
           </Accordion>
         </div>
-        <div className="flex flex-col w-full col-span-2 py-4">
+        <div className="flex flex-col w-full col-span-4 py-4">
           <div className="flex items-center w-full gap-2">
             <Input value={querySearch} onChange={(e)=>setQuerySearch(e.target.value)} placeholder="Tìm tên món ăn" className="w-full text-black text-base bg-white rounded-lg" />
+            <Select onValueChange={(value)=> setSortPrice(value)}>
+              <SelectTrigger className="h-10 !min-w-[320px] !cursor-pointer rounded-md border-[1.5px] border-slate-300 bg-white text-base !font-normal text-black">
+                <SelectValue defaultValue={sortPrice} placeholder="Sắp xếp giá">
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="asc">Giá: Thấp đến cao</SelectItem>
+                <SelectItem value="des">Giá: Cao đến thấp</SelectItem>
+              </SelectContent>
+            </Select>
             <div className="flex items-center w-full gap-2">
               <Checkbox
                     className="bg-white p-0"
