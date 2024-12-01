@@ -86,6 +86,8 @@ export default function SignInRoute() {
           userId: id,
           role,
         });
+        console.log("role", role,id);
+        localStorage.setItem("role", role);
         toastSuccess("Đăng nhập thành công");
         if (role === UserRole.ADMIN) {
           navigate("/dashboad");

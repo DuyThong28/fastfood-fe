@@ -35,6 +35,7 @@ import ProductDetailRoute from "./routes/customers/product-detail";
 import ProductReportRoute from "./routes/admin/product-report";
 import PublicProductDetailRoute from "./routes/customers/product-detail";
 import AdminProductDetailRoute from "./routes/admin/product-detail";
+import { AuthorizedAdministrator } from "./authorizedRoute";
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -108,63 +109,124 @@ const createAppRouter = () =>
     },
     {
       path: routes.ADMIN.ACCOUNT_PROFILE,
-      element: <AdminProfileRoute />,
+      element: (
+        <AuthorizedAdministrator>
+          <AdminProfileRoute />
+        </AuthorizedAdministrator>
+      ),
     },
     {
       path: routes.ADMIN.ADD_PRODUCT,
-      element: <AddProductRoute />,
+      element:
+        (
+          <AuthorizedAdministrator>
+            <AddProductRoute />
+          </AuthorizedAdministrator>
+        )
     },
     {
       path: routes.ADMIN.PRODUCT_REPORT,
-      element: <ProductReportRoute />,
+      element: (
+          <AuthorizedAdministrator>
+          <ProductReportRoute />    
+        </AuthorizedAdministrator>
+      )
     },
     {
       path: routes.ADMIN.DASHBOAD,
-      element: <DashboardRoute />,
+      element: (
+          <AuthorizedAdministrator>
+          <DashboardRoute />    
+        </AuthorizedAdministrator>
+      )
     },
     {
       path: routes.ADMIN.INCOME_REPORT,
-      element: <IncomeReportRoute />,
+      element: (
+          <AuthorizedAdministrator>
+          <IncomeReportRoute />    
+        </AuthorizedAdministrator>
+      )
     },
     {
       path: routes.ADMIN.ORDER,
-      element: <OrderRoute />,
+      element: (
+          <AuthorizedAdministrator>
+          <OrderRoute />    
+        </AuthorizedAdministrator>
+      )
     },
     {
       path: routes.ADMIN.ORDER_DETAIL,
-      element: <AdminOrderDetailRoute />,
+      element: (
+          <AuthorizedAdministrator>
+          <AdminOrderDetailRoute />
+        </AuthorizedAdministrator>
+      )
     },
     {
       path: routes.ADMIN.PRODUCT,
-      element: <ProductRoute />,
+      element:(
+          <AuthorizedAdministrator>
+          <ProductRoute />
+          </AuthorizedAdministrator>
+      )
     },
     {
       path: routes.ADMIN.CATEGORY,
-      element: <CategoryRoute />,
+      element:  (
+        <AuthorizedAdministrator>
+           <CategoryRoute />            
+        </AuthorizedAdministrator>
+      )
     },
     {
       path: routes.ADMIN.CHANGE_PASSWORD,
-      element: <AdminPasswordRoute />,
+      element: (
+        <AuthorizedAdministrator>
+          <AdminPasswordRoute />  
+        </AuthorizedAdministrator>
+      )
     },
     {
       path: routes.ADMIN.PRODUCT_DETAIL,
-      element: <AdminProductDetailRoute />,
+      element:(
+        <AuthorizedAdministrator>
+          <ProductDetailRoute />
+        </AuthorizedAdministrator>
+      )
     },
     {
       path: routes.ADMIN.REVIEW,
-      element: <ReviewRoute />,
+      element: (
+        <AuthorizedAdministrator>
+          <ReviewRoute />   
+          </AuthorizedAdministrator>
+      )
     },
     {
       path: routes.ADMIN.CUSTOMER,
-      element: <CustomerRoute />,
+      element:(
+        <AuthorizedAdministrator>
+          <CustomerRoute />
+        </AuthorizedAdministrator>
+      )
     },
     {
       path: routes.ADMIN.EMPLOYEE,
-      element: <EmployeeRoute />,
+      element: (
+        <AuthorizedAdministrator>
+          <EmployeeRoute />         
+          </AuthorizedAdministrator>
+      )
     },
     {
       path: routes.ADMIN.ADD_EMPLOYEE,
-      element: <AddEmployeeRoute />,
+      element:(
+        <AuthorizedAdministrator>
+          <AddEmployeeRoute />
+        </AuthorizedAdministrator>
+      )
     },
     {
       path: "*",
