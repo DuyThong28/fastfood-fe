@@ -141,14 +141,6 @@ const createAppRouter = () =>
       )
     },
     {
-      path: routes.ADMIN.INCOME_REPORT,
-      element: (
-          <AuthorizedAdministrator>
-          <IncomeReportRoute />    
-        </AuthorizedAdministrator>
-      )
-    },
-    {
       path: routes.ADMIN.ORDER,
       element: (
           <AuthorizedAdministrator>
