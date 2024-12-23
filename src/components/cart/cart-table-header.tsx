@@ -16,12 +16,12 @@ export const CartTableHeader: React.FC<CartTableHeaderProps> = ({
         <TableHead className="w-[30px]">
           <Checkbox checked={isCheck} onCheckedChange={onCheck} />
         </TableHead>
-        <TableHead>San pham</TableHead>
-        <TableHead>Don gia</TableHead>
-        <TableHead>So luong</TableHead>
-        <TableHead>So tien</TableHead>
+        <TableHead>Sản phẩm</TableHead>
+        <TableHead>Đơn giá</TableHead>
+        <TableHead>Số lượng</TableHead>
+        <TableHead>Số tiền</TableHead>
         <TableHead className="w-[30px]">
-          <span className="sr-only">Thao tac</span>
+          <span className="sr-only">Thao tác</span>
         </TableHead>
       </TableRow>
     </TableHeader>

@@ -1,43 +1,38 @@
 import { api, getAccessToken, setAccessToken } from "@/lib/api-client";
 import { ResetPassword } from "@/types/auth";
 import { User } from "@/types/user";
+import { trimObjectAttributes } from "@/utils/format";
 import axios from "axios";
 const URL_SERVER = import.meta.env.VITE_URL_SERVER;
 
 class AuthService {
   async signInWithEmail(data: { email_phone: string; password: string }) {
+    const trimmedData = trimObjectAttributes(data);
     return api.post("/auth/sign-in/email", {
-      email: data.email_phone,
-      password: data.password,
+      email: trimmedData.email_phone,
+      password: trimmedData.password,
     });
   }
   async signUpByEmail(data: User) {
-    return api.post("/auth/sign-up/email", data);
+    const trimmedData = trimObjectAttributes(data);
+    return api.post("/auth/sign-up/email", trimmedData);
   }
 
-  async singInWithPhone(data: { email_phone: string; password: string }) {
-    return api.post("/auth/sign-in/phone", {
-      phone: data.email_phone,
-      password: data.password,
-    });
-  }
   async verificationEmail(data: { token: string }) {
-    return api.post("/auth/verify-email", data);
+    const trimmedData = trimObjectAttributes(data);
+    return api.post("/auth/verify-email", trimmedData);
   }
   async logOut() {
     return api.delete("/auth/sign-out");
   }
 
   async forgotPassword(email: string) {
-    return api.post("/auth/forgot-password", { email: email });
+    return api.post("/auth/forgot-password", { email: email.trim() });
   }
 
-  async resetPassword({ email, newPassword, code }: ResetPassword) {
-    return api.post("auth/reset-password", {
-      email,
-      newPassword,
-      code,
-    });
+  async resetPassword(data: ResetPassword) {
+    const trimmedData = trimObjectAttributes(data);
+    return api.post("auth/reset-password", trimmedData);
   }
 
   async refreshAccessToken(): Promise<string> {

@@ -1,4 +1,4 @@
-export enum BookStatus {
+export enum ProductStatus {
     INACTIVE = "INACTIVE",
     ACTIVE = "ACTIVE",
   }
