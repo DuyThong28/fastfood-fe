@@ -192,7 +192,7 @@ const createAppRouter = () =>
       path: routes.ADMIN.PRODUCT_DETAIL,
       element:(
         <AuthorizedAdministrator>
-          <ProductDetailRoute />
+          <AdminProductDetailRoute />
         </AuthorizedAdministrator>
       )
     },
