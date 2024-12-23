@@ -7,6 +7,7 @@ import {
   ShoppingCart,
   UserRound,
   Users,
+  ChartColumnIncreasing,
 } from "lucide-react";
 import { routes } from "@/config";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -101,6 +102,13 @@ export default function DashBoardLayout({
               >
                 <Users className="h-4 w-4" />
                 Quản Lý Nhân Viên
+              </button>
+              <button
+                onClick={() => navigate(routes.ADMIN.REPORT)}
+                className={pathname === routes.ADMIN.REPORT ? active : inActive}
+              >
+                <ChartColumnIncreasing className="h-4 w-4" />
+                Báo Cáo
               </button>
               <button
                 onClick={() => navigate(routes.ADMIN.ACCOUNT_PROFILE)}

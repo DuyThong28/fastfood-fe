@@ -7,7 +7,6 @@ import ReviewRoute from "./routes/admin/review";
 import AdminPasswordRoute from "./routes/admin/account-password";
 import ProductRoute from "./routes/admin/product";
 import OrderRoute from "./routes/admin/order";
-import IncomeReportRoute from "./routes/admin/income-report";
 import DashboardRoute from "./routes/admin/dashboard";
 import AddProductRoute from "./routes/admin/add-product";
 import AdminProfileRoute from "./routes/admin/account-profile";
@@ -32,10 +31,10 @@ import SignInSuccess from "./routes/auth/sign-in-success";
 import AddEmployeeRoute from "./routes/admin/add-employee";
 import EmployeeRoute from "./routes/admin/employee";
 import ProductDetailRoute from "./routes/customers/product-detail";
-import ProductReportRoute from "./routes/admin/product-report";
 import PublicProductDetailRoute from "./routes/customers/product-detail";
 import AdminProductDetailRoute from "./routes/admin/product-detail";
 import { AuthorizedAdministrator } from "./authorizedRoute";
+import ReportRoute from "./routes/admin/report";
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -125,13 +124,14 @@ const createAppRouter = () =>
         )
     },
     {
-      path: routes.ADMIN.PRODUCT_REPORT,
+      path: routes.ADMIN.REPORT,
       element: (
           <AuthorizedAdministrator>
-          <ProductReportRoute />    
+          <ReportRoute />    
         </AuthorizedAdministrator>
       )
     },
+
     {
       path: routes.ADMIN.DASHBOAD,
       element: (

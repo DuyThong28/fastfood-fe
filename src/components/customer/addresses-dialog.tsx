@@ -54,25 +54,21 @@ const AddressesDialog = forwardRef<AddressesDialogRef, AddressesDialogProps>(
       getAllAddress();
     }, []);
 
-    useImperativeHandle(
-      ref,
-      () => {
-        return {
-          onOpen(data?: ResAddress) {
-            if (data) {
-              setAddressId(data.id);
-            } else {
-              setAddressId("");
-            }
-            setIsOpen(true);
-          },
-          onClose() {
-            setIsOpen(false);
-          },
-        };
-      },
-      []
-    );
+    useImperativeHandle(ref, () => {
+      return {
+        onOpen(data?: ResAddress) {
+          if (data) {
+            setAddressId(data.id);
+          } else {
+            setAddressId("");
+          }
+          setIsOpen(true);
+        },
+        onClose() {
+          setIsOpen(false);
+        },
+      };
+    }, []);
 
     const handleSetAddress = () => {
       const selectedAddress = addresses.find((item) => item.id === addressId);
