@@ -1,10 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { api } from "@/lib/api-client";
+import ProductItemCard from "../product/product-item-card";
+import { ChatbotMessage } from "@/common/enums";
 
 type Message = {
   sender: string;
   text: string;
   results?: any[];
+  type?: string;
 };
 
 export default function Chatbot() {
@@ -12,7 +15,7 @@ export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: "bot",
-      text: "Xin chào, tôi là trợ lí ảo FashionBot. Tôi có thể giúp gì cho bạn?",
+      text: "Xin chào, tôi là trợ lí ảo FoodzyBot. Tôi có thể giúp gì cho bạn?",
     },
   ]);
   const [content, setContent] = useState("");
@@ -36,11 +39,19 @@ export default function Chatbot() {
 
     try {
       const response = await api.post("/chatbot", { message: content });
+      let type;
+      Object.entries(ChatbotMessage).forEach(([key, message]) => {
+        if (response.data.message.includes(message)) {
+          type = key;
+        }
+      });
       const botMessage = {
         sender: "bot",
         text: response.data.message,
         results: response.data.data,
+        type: type,
       };
+      console.log(botMessage);
       setMessages((prevMessages) => [...prevMessages, botMessage]);
 
       if (messagesEndRef.current) {
@@ -165,7 +176,7 @@ export default function Chatbot() {
               </svg>
             </button>
           </div>
-          <div className="h-80 overflow-y-auto p-2 shadow-inner rounded-lg">
+          <div className="h-96 overflow-y-auto p-2 shadow-inner rounded-lg">
             {messages.map((msg, index) => (
               <div
                 key={index}
@@ -200,7 +211,7 @@ export default function Chatbot() {
                         fill="white"
                       />
                     </svg>
-                    <p className="text-sm">FashionBot</p>
+                    <p className="text-sm">FoodzyBot</p>
                   </div>
                 )}
                 <p
@@ -212,13 +223,32 @@ export default function Chatbot() {
                 >
                   {msg.text}
                 </p>
+                {msg.sender === "bot" &&
+                  msg.results &&
+                  (msg.type === "BEST_SELLER" || msg.type === "CATEGORY") && (
+                    <div className="mt-3 ml-8 overflow-x-scroll thin-scrollbar">
+                      <div className="flex space-x-4 pb-2">
+                        {msg.results.map((result, index) => (
+                          <ProductItemCard key={index} data={result} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 {msg.sender === "bot" && msg.results && (
-                  <div className="ml-8 mt-3 flex flex-col gap-y-3 w-11/12">
-                    {msg.results.map((result) => (
-                      //   <ProductItem key={result._id} id={result._id} />
-                      <div></div>
-                    ))}
-                  </div>
+                  <>
+                    {msg.type === "TRACK_ORDER" &&
+                      (() => {
+                        // const tracking = msg.results.orderTracking;
+                        // const details = msg.results.orderDetail;
+                        // const item = tracking[tracking.length - 1];
+
+                        return (
+                          <div className="flex flex-col justify-center gap-y-3">
+                            <div className="ml-8 mt-3 flex flex-col gap-y-3 w-11/12"></div>
+                          </div>
+                        );
+                      })()}
+                  </>
                 )}
               </div>
             ))}
