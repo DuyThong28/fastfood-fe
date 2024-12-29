@@ -2,11 +2,16 @@ import { useState, useEffect, useRef } from "react";
 import { api } from "@/lib/api-client";
 import ProductItemCard from "../product/product-item-card";
 import { ChatbotMessage } from "@/common/enums";
+import { useNavigate } from "react-router-dom";
+import { Order } from "@/types/order";
+import { Product } from "@/types/product";
+import SectionCard from "../shared/section-card";
+import { ORDER_STATUS } from "@/common/constants/order";
 
 type Message = {
   sender: string;
   text: string;
-  results?: any[];
+  results?: Order[] | Product[] | any[];
   type?: string;
 };
 
@@ -21,6 +26,7 @@ export default function Chatbot() {
   const [content, setContent] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -48,7 +54,12 @@ export default function Chatbot() {
       const botMessage = {
         sender: "bot",
         text: response.data.message,
-        results: response.data.data,
+        results:
+          type === "TRACK_ORDER"
+            ? Array.isArray(response.data.data)
+              ? response.data.data
+              : [response.data.data]
+            : response.data.data,
         type: type,
       };
       console.log(botMessage);
@@ -176,7 +187,7 @@ export default function Chatbot() {
               </svg>
             </button>
           </div>
-          <div className="h-96 overflow-y-auto p-2 shadow-inner rounded-lg">
+          <div className="h-96 overflow-y-auto p-3 shadow-inner rounded-lg">
             {messages.map((msg, index) => (
               <div
                 key={index}
@@ -225,7 +236,8 @@ export default function Chatbot() {
                 </p>
                 {msg.sender === "bot" &&
                   msg.results &&
-                  (msg.type === "BEST_SELLER" || msg.type === "CATEGORY") && (
+                  ((Array.isArray(msg.results) && msg.type === "BEST_SELLER") ||
+                    msg.type === "CATEGORY") && (
                     <div className="mt-3 ml-8 overflow-x-scroll thin-scrollbar">
                       <div className="flex space-x-4 pb-2">
                         {msg.results.map((result, index) => (
@@ -238,13 +250,36 @@ export default function Chatbot() {
                   <>
                     {msg.type === "TRACK_ORDER" &&
                       (() => {
-                        // const tracking = msg.results.orderTracking;
-                        // const details = msg.results.orderDetail;
-                        // const item = tracking[tracking.length - 1];
+                        const tracking = msg.results as Order[];
+                        const orderDetail = tracking[0];
 
                         return (
                           <div className="flex flex-col justify-center gap-y-3">
-                            <div className="ml-8 mt-3 flex flex-col gap-y-3 w-11/12"></div>
+                            <div className="ml-8 mt-3 flex flex-col gap-y-3 w-11/12">
+                              <div className="flex flex-col space-y-2">
+                                <p>
+                                  Trạng thái: {ORDER_STATUS[orderDetail.status]}
+                                </p>
+                                <SectionCard className="p-4 space-y-4">
+                                  <div className="font-medium">
+                                    Địa chỉ nhận hàng
+                                  </div>
+                                  <div className="space-y-2 text-muted-foreground">
+                                    <div>{`Người nhận: ${orderDetail.full_name}`}</div>
+                                    <div>{`Số điện thoại: ${orderDetail.phone_number}`}</div>
+                                    <div>{`Địa chỉ: ${orderDetail.address}`}</div>
+                                  </div>
+                                </SectionCard>
+                              </div>
+                            </div>
+                            <button
+                              className="px-6 py-2 rounded-lg bg-[#0A0A0A] text-white"
+                              onClick={() =>
+                                navigate(`/customer/purchase/${tracking[0].id}`)
+                              }
+                            >
+                              Xem chi tiết
+                            </button>
                           </div>
                         );
                       })()}
