@@ -153,12 +153,7 @@ export default function ProductTab() {
     reportCell2.font = { bold: true };
     reportCell2.alignment = { vertical: "middle", horizontal: "center" };
 
-    worksheet.getRow(3).values = [
-      "STT",
-      "Tên sản phẩm",
-      "Số bán ra",
-      "Số còn lại",
-    ];
+    worksheet.getRow(3).values = ["STT", "Tên sản phẩm", "Số bán ra"];
     const headerRow = worksheet.getRow(3);
     headerRow.eachCell((cell) => {
       cell.font = { bold: true };
@@ -180,7 +175,6 @@ export default function ProductTab() {
       { key: "no", width: 5 },
       { key: "title", width: 30 },
       { key: "sold_quantity", width: 15 },
-      { key: "stock_quantity", width: 15 },
     ];
 
     soldProducts.forEach((product: any, index: number) => {
@@ -188,7 +182,6 @@ export default function ProductTab() {
         no: index + 1,
         title: product.product.title,
         sold_quantity: product.product.sold_quantity,
-        stock_quantity: product.product.stock_quantity,
       });
     });
 
@@ -263,7 +256,6 @@ export default function ProductTab() {
                   <TableCell>STT</TableCell>
                   <TableCell>Tên sản phẩm</TableCell>
                   <TableCell>Số bán ra</TableCell>
-                  <TableCell>Số còn lại</TableCell>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -272,7 +264,6 @@ export default function ProductTab() {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{product.product.title}</TableCell>
                     <TableCell>{product.product.sold_quantity}</TableCell>
-                    <TableCell>{product.product.stock_quantity}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
