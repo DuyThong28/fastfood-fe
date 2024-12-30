@@ -55,19 +55,21 @@ export const ProductInfoSection = ({
     name: string;
     value: string;
   }) => {
-    (onChange as Dispatch<SetStateAction<CreateProductDetail | UpdateProductDetail>>)(
-      (prevDetailData) => {
-        return {
-          ...prevDetailData,
-          [name]: value,
-        };
-      }
-    );
+    (
+      onChange as Dispatch<
+        SetStateAction<CreateProductDetail | UpdateProductDetail>
+      >
+    )((prevDetailData) => {
+      return {
+        ...prevDetailData,
+        [name]: value,
+      };
+    });
   };
 
   useEffect(() => {
     const imageUrls = detailData.images.map((file: File) =>
-      URL.createObjectURL(file)
+      URL.createObjectURL(file),
     );
     setSelectedImages(imageUrls);
     return () => {
@@ -77,20 +79,22 @@ export const ProductInfoSection = ({
 
   const handleDeleteImageFile = (index: number) => {
     console.log(index);
-    (onChange as Dispatch<SetStateAction<CreateProductDetail | UpdateProductDetail>>)(
-      (prevData) => {
-        const newImages = prevData.images.filter(
-          (_: File, i: number) => i !== index
-        );
-        return { ...prevData, images: newImages };
-      }
-    );
+    (
+      onChange as Dispatch<
+        SetStateAction<CreateProductDetail | UpdateProductDetail>
+      >
+    )((prevData) => {
+      const newImages = prevData.images.filter(
+        (_: File, i: number) => i !== index,
+      );
+      return { ...prevData, images: newImages };
+    });
   };
 
   const handleDeleteInitImage = (index: number) => {
     (onChange as Dispatch<SetStateAction<UpdateProductDetail>>)((prevData) => {
       const newImages = prevData.image_url.filter(
-        (_: string, i: number) => i !== index
+        (_: string, i: number) => i !== index,
       );
       return { ...prevData, image_url: newImages };
     });
@@ -144,7 +148,7 @@ export const ProductInfoSection = ({
                         </div>
                       </div>
                     );
-                  }
+                  },
                 )}
               {selectedImages.map((item, index) => {
                 return (

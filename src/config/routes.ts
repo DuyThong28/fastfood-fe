@@ -33,8 +33,8 @@ const routes = {
     ACCOUNT_PROFILE: "/admin/account/profile",
     CHANGE_PASSWORD: "/admin/account/password",
     CUSTOMER: "/admin/customer",
-      EMPLOYEE: "/admin/employee",
-      ADD_EMPLOYEE: "/portal/employee/new",
+    EMPLOYEE: "/admin/employee",
+    ADD_EMPLOYEE: "/portal/employee/new",
   },
 };
 export default routes;

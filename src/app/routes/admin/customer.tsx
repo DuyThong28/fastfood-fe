@@ -48,7 +48,7 @@ export default function CustomerRoute() {
             page: meta.page,
             take: meta.take,
           },
-          isDisable
+          isDisable,
         );
       }
       setMeta(response.data.meta);

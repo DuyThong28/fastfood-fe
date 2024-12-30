@@ -49,7 +49,7 @@ export default function ProductRoute() {
           order: order,
           sortBy: sortBy,
           title: searchText,
-        }
+        },
       );
 
       setProducts(response.data.data);
@@ -108,7 +108,7 @@ export default function ProductRoute() {
                 value={ProductStatus.INACTIVE}
                 onClick={() => setTabState(ProductStatus.INACTIVE)}
               >
-                    {PRODUCT_STATUS[ProductStatus.INACTIVE]}
+                {PRODUCT_STATUS[ProductStatus.INACTIVE]}
               </TabsTrigger>
             </TabsList>
           </div>

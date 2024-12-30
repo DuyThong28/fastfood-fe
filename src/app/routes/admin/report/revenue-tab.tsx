@@ -85,7 +85,7 @@ export default function RevenueTab() {
           for (let i = 0; i < 7; i++) {
             const currentDay = startOfWeek.add(i, "day");
             const response = await api.get(
-              `/statistics?year=${currentDay.year()}&month=${currentDay.month() + 1}&day=${currentDay.date()}`
+              `/statistics?year=${currentDay.year()}&month=${currentDay.month() + 1}&day=${currentDay.date()}`,
             );
             weekStatistics.push(...response.data.data);
           }
@@ -96,12 +96,12 @@ export default function RevenueTab() {
             (sum: number, stat: Statistic) => {
               return sum + stat.total_revenue;
             },
-            0
+            0,
           );
           setTotalRevenue(total);
         } else if (selectedView === "month") {
           const response = await api.get(
-            `/statistics?year=${year}&month=${month}`
+            `/statistics?year=${year}&month=${month}`,
           );
           setStatistics(response.data.data);
 
@@ -109,7 +109,7 @@ export default function RevenueTab() {
             (sum: number, stat: Statistic) => {
               return sum + stat.total_revenue;
             },
-            0
+            0,
           );
           setTotalRevenue(total);
         } else if (selectedView === "year") {
@@ -120,7 +120,7 @@ export default function RevenueTab() {
             (sum: number, stat: Statistic) => {
               return sum + stat.total_revenue;
             },
-            0
+            0,
           );
           setTotalRevenue(total);
         }

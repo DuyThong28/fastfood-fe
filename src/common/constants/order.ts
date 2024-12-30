@@ -14,7 +14,7 @@ export const ADMIN_ORDER_STATUS = {
   SUCCESS: "Hoàn tất",
   CANCELLED: "Đã hủy bởi người mua",
   REJECT: "Đã hủy bởi người bán",
-}
+};
 
 export const ORDER_ACTION_TITLE = {
   PENDING: "Xác nhận chuẩn bị hàng?",

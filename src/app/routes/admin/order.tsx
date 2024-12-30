@@ -38,7 +38,7 @@ export default function OrderRoute() {
         {
           search: searchText,
           status: tabState,
-        }
+        },
       );
 
       setOrders(response.data.data);

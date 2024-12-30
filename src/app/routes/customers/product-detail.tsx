@@ -81,7 +81,7 @@ export default function ProductDetailRoute() {
           take: meta.take,
         },
         id,
-        { rating }
+        { rating },
       );
 
       setMeta(response.data.meta);
@@ -179,7 +179,7 @@ export default function ProductDetailRoute() {
               </div>
             </div>
             <p className="text-xl text-gray-900">{`${formatNumber(
-              detailData.price
+              detailData.price,
             )}`}</p>
             <section aria-labelledby="options-heading">
               <div className="space-y-6">

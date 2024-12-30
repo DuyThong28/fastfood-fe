@@ -106,7 +106,7 @@ const ProductLayout = forwardRef<ProductLayoutRef, ProductLayoutProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default ProductLayout;

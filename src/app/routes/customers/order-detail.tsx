@@ -62,7 +62,7 @@ export default function OrderDetailRoute() {
           } catch (err) {
             console.log(err);
           }
-        }
+        },
       );
     }
   };
@@ -153,14 +153,16 @@ export default function OrderDetailRoute() {
                     <ProductOrderDetailRow
                       key={index}
                       data={item}
-                      onShowProductDetail={() => navigate(`/product/${item.product_id}`)}
+                      onShowProductDetail={() =>
+                        navigate(`/product/${item.product_id}`)
+                      }
                     />
                   );
                 })}
               </div>
               <div className="flex p-4">
                 <div className="ml-auto font-medium">{`Tổng tiền hàng: ${formatNumber(
-                  orderDetail.total_price
+                  orderDetail.total_price,
                 )}`}</div>
               </div>
             </SectionCard>

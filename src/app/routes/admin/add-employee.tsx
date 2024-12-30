@@ -20,9 +20,9 @@ type ErrorState = {
 
 interface EmployeeNavigate {
   state: {
-    data: Employee,
-    isUpdate: boolean
-  }
+    data: Employee;
+    isUpdate: boolean;
+  };
 }
 
 export default function AddEmployeeRoute() {
@@ -59,8 +59,7 @@ export default function AddEmployeeRoute() {
     if (detailData.phone && !phoneRegex.test(detailData.phone.toString())) {
       newErrors.phone = "Số điện thoại chưa đúng định dạng";
     }
-    if (type === 'create' && !detailData.password)
-    {
+    if (type === "create" && !detailData.password) {
       newErrors.password = "Mật khẩu không được để trống";
     }
 
@@ -68,13 +67,12 @@ export default function AddEmployeeRoute() {
 
     return Object.keys(newErrors).length === 0;
   };
-  console.log("Error",errors)
+  console.log("Error", errors);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if (location.state?.isUpdate)
-      {
-        if(!validateInputs("update")) return
+      if (location.state?.isUpdate) {
+        if (!validateInputs("update")) return;
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password, ...updateData } = detailData;
         const finalUpdateData: UpdateEmployee = {
@@ -83,15 +81,15 @@ export default function AddEmployeeRoute() {
           gender: updateData.gender,
           birthday: updateData.birthday || new Date(),
           phone: updateData.phone,
-          fullName: updateData.full_name, 
+          fullName: updateData.full_name,
           role: "STAFF",
-        }
+        };
         console.log("updateData", updateData);
-        await userService.updateStaff(finalUpdateData)
+        await userService.updateStaff(finalUpdateData);
         toastSuccess("Cập nhật tài khoản thành công");
-        navigate(routes.ADMIN.EMPLOYEE)
+        navigate(routes.ADMIN.EMPLOYEE);
       } else {
-        if(!validateInputs("create")) return
+        if (!validateInputs("create")) return;
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password, ...updateData } = detailData;
         const finalUpdateData: CreateEmployee = {
@@ -99,13 +97,13 @@ export default function AddEmployeeRoute() {
           gender: updateData.gender,
           birthday: updateData.birthday || new Date(),
           phone: updateData.phone,
-          fullName: updateData.full_name, 
+          fullName: updateData.full_name,
           role: "STAFF",
-          password: detailData.password
-        }
-        await userService.createEmployee(finalUpdateData)
+          password: detailData.password,
+        };
+        await userService.createEmployee(finalUpdateData);
         toastSuccess("Tạo tài khoản thành công");
-        navigate(routes.ADMIN.EMPLOYEE)
+        navigate(routes.ADMIN.EMPLOYEE);
       }
       // navigate(routes.ADMIN.EMPLOYEE);
     } catch (err) {
@@ -119,7 +117,12 @@ export default function AddEmployeeRoute() {
         className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto"
         onSubmit={handleSubmit}
       >
-        <EmployeeInfoSection errors={errors} detailData={detailData} onChange={setDetailData} isUpdate={location.state?.isUpdate}/>
+        <EmployeeInfoSection
+          errors={errors}
+          detailData={detailData}
+          onChange={setDetailData}
+          isUpdate={location.state?.isUpdate}
+        />
         <div className="flex flex-row gap-4 mx-auto mb-12">
           <Button
             variant="outline"

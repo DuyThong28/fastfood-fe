@@ -33,7 +33,7 @@ import EmployeeRoute from "./routes/admin/employee";
 import ProductDetailRoute from "./routes/customers/product-detail";
 import PublicProductDetailRoute from "./routes/customers/product-detail";
 import AdminProductDetailRoute from "./routes/admin/product-detail";
-import { AuthorizedAdministrator } from "./authorizedRoute";
+import { AuthorizedAdministrator, AuthorizedStaff } from "./authorizedRoute";
 import ReportRoute from "./routes/admin/report";
 
 const createAppRouter = () =>
@@ -109,116 +109,115 @@ const createAppRouter = () =>
     {
       path: routes.ADMIN.ACCOUNT_PROFILE,
       element: (
-        <AuthorizedAdministrator>
+        <AuthorizedStaff>
           <AdminProfileRoute />
-        </AuthorizedAdministrator>
+        </AuthorizedStaff>
       ),
     },
     {
       path: routes.ADMIN.ADD_PRODUCT,
-      element:
-        (
-          <AuthorizedAdministrator>
-            <AddProductRoute />
-          </AuthorizedAdministrator>
-        )
+      element: (
+        <AuthorizedAdministrator>
+          <AddProductRoute />
+        </AuthorizedAdministrator>
+      ),
     },
     {
       path: routes.ADMIN.REPORT,
       element: (
-          <AuthorizedAdministrator>
-          <ReportRoute />    
-        </AuthorizedAdministrator>
-      )
+        <AuthorizedStaff>
+          <ReportRoute />
+        </AuthorizedStaff>
+      ),
     },
 
     {
       path: routes.ADMIN.DASHBOAD,
       element: (
-          <AuthorizedAdministrator>
-          <DashboardRoute />    
-        </AuthorizedAdministrator>
-      )
+        <AuthorizedStaff>
+          <DashboardRoute />
+        </AuthorizedStaff>
+      ),
     },
     {
       path: routes.ADMIN.ORDER,
       element: (
-          <AuthorizedAdministrator>
-          <OrderRoute />    
+        <AuthorizedAdministrator>
+          <OrderRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
     {
       path: routes.ADMIN.ORDER_DETAIL,
       element: (
-          <AuthorizedAdministrator>
+        <AuthorizedAdministrator>
           <AdminOrderDetailRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
     {
       path: routes.ADMIN.PRODUCT,
-      element:(
-          <AuthorizedAdministrator>
+      element: (
+        <AuthorizedAdministrator>
           <ProductRoute />
-          </AuthorizedAdministrator>
-      )
+        </AuthorizedAdministrator>
+      ),
     },
     {
       path: routes.ADMIN.CATEGORY,
-      element:  (
+      element: (
         <AuthorizedAdministrator>
-           <CategoryRoute />            
+          <CategoryRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
     {
       path: routes.ADMIN.CHANGE_PASSWORD,
       element: (
         <AuthorizedAdministrator>
-          <AdminPasswordRoute />  
+          <AdminPasswordRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
     {
       path: routes.ADMIN.PRODUCT_DETAIL,
-      element:(
+      element: (
         <AuthorizedAdministrator>
           <AdminProductDetailRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
     {
       path: routes.ADMIN.REVIEW,
       element: (
         <AuthorizedAdministrator>
-          <ReviewRoute />   
-          </AuthorizedAdministrator>
-      )
+          <ReviewRoute />
+        </AuthorizedAdministrator>
+      ),
     },
     {
       path: routes.ADMIN.CUSTOMER,
-      element:(
-        <AuthorizedAdministrator>
+      element: (
+        <AuthorizedStaff>
           <CustomerRoute />
-        </AuthorizedAdministrator>
-      )
+        </AuthorizedStaff>
+      ),
     },
     {
       path: routes.ADMIN.EMPLOYEE,
       element: (
         <AuthorizedAdministrator>
-          <EmployeeRoute />         
-          </AuthorizedAdministrator>
-      )
+          <EmployeeRoute />
+        </AuthorizedAdministrator>
+      ),
     },
     {
       path: routes.ADMIN.ADD_EMPLOYEE,
-      element:(
+      element: (
         <AuthorizedAdministrator>
           <AddEmployeeRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
     {
       path: "*",

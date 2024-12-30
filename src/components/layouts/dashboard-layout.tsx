@@ -26,6 +26,8 @@ export default function DashBoardLayout({
   const location = useLocation();
   const { pathname } = location;
   const navigate = useNavigate();
+  const role = localStorage.getItem("role");
+  const onlyAdmin = role === "ADMIN";
 
   return (
     <div className="grid min-h-screen  w-full grid-cols-[220px_1fr]">
@@ -52,39 +54,50 @@ export default function DashBoardLayout({
                 Trang Chủ
               </button>
 
-              <button
-                onClick={() => navigate(routes.ADMIN.PRODUCT)}
-                className={
-                  pathname === routes.ADMIN.PRODUCT ? active : inActive
-                }
-              >
-                <Package className="h-4 w-4" />
-                Quản Lý Sản Phẩm
-              </button>
-
-              <button
-                onClick={() => navigate(routes.ADMIN.CATEGORY)}
-                className={
-                  pathname === routes.ADMIN.CATEGORY ? active : inActive
-                }
-              >
-                <Grid2x2 className="h-4 w-4" />
-                Quản Lý Danh Mục
-              </button>
-              <button
-                onClick={() => navigate(routes.ADMIN.ORDER)}
-                className={pathname === routes.ADMIN.ORDER ? active : inActive}
-              >
-                <ShoppingCart className="h-4 w-4" />
-                Quản Lý Đơn Hàng
-              </button>
-              <button
-                onClick={() => navigate(routes.ADMIN.REVIEW)}
-                className={pathname === routes.ADMIN.REVIEW ? active : inActive}
-              >
-                <MessageSquareMore className="h-4 w-4" />
-                Quản Lý Đánh Giá
-              </button>
+              {onlyAdmin && (
+                <button
+                  onClick={() => navigate(routes.ADMIN.PRODUCT)}
+                  className={
+                    pathname === routes.ADMIN.PRODUCT ? active : inActive
+                  }
+                >
+                  <Package className="h-4 w-4" />
+                  Quản Lý Sản Phẩm
+                </button>
+              )}
+              {onlyAdmin && (
+                <button
+                  onClick={() => navigate(routes.ADMIN.CATEGORY)}
+                  className={
+                    pathname === routes.ADMIN.CATEGORY ? active : inActive
+                  }
+                >
+                  <Grid2x2 className="h-4 w-4" />
+                  Quản Lý Danh Mục
+                </button>
+              )}
+              {onlyAdmin && (
+                <button
+                  onClick={() => navigate(routes.ADMIN.ORDER)}
+                  className={
+                    pathname === routes.ADMIN.ORDER ? active : inActive
+                  }
+                >
+                  <ShoppingCart className="h-4 w-4" />
+                  Quản Lý Đơn Hàng
+                </button>
+              )}
+              {onlyAdmin && (
+                <button
+                  onClick={() => navigate(routes.ADMIN.REVIEW)}
+                  className={
+                    pathname === routes.ADMIN.REVIEW ? active : inActive
+                  }
+                >
+                  <MessageSquareMore className="h-4 w-4" />
+                  Quản Lý Đánh Giá
+                </button>
+              )}
               <button
                 onClick={() => navigate(routes.ADMIN.CUSTOMER)}
                 className={
@@ -94,15 +107,17 @@ export default function DashBoardLayout({
                 <Users className="h-4 w-4" />
                 Quản Lý Khách Hàng
               </button>
-              <button
-                onClick={() => navigate(routes.ADMIN.EMPLOYEE)}
-                className={
-                  pathname === routes.ADMIN.EMPLOYEE ? active : inActive
-                }
-              >
-                <Users className="h-4 w-4" />
-                Quản Lý Nhân Viên
-              </button>
+              {onlyAdmin && (
+                <button
+                  onClick={() => navigate(routes.ADMIN.EMPLOYEE)}
+                  className={
+                    pathname === routes.ADMIN.EMPLOYEE ? active : inActive
+                  }
+                >
+                  <Users className="h-4 w-4" />
+                  Quản Lý Nhân Viên
+                </button>
+              )}
               <button
                 onClick={() => navigate(routes.ADMIN.REPORT)}
                 className={pathname === routes.ADMIN.REPORT ? active : inActive}

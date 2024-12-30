@@ -57,7 +57,7 @@ export default function ReviewRoute() {
           page: meta.page,
           take: meta.take,
         },
-        { rating: rating, search: searchText, date: date, state: reviewwState }
+        { rating: rating, search: searchText, date: date, state: reviewwState },
       );
       setReviews(response.data.data);
       setMeta(response.data.meta);

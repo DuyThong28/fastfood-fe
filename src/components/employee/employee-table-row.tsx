@@ -22,7 +22,7 @@ export const EmployeeTableRow: React.FC<EmployeeTableRowProps> = ({
   data,
   onRefetch,
 }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleActive = async () => {
     try {
@@ -46,9 +46,9 @@ export const EmployeeTableRow: React.FC<EmployeeTableRowProps> = ({
     navigate(routes.ADMIN.ADD_EMPLOYEE, {
       state: {
         data,
-        isUpdate: true
-      }
-    })
+        isUpdate: true,
+      },
+    });
   };
   return (
     <TableRow>
@@ -75,13 +75,13 @@ export const EmployeeTableRow: React.FC<EmployeeTableRowProps> = ({
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </PopoverTrigger>
-                  <PopoverContent className="w-max p-1">
-                      <div
-                className="py-2 px-3  w-full hover:bg-[#F4F4F5]"
-                onClick={handleEditStaff}
-              >
-                Chinh sua thong tin
-              </div>
+          <PopoverContent className="w-max p-1">
+            <div
+              className="py-2 px-3  w-full hover:bg-[#F4F4F5]"
+              onClick={handleEditStaff}
+            >
+              Chinh sua thong tin
+            </div>
             {data.is_disable ? (
               <div
                 className="py-2 px-3  w-full hover:bg-[#F4F4F5]"

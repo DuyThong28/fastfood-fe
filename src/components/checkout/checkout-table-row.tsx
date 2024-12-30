@@ -14,7 +14,11 @@ export const CheckoutTableRow: React.FC<CheckoutTableRowProps> = ({ data }) => {
           alt="Product image"
           className="aspect-square rounded-md object-cover"
           height="64"
-          src={data.product.image_url.length > 0 ? data.product.image_url[0] : image}
+          src={
+            data.product.image_url.length > 0
+              ? data.product.image_url[0]
+              : image
+          }
           width="64"
         />
         <div className="w-full flex flex-col justify-center">

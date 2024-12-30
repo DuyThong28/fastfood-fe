@@ -78,7 +78,7 @@ export default function AddProductRoute() {
     if (!validateInputs()) return;
     try {
       await productService.createProduct(detailData);
-      toastSuccess("Thêm sản phẩm thành công")
+      toastSuccess("Thêm sản phẩm thành công");
       navigate(routes.ADMIN.PRODUCT);
     } catch (err) {
       console.log(err);
@@ -92,7 +92,11 @@ export default function AddProductRoute() {
         onSubmit={handleSubmit}
         noValidate
       >
-        <ProductInfoSection detailData={detailData} onChange={setDetailData} errors={errors}/>
+        <ProductInfoSection
+          detailData={detailData}
+          onChange={setDetailData}
+          errors={errors}
+        />
         {/* <ProductSaleSection /> */}
         <div className="flex flex-row gap-4 mx-auto mb-12">
           <Button
