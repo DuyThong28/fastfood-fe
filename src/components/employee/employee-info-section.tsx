@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { dateToString, stringToDate } from "@/utils/format";
 import {
   Select,
@@ -13,6 +13,8 @@ import {
 } from "../ui/select";
 import { Gender } from "@/common/enums";
 import { Employee } from "@/types/user";
+import { DEFAULT_AVATAR_URL } from "@/common/constants/user";
+import { Pencil } from "lucide-react";
 
 type ErrorState = {
   email?: string;
@@ -34,11 +36,11 @@ export const EmployeeInfoSection = ({
   detailData: Employee;
   isUpdate?: boolean;
 }) => {
-  // const inputRef = useRef<HTMLInputElement | null>(null);
-
-  // const handleUploadFile = () => {
-  //   inputRef.current?.click();
-  // };
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const handleUploadFile = () => {
+    inputRef.current?.click();
+  };
 
   const handleChangeInput = ({
     name,
@@ -63,29 +65,29 @@ export const EmployeeInfoSection = ({
     });
   };
 
-  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0];
-  //   if (file && setImageFile) {
-  //     setImageFile(file);
-  //   }
-  // };
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file && setImageFile) {
+      setImageFile(file);
+    }
+  };
 
-  // useEffect(() => {
-  //   if (imageFile != null) {
-  //     onChange((prevData) => {
-  //       return {
-  //         ...prevData,
-  //         avatar_url: URL.createObjectURL(imageFile),
-  //       };
-  //     });
-  //   }
-  //   console.log('image',imageFile)
-  //   return () => {
-  //     if ('avatar_url' in detailData && detailData.avatar_url) {
-  //       URL.revokeObjectURL(detailData.avatar_url);
-  //     }
-  //   };
-  // }, [imageFile]);
+  useEffect(() => {
+    if (imageFile != null) {
+      onChange((prevData) => {
+        return {
+          ...prevData,
+          avatar_url: URL.createObjectURL(imageFile),
+        };
+      });
+    }
+    console.log('image',imageFile)
+    return () => {
+      if ('avatar_url' in detailData && detailData.avatar_url) {
+        URL.revokeObjectURL(detailData.avatar_url);
+      }
+    };
+  }, [imageFile]);
 
   return (
     <Card className="w-full">
@@ -125,12 +127,12 @@ export const EmployeeInfoSection = ({
             )}
           </div>
         )}
-        {/* {isUpdate && <div className="grid grid-cols-[120px_1fr_1fr] gap-4">
+        {isUpdate && <div className="grid grid-cols-[120px_1fr_1fr] gap-4">
           <Label>Hình ảnh nhân viên</Label>
           <div className="relative">
             <img
               className="w-28 h-28 rounded-full border-4 border-[#C2E1FF]"
-              src={'avatar_url' in detailData && detailData.avatar_url || image}
+              src={'avatar_url' in detailData && detailData.avatar_url || DEFAULT_AVATAR_URL}
               alt="Rounded avatar"
             />
             <div
@@ -147,7 +149,7 @@ export const EmployeeInfoSection = ({
             onChange={handleFileChange}
             style={{ display: "none" }}
           />
-        </div>} */}
+        </div>}
         <div className="grid grid-cols-[1fr_1fr] gap-4">
           <div className="space-y-2">
             <Label>Giới tính</Label>

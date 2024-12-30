@@ -8,10 +8,11 @@ import { dateToVNString } from "@/utils/format";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import customerService from "@/services/customer.service";
 import { useState } from "react";
-import image from "@/assets/placeholder.svg";
+// import image from "@/assets/placeholder.svg";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@/config";
 import { resEmployee } from "@/types/user";
+import { DEFAULT_AVATAR_URL } from "@/common/constants/user";
 
 interface EmployeeTableRowProps {
   data: resEmployee;
@@ -55,7 +56,7 @@ export const EmployeeTableRow: React.FC<EmployeeTableRowProps> = ({
       <TableCell className="flex flex-row gap-4 items-center">
         <img
           className="aspect-square rounded-full object-cover"
-          src={data.avatar_url || image}
+          src={data.avatar_url || DEFAULT_AVATAR_URL}
         />
       </TableCell>
       <TableCell>{data.full_name}</TableCell>
