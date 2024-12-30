@@ -38,7 +38,7 @@ class UserService {
       formData.append("birthday", data.birthday.toString());
     }
     formData.append("email", data.email);
-    formData.append("full_name", data.fullName);
+    formData.append("fullName", data.fullName);
     formData.append("gender", data.gender);
     if(data.phone)
       formData.append("phone", data.phone);
@@ -48,7 +48,7 @@ class UserService {
       formData.append("avatar_url", image);
     }
  
-    return api.put(`/users/update-by-admin`, data);
+    return api.put(`/users/update-by-admin`, formData);
   }
 }
 

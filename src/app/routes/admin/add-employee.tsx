@@ -39,6 +39,7 @@ export default function AddEmployeeRoute() {
     password: "",
     avatar_url: location.state?.data.avatar_url || undefined,
   });
+  console.log("detailData", detailData);
   const [errors, setErrors] = useState<ErrorState>({});
   const navigate = useNavigate();
 
@@ -89,7 +90,7 @@ export default function AddEmployeeRoute() {
         console.log("updateData", updateData);
         await userService.updateStaff(finalUpdateData, imageFile);
         toastSuccess("Cập nhật tài khoản thành công");
-        // navigate(routes.ADMIN.EMPLOYEE);
+        navigate(routes.ADMIN.EMPLOYEE);
       } else {
         if (!validateInputs("create")) return;
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
