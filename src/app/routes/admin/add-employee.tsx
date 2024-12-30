@@ -27,6 +27,7 @@ interface EmployeeNavigate {
 
 export default function AddEmployeeRoute() {
   const location = useLocation() as EmployeeNavigate;
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [detailData, setDetailData] = useState<Employee>({
     id: location.state?.data.id || "",
     email: location.state?.data.email || "",
@@ -36,6 +37,7 @@ export default function AddEmployeeRoute() {
     full_name: location.state?.data.full_name || "",
     role: "STAFF",
     password: "",
+    avatar_url: location.state?.data.avatar_url || undefined,
   });
   const [errors, setErrors] = useState<ErrorState>({});
   const navigate = useNavigate();
@@ -122,6 +124,8 @@ export default function AddEmployeeRoute() {
           detailData={detailData}
           onChange={setDetailData}
           isUpdate={location.state?.isUpdate}
+          setImageFile={setImageFile}
+          imageFile={imageFile}
         />
         <div className="flex flex-row gap-4 mx-auto mb-12">
           <Button

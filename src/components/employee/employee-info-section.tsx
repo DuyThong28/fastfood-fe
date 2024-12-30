@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { dateToString, stringToDate } from "@/utils/format";
 import {
   Select,
@@ -30,14 +30,17 @@ export const EmployeeInfoSection = ({
   onChange,
   detailData,
   isUpdate,
+  setImageFile,
+  imageFile,
 }: {
   errors: ErrorState;
   onChange: Dispatch<SetStateAction<Employee>>;
   detailData: Employee;
   isUpdate?: boolean;
+  setImageFile?: Dispatch<SetStateAction<File | null>>;
+  imageFile?: File | null;
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null);
   const handleUploadFile = () => {
     inputRef.current?.click();
   };
@@ -81,9 +84,9 @@ export const EmployeeInfoSection = ({
         };
       });
     }
-    console.log('image',imageFile)
+    console.log("image", imageFile);
     return () => {
-      if ('avatar_url' in detailData && detailData.avatar_url) {
+      if ("avatar_url" in detailData && detailData.avatar_url) {
         URL.revokeObjectURL(detailData.avatar_url);
       }
     };
@@ -127,29 +130,34 @@ export const EmployeeInfoSection = ({
             )}
           </div>
         )}
-        {isUpdate && <div className="grid grid-cols-[120px_1fr_1fr] gap-4">
-          <Label>Hình ảnh nhân viên</Label>
-          <div className="relative">
-            <img
-              className="w-28 h-28 rounded-full border-4 border-[#C2E1FF]"
-              src={'avatar_url' in detailData && detailData.avatar_url || DEFAULT_AVATAR_URL}
-              alt="Rounded avatar"
-            />
-            <div
-              className="absolute bottom-[10px] left-[90px] w-4 h-4 bg-[#64646D] rounded-full flex justify-center items-center hover:cursor-pointer"
-              onClick={handleUploadFile}
-            >
-              <Pencil className="w-3 h-3 text-white absolute" />
+        {isUpdate && (
+          <div className="grid grid-cols-[120px_1fr_1fr] gap-4">
+            <Label>Hình ảnh nhân viên</Label>
+            <div className="relative">
+              <img
+                className="w-28 h-28 rounded-full border-4 border-[#C2E1FF]"
+                src={
+                  ("avatar_url" in detailData && detailData.avatar_url) ||
+                  DEFAULT_AVATAR_URL
+                }
+                alt="Rounded avatar"
+              />
+              <div
+                className="absolute bottom-[10px] left-[90px] w-4 h-4 bg-[#64646D] rounded-full flex justify-center items-center hover:cursor-pointer"
+                onClick={handleUploadFile}
+              >
+                <Pencil className="w-3 h-3 text-white absolute" />
+              </div>
             </div>
+            <input
+              type="file"
+              accept="image/*"
+              ref={inputRef}
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+            />
           </div>
-          <input
-            type="file"
-            accept="image/*"
-            ref={inputRef}
-            onChange={handleFileChange}
-            style={{ display: "none" }}
-          />
-        </div>}
+        )}
         <div className="grid grid-cols-[1fr_1fr] gap-4">
           <div className="space-y-2">
             <Label>Giới tính</Label>
