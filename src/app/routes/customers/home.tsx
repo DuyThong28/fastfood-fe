@@ -230,7 +230,7 @@ export default function HomeRoute() {
             </AccordionItem>
             <AccordionItem value="item-2">
               <AccordionTrigger className="bg-white px-5 py-4 font-semibold text-black">
-                Giá bán
+                Giá bán (VND)
               </AccordionTrigger>
               <AccordionContent className="bg-white px-5 py-4 font-normal text-black">
                 <div className="flex flex-col gap-2">
@@ -242,7 +242,7 @@ export default function HomeRoute() {
                           return { ...prev, from: e.target.value };
                         })
                       }
-                      placeholder="Từ vnđ"
+                      placeholder="Từ"
                     />
                     <span>-</span>
                     <Input
@@ -252,7 +252,7 @@ export default function HomeRoute() {
                           return { ...prev, to: e.target.value };
                         })
                       }
-                      placeholder="Đến vnđ"
+                      placeholder="Đến"
                     />
                   </div>
                   {errors?.price && (
@@ -335,13 +335,13 @@ export default function HomeRoute() {
         <div className="flex flex-col w-full col-span-4 py-4">
           <div className="flex items-center w-full gap-2">
             <Select onValueChange={(value) => setSortPrice(value)}>
-              <SelectTrigger className="h-10 !min-w-[320px] !cursor-pointer rounded-md border-[1.5px] border-slate-300 bg-white text-base !font-normal text-black">
+              <SelectTrigger className="h-10 w-[250px] !cursor-pointer rounded-md border-[1.5px] border-slate-300 bg-white text-base !font-normal text-black">
                 <SelectValue
                   defaultValue={sortPrice}
                   placeholder="Sắp xếp giá"
                 ></SelectValue>
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="w-fit">
                 <SelectItem value="asc">Giá: Thấp đến cao</SelectItem>
                 <SelectItem value="des">Giá: Cao đến thấp</SelectItem>
               </SelectContent>
