@@ -334,12 +334,6 @@ export default function HomeRoute() {
         </div>
         <div className="flex flex-col w-full col-span-4 py-4">
           <div className="flex items-center w-full gap-2">
-            <Input
-              value={querySearch}
-              onChange={(e) => setQuerySearch(e.target.value)}
-              placeholder="Tìm tên món ăn"
-              className="w-full text-black text-base bg-white rounded-lg"
-            />
             <Select onValueChange={(value) => setSortPrice(value)}>
               <SelectTrigger className="h-10 !min-w-[320px] !cursor-pointer rounded-md border-[1.5px] border-slate-300 bg-white text-base !font-normal text-black">
                 <SelectValue
