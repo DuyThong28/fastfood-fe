@@ -24,6 +24,7 @@ import { Category } from "@/types/category";
 import { ResProductDetail } from "@/types/product";
 import { Star } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 
 interface PriceFilter {
   from: string;
@@ -35,9 +36,19 @@ type ErrorState = {
 };
 
 export default function HomeRoute() {
+  const location = useLocation();
+  const [querySearch, setQuerySearch] = useState<string | undefined>();
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const titleParam = queryParams.get("title");
+    if (titleParam) {
+      setQuerySearch(titleParam);
+    }
+  }, [location.search]);
+
   const [products, setProducts] = useState<ResProductDetail[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [querySearch, setQuerySearch] = useState<string | undefined>();
   const [categorySelect, setCategorySelect] = useState<string[]>([]);
   const [priceFilter, setPriceFilter] = useState<PriceFilter>({
     from: "",
