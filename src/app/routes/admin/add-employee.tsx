@@ -87,9 +87,9 @@ export default function AddEmployeeRoute() {
           role: "STAFF",
         };
         console.log("updateData", updateData);
-        await userService.updateStaff(finalUpdateData);
+        await userService.updateStaff(finalUpdateData, imageFile);
         toastSuccess("Cập nhật tài khoản thành công");
-        navigate(routes.ADMIN.EMPLOYEE);
+        // navigate(routes.ADMIN.EMPLOYEE);
       } else {
         if (!validateInputs("create")) return;
         // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -32,7 +32,22 @@ class UserService {
       return api.get(`/users/search?keyword=${keyword}&role=${role}`);
     }
   }
-  async updateStaff(data: UpdateEmployee) {
+  async updateStaff(data: UpdateEmployee, image: File | null) {
+    const formData = new FormData();
+    if (data.birthday) {
+      formData.append("birthday", data.birthday.toString());
+    }
+    formData.append("email", data.email);
+    formData.append("full_name", data.fullName);
+    formData.append("gender", data.gender);
+    if(data.phone)
+      formData.append("phone", data.phone);
+    formData.append("role", data.role);
+    formData.append("id", data.id);
+    if (image) {
+      formData.append("avatar_url", image);
+    }
+ 
     return api.put(`/users/update-by-admin`, data);
   }
 }
