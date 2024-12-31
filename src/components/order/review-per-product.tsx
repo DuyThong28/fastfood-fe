@@ -65,7 +65,11 @@ export default function ReviewPerProduct({
             placeholder="Hãy chia sẻ những gì bạn thích về sản phẩm."
             value={data.description}
             onChange={(e) =>
-              onChange((data as Review).productId, "description", e.target.value)
+              onChange(
+                (data as Review).productId,
+                "description",
+                e.target.value,
+              )
             }
             disabled={action !== ReviewStatus.UNREVIEW}
           />

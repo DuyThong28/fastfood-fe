@@ -33,7 +33,7 @@ import EmployeeRoute from "./routes/admin/employee";
 import ProductDetailRoute from "./routes/customers/product-detail";
 import PublicProductDetailRoute from "./routes/customers/product-detail";
 import AdminProductDetailRoute from "./routes/admin/product-detail";
-import { AuthorizedAdministrator } from "./authorizedRoute";
+import { AuthorizedAdministrator, AuthorizedStaff } from "./authorizedRoute";
 import ReportRoute from "./routes/admin/report";
 import Chatbot from "@/components/chatbot/chatbot";
 
@@ -155,9 +155,9 @@ const createAppRouter = () =>
     {
       path: routes.ADMIN.ACCOUNT_PROFILE,
       element: (
-        <AuthorizedAdministrator>
+        <AuthorizedStaff>
           <AdminProfileRoute />
-        </AuthorizedAdministrator>
+        </AuthorizedStaff>
       ),
     },
     {
@@ -171,18 +171,18 @@ const createAppRouter = () =>
     {
       path: routes.ADMIN.REPORT,
       element: (
-        <AuthorizedAdministrator>
+        <AuthorizedStaff>
           <ReportRoute />
-        </AuthorizedAdministrator>
+        </AuthorizedStaff>
       ),
     },
 
     {
       path: routes.ADMIN.DASHBOAD,
       element: (
-        <AuthorizedAdministrator>
+        <AuthorizedStaff>
           <DashboardRoute />
-        </AuthorizedAdministrator>
+        </AuthorizedStaff>
       ),
     },
     {
@@ -244,9 +244,9 @@ const createAppRouter = () =>
     {
       path: routes.ADMIN.CUSTOMER,
       element: (
-        <AuthorizedAdministrator>
+        <AuthorizedStaff>
           <CustomerRoute />
-        </AuthorizedAdministrator>
+        </AuthorizedStaff>
       ),
     },
     {

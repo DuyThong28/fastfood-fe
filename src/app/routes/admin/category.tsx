@@ -56,7 +56,7 @@ export default function CategoryRoute() {
             page: meta.page,
             take: meta.take,
           },
-          isDisable
+          isDisable,
         );
       }
       setCategories(response.data.data);

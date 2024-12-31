@@ -106,7 +106,7 @@ export default function CartRoute() {
       async () => {
         try {
           await Promise.all(
-            rowSelection.map((item) => cartService.removeFromCart(item))
+            rowSelection.map((item) => cartService.removeFromCart(item)),
           );
           toastSuccess(`Xóa ${rowSelection.length} sản phẩm thành công`);
           setRowSelection([]);
@@ -114,7 +114,7 @@ export default function CartRoute() {
         } catch (err) {
           console.log(err);
         }
-      }
+      },
     );
   };
 

@@ -8,10 +8,11 @@ import { dateToVNString } from "@/utils/format";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import customerService from "@/services/customer.service";
 import { useState } from "react";
-import image from "@/assets/placeholder.svg";
+// import image from "@/assets/placeholder.svg";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@/config";
 import { resEmployee } from "@/types/user";
+import { DEFAULT_AVATAR_URL } from "@/common/constants/user";
 
 interface EmployeeTableRowProps {
   data: resEmployee;
@@ -22,7 +23,7 @@ export const EmployeeTableRow: React.FC<EmployeeTableRowProps> = ({
   data,
   onRefetch,
 }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleActive = async () => {
     try {
@@ -46,16 +47,16 @@ export const EmployeeTableRow: React.FC<EmployeeTableRowProps> = ({
     navigate(routes.ADMIN.ADD_EMPLOYEE, {
       state: {
         data,
-        isUpdate: true
-      }
-    })
+        isUpdate: true,
+      },
+    });
   };
   return (
     <TableRow>
       <TableCell className="flex flex-row gap-4 items-center">
         <img
           className="aspect-square rounded-full object-cover"
-          src={data.avatar_url || image}
+          src={data.avatar_url || DEFAULT_AVATAR_URL}
         />
       </TableCell>
       <TableCell>{data.full_name}</TableCell>
@@ -75,13 +76,13 @@ export const EmployeeTableRow: React.FC<EmployeeTableRowProps> = ({
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </PopoverTrigger>
-                  <PopoverContent className="w-max p-1">
-                      <div
-                className="py-2 px-3  w-full hover:bg-[#F4F4F5]"
-                onClick={handleEditStaff}
-              >
-                Chinh sua thong tin
-              </div>
+          <PopoverContent className="w-max p-1">
+            <div
+              className="py-2 px-3  w-full hover:bg-[#F4F4F5]"
+              onClick={handleEditStaff}
+            >
+              Chinh sua thong tin
+            </div>
             {data.is_disable ? (
               <div
                 className="py-2 px-3  w-full hover:bg-[#F4F4F5]"

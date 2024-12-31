@@ -32,7 +32,7 @@ export const CustomerAddress: React.FC<CustomerAddressProps> = ({
         } catch (err) {
           console.log(err);
         }
-      }
+      },
     );
   };
   return (

@@ -6,4 +6,3 @@ export enum OrderStatus {
   SUCCESS = "SUCCESS",
   REJECT = "REJECT",
 }
-

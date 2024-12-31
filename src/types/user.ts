@@ -9,7 +9,6 @@ export interface User {
   birthday: Date | null;
 }
 
-
 export interface ResUser {
   password?: string;
   email: string;
@@ -28,8 +27,8 @@ export interface Employee {
   birthday: Date | null;
   gender: Gender;
   avatar_url?: string;
-  role: "STAFF"
-  password: string
+  role: "STAFF";
+  password: string;
 }
 
 export interface resEmployee extends Employee {
@@ -37,8 +36,8 @@ export interface resEmployee extends Employee {
   birthday: Date;
 }
 
-export interface CreateEmployee{
-  role: "STAFF"
+export interface CreateEmployee {
+  role: "STAFF";
   password: string;
   email: string;
   gender: Gender;
@@ -47,7 +46,7 @@ export interface CreateEmployee{
   fullName: string;
 }
 
-export interface UpdateEmployee{
+export interface UpdateEmployee {
   id: string;
   role: "STAFF";
   email: string;
@@ -63,9 +62,8 @@ export interface ResFetchAllEmployees extends Respone {
   };
 }
 
-
 export interface UserBasicInfo {
   full_name: string;
   avatar_url: string | undefined;
-  email: string
+  email: string;
 }

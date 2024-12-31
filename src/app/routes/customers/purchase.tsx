@@ -37,7 +37,7 @@ export default function PurchaseRoute() {
           take: meta.take,
         },
         tabState,
-        searchText.trim()
+        searchText.trim(),
       );
       setOrders(response.data.data);
       setMeta(response.data.meta);

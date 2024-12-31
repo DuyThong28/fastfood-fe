@@ -9,7 +9,7 @@ export interface Customer {
   birthday: Date;
   gender: Gender;
   is_disable: boolean;
-  avatar_url?: string
+  avatar_url?: string;
 }
 
 export interface ResFetchAllCustomers extends Respone {
@@ -18,4 +18,3 @@ export interface ResFetchAllCustomers extends Respone {
     meta: Meta;
   };
 }
-

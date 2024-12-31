@@ -5,12 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import {
-  FormEvent,
-  forwardRef,
-  useImperativeHandle,
-  useState,
-} from "react";
+import { FormEvent, forwardRef, useImperativeHandle, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Address, ResAddress } from "@/types/address";
@@ -61,35 +56,31 @@ const AddressDialog = forwardRef<AddressDialogRef, AddressDialogProps>(
       return Object.keys(newErrors).length === 0;
     };
 
-    useImperativeHandle(
-      ref,
-      () => {
-        return {
-          onOpen(data?: ResAddress) {
-            if (data) {
-              setAddress({
-                address: data.address,
-                fullName: data.full_name,
-                phoneNumber: data.phone_number,
-                id: data.id,
-              });
-            } else {
-              setAddress({
-                address: "",
-                fullName: "",
-                phoneNumber: undefined,
-              });
-            }
-            setErrors({});
-            setIsOpen(true);
-          },
-          onClose() {
-            setIsOpen(false);
-          },
-        };
-      },
-      []
-    );
+    useImperativeHandle(ref, () => {
+      return {
+        onOpen(data?: ResAddress) {
+          if (data) {
+            setAddress({
+              address: data.address,
+              fullName: data.full_name,
+              phoneNumber: data.phone_number,
+              id: data.id,
+            });
+          } else {
+            setAddress({
+              address: "",
+              fullName: "",
+              phoneNumber: undefined,
+            });
+          }
+          setErrors({});
+          setIsOpen(true);
+        },
+        onClose() {
+          setIsOpen(false);
+        },
+      };
+    }, []);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -99,8 +90,7 @@ const AddressDialog = forwardRef<AddressDialogRef, AddressDialogProps>(
           await addressService.updateAddressById(address);
           toastSuccess("Cập nhật địa chỉ thành công");
           await onRefetch();
-       
-      } else {
+        } else {
           await addressService.createAddress({
             address: address.address,
             fullName: address.fullName,
@@ -108,22 +98,21 @@ const AddressDialog = forwardRef<AddressDialogRef, AddressDialogProps>(
           });
           toastSuccess("Thêm mới địa chỉ thành công");
           await onRefetch();
-        
-      }
-      setIsOpen(false);
-      setAddress({
-        address: "",
-        fullName: "",
-        phoneNumber: undefined,
-      });
-      }  catch (err) {
+        }
+        setIsOpen(false);
+        setAddress({
+          address: "",
+          fullName: "",
+          phoneNumber: undefined,
+        });
+      } catch (err) {
         console.log(err);
       }
     };
 
     const handleChangeInput = (
       name: string,
-      value: string | number | undefined
+      value: string | number | undefined,
     ) => {
       setAddress((prevData) => {
         return {
@@ -196,7 +185,7 @@ const AddressDialog = forwardRef<AddressDialogRef, AddressDialogProps>(
         </DialogContent>
       </Dialog>
     );
-  }
+  },
 );
 
 export default AddressDialog;

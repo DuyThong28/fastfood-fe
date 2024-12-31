@@ -48,7 +48,7 @@ export const ProductTableRow: React.FC<ProductTableRowProps> = ({
         } catch (err) {
           console.log(err);
         }
-      }
+      },
     );
   };
 
@@ -69,10 +69,10 @@ export const ProductTableRow: React.FC<ProductTableRowProps> = ({
         } catch (err) {
           console.log(err);
         }
-      }
+      },
     );
   };
-  
+
   return (
     <>
       <CustomAlertDialog ref={alertDialogRef} />
