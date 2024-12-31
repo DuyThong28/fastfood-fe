@@ -114,7 +114,7 @@ export default function AccountInfo() {
     try {
       const response = await customerService.updateAccount(
         accountData,
-        imageFile
+        imageFile,
       );
       setUser({
         avatar_url: response.data.data.avatar_url,
@@ -238,7 +238,7 @@ export default function AccountInfo() {
                 type="date"
                 value={dateToString(
                   (accountData?.birthday && new Date(accountData?.birthday)) ||
-                    new Date()
+                    new Date(),
                 )}
                 onChange={(e) =>
                   handleChangeInput({

@@ -54,7 +54,7 @@ function Day(
   props: PickersDayProps<Dayjs> & {
     selectedDay?: Dayjs | null;
     hoveredDay?: Dayjs | null;
-  }
+  },
 ) {
   const { day, selectedDay, hoveredDay, ...other } = props;
 

@@ -60,7 +60,7 @@ export default function AdminOrderDetailRoute() {
           } catch (err) {
             console.log(err);
           }
-        }
+        },
       );
     }
   };
@@ -99,7 +99,7 @@ export default function AdminOrderDetailRoute() {
           } catch (err) {
             console.log(err);
           }
-        }
+        },
       );
     }
   };
@@ -160,7 +160,9 @@ export default function AdminOrderDetailRoute() {
                     <ProductOrderDetailRow
                       key={index}
                       data={item}
-                      onShowProductDetail={() => navigate(`/product/${item.product_id}`)}
+                      onShowProductDetail={() =>
+                        navigate(`/product/${item.product_id}`)
+                      }
                     />
                   );
                 })}

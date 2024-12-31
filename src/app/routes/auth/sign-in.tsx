@@ -52,9 +52,7 @@ export default function SignInRoute() {
     } else {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-      if (
-        !emailRegex.test(input.email_phone) 
-      ) {
+      if (!emailRegex.test(input.email_phone)) {
         newErrors.email = "Email chưa đúng định dạng";
       }
     }
@@ -75,7 +73,7 @@ export default function SignInRoute() {
 
     if (!validateInputs()) return;
     try {
-      const response= await authService.signInWithEmail(input);
+      const response = await authService.signInWithEmail(input);
       if (response.data) {
         const accessToken: string = response.data.access_token;
         setAccessToken(accessToken);
@@ -86,10 +84,10 @@ export default function SignInRoute() {
           userId: id,
           role,
         });
-        console.log("role", role,id);
+        console.log("role", role, id);
         localStorage.setItem("role", role);
         toastSuccess("Đăng nhập thành công");
-        if (role === UserRole.ADMIN) {
+        if (role === UserRole.ADMIN || role === UserRole.STAFF) {
           navigate("/dashboad");
         } else if (role === UserRole.CUSTOMER) {
           navigate("/");

@@ -116,7 +116,7 @@ export default function ProductTab() {
       const modifiedEndDate = dayjs(endDate).add(1, "day").format("YYYY-MM-DD");
       try {
         const response = await api.get(
-          `/statistics/soldProduct?start=${startDate}&end=${modifiedEndDate}`
+          `/statistics/soldProduct?start=${startDate}&end=${modifiedEndDate}`,
         );
         setSoldProducts(response.data.data);
       } catch (error) {

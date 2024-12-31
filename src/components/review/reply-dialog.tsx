@@ -49,20 +49,16 @@ const ReplyDialog = forwardRef<ReplyDialogRef, ReplyDialogProps>(
       }
     };
 
-    useImperativeHandle(
-      ref,
-      () => {
-        return {
-          async onOpen(id: string) {
-            await getOrderById(id);
-          },
-          onClose() {
-            setIsOpen(false);
-          },
-        };
-      },
-      []
-    );
+    useImperativeHandle(ref, () => {
+      return {
+        async onOpen(id: string) {
+          await getOrderById(id);
+        },
+        onClose() {
+          setIsOpen(false);
+        },
+      };
+    }, []);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -86,7 +82,7 @@ const ReplyDialog = forwardRef<ReplyDialogRef, ReplyDialogProps>(
           } catch (err) {
             console.log(err);
           }
-        }
+        },
       );
     };
 
@@ -158,7 +154,7 @@ const ReplyDialog = forwardRef<ReplyDialogRef, ReplyDialogProps>(
         </>
       )
     );
-  }
+  },
 );
 
 export default ReplyDialog;

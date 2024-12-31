@@ -62,7 +62,7 @@ export default function DashboardRoute() {
           page: meta.page,
           take: meta.take,
         },
-        { status: "", search: "" }
+        { status: "", search: "" },
       );
       setRecentOrders(recentResponse.data.data);
 

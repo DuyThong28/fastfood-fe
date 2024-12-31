@@ -1,7 +1,12 @@
 import { ReviewStatus } from "@/common/enums";
 import { api } from "@/lib/api-client";
 import { Page } from "@/types/api";
-import { GetAllReviewQueries, GetAllReviews, GetReviewByProductId, ResReview } from "@/types/review";
+import {
+  GetAllReviewQueries,
+  GetAllReviews,
+  GetReviewByProductId,
+  ResReview,
+} from "@/types/review";
 import { trimObjectAttributes } from "@/utils/format";
 
 class ReviewService {
@@ -27,10 +32,9 @@ class ReviewService {
             pageCount: 0,
             hasPreviousPage: false,
             hasNextPage: false,
-
-          }
-        }
-      }
+          },
+        },
+      };
     }
     if (trimmedData.date) {
       url += `&date=${trimmedData.date}`;
@@ -52,11 +56,17 @@ class ReviewService {
     return api.post(`reviews/${id}/reply`, { reply: reply.trim() });
   }
 
-  async getReviewsByOrderId(orderId: string): Promise<{ data: { data: ResReview[] } }> {
-    return api.get(`reviews/get-review-by-order-id/${orderId}`)
+  async getReviewsByOrderId(
+    orderId: string,
+  ): Promise<{ data: { data: ResReview[] } }> {
+    return api.get(`reviews/get-review-by-order-id/${orderId}`);
   }
 
-  async getReivewsByProductId({ page, take }: Page, productId: string, query: { rating: number[] }): Promise<GetReviewByProductId> {
+  async getReivewsByProductId(
+    { page, take }: Page,
+    productId: string,
+    query: { rating: number[] },
+  ): Promise<GetReviewByProductId> {
     let url = `reviews/get-review-by-product-id/${productId}?page=${page}&take=${take}`;
     if (query.rating.length > 0) {
       const ratingParams = query.rating
@@ -74,10 +84,9 @@ class ReviewService {
             pageCount: 0,
             hasPreviousPage: false,
             hasNextPage: false,
-
-          }
-        }
-      }
+          },
+        },
+      };
     }
     return api.get(url);
   }

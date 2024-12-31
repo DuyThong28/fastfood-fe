@@ -38,7 +38,7 @@ export interface ReplyReviews {
 
 export interface ResReviewOfAdmin extends ResReview {
   OrderItem: {
-    order_id: string
+    order_id: string;
   };
 }
 
@@ -58,7 +58,7 @@ export interface GetAllReviewQueries {
 
 export interface GetReviewByProductId {
   data: {
-    data: ResReview[],
-    meta: Meta
-  }
+    data: ResReview[];
+    meta: Meta;
+  };
 }

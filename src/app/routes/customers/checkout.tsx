@@ -36,8 +36,8 @@ export default function CheckOutRoute() {
       const response = await cartService.getCart();
       setCartItemsSelected(
         response.data.data.filter((item) =>
-          selectedProductIds.includes(item.product_id)
-        )
+          selectedProductIds.includes(item.product_id),
+        ),
       );
     } catch (err) {
       console.log(err);
@@ -69,7 +69,7 @@ export default function CheckOutRoute() {
     if (cartItemsSelected.length === 0) return;
     if (!addressInfo) {
       toastWarning(
-        "Vui lòng cung cấp địa chỉ giao hàng trước khi xác nhận đơn hàng."
+        "Vui lòng cung cấp địa chỉ giao hàng trước khi xác nhận đơn hàng.",
       );
       return;
     }
@@ -96,7 +96,7 @@ export default function CheckOutRoute() {
         } catch (err) {
           console.log(err);
         }
-      }
+      },
     );
   };
 

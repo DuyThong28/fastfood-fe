@@ -9,7 +9,6 @@ import Cookies from "universal-cookie";
 import { routes } from "@/config";
 const cookies = new Cookies();
 
-
 const URL_SERVER = import.meta.env.VITE_URL_SERVER;
 export const getAccessToken = () => {
   return cookies.get("access_token");
@@ -18,7 +17,7 @@ export const setAccessToken = (token: string) => {
   cookies.set("access_token", token, { path: "/" });
 };
 export const removeAccessToken = () => {
-  cookies.remove("access_token", { path: '/' });
+  cookies.remove("access_token", { path: "/" });
 };
 
 const refreshAccessToken = throttle(

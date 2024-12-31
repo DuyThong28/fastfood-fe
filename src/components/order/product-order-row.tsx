@@ -22,7 +22,8 @@ export const ProductOrderRow: React.FC<ProductOrderRowProps> = ({
           alt="Product image"
           className="object-cover w-full h-full"
           src={
-            (data.product.image_url.length > 0 && data.product.image_url[0]) || image
+            (data.product.image_url.length > 0 && data.product.image_url[0]) ||
+            image
           }
         />
       </div>

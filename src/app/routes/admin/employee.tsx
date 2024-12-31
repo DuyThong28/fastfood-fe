@@ -18,7 +18,7 @@ import { resEmployee } from "@/types/user";
 import { routes } from "@/config";
 
 export default function EmployeeRoute() {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
   const [employees, setEmployees] = useState<Array<resEmployee>>([]);
   const [meta, setMeta] = useState<Meta>({
     page: 1,
@@ -40,7 +40,7 @@ export default function EmployeeRoute() {
     } else {
       isDisable = null;
     }
-    console.log("isDisable",isDisable)
+    console.log("isDisable", isDisable);
     try {
       let response;
       if (textSearch) {
@@ -59,7 +59,7 @@ export default function EmployeeRoute() {
     } catch (err) {
       console.log(err);
     }
-  },[meta.page, meta.take, tabState, textSearch]);
+  }, [meta.page, meta.take, tabState, textSearch]);
 
   useEffect(() => {
     fetchAllCustomer();
@@ -71,20 +71,19 @@ export default function EmployeeRoute() {
     }
   };
 
-
   return (
     <DashBoardLayout>
-          <main className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto">
-              <div className="flex">
-                  <h1 className="text-lg font-semibold">Danh Sach Nhan vien</h1>
-              <Button
+      <main className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto">
+        <div className="flex">
+          <h1 className="text-lg font-semibold">Danh Sach Nhan vien</h1>
+          <Button
             className="gap-1 ml-auto"
             onClick={() => navigate(routes.ADMIN.ADD_EMPLOYEE)}
           >
             <PlusCircle className="h-3.5 w-3.5" />
             <span>Them nhan vien moi</span>
           </Button>
-              </div>
+        </div>
         <Tabs value={tabState}>
           <div className="flex items-center">
             <TabsList>

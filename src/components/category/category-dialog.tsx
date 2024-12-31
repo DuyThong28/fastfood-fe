@@ -49,40 +49,36 @@ const CategoryDialog = forwardRef<CategoryDialogRef, CategoryDialogProps>(
       return Object.keys(newErrors).length === 0;
     };
 
-    useImperativeHandle(
-      ref,
-      () => {
-        return {
-          async onOpen(id?: string) {
-            if (id) {
-              try {
-                const response = await categoryService.getCategoryById(id);
-                setCategory(response.data.data);
-                setInput(response.data.data.name);
-                setErrors({});
-                setIsOpen(true);
-              } catch (err) {
-                console.log(err);
-              }
-            } else {
-              setCategory({
-                id: "",
-                name: "",
-                is_disable: false,
-              });
-              setInput("");
+    useImperativeHandle(ref, () => {
+      return {
+        async onOpen(id?: string) {
+          if (id) {
+            try {
+              const response = await categoryService.getCategoryById(id);
+              setCategory(response.data.data);
+              setInput(response.data.data.name);
               setErrors({});
               setIsOpen(true);
+            } catch (err) {
+              console.log(err);
             }
-          },
-          onClose() {
+          } else {
+            setCategory({
+              id: "",
+              name: "",
+              is_disable: false,
+            });
+            setInput("");
             setErrors({});
-            setIsOpen(false);
-          },
-        };
-      },
-      []
-    );
+            setIsOpen(true);
+          }
+        },
+        onClose() {
+          setErrors({});
+          setIsOpen(false);
+        },
+      };
+    }, []);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -149,7 +145,7 @@ const CategoryDialog = forwardRef<CategoryDialogRef, CategoryDialogProps>(
         </DialogContent>
       </Dialog>
     );
-  }
+  },
 );
 
 export default CategoryDialog;

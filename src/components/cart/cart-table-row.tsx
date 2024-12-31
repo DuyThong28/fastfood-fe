@@ -38,7 +38,7 @@ export const CartTableRow: React.FC<CartTableRowProps> = ({
         } catch (err) {
           console.log(err);
         }
-      }
+      },
     );
   };
 
@@ -73,7 +73,9 @@ export const CartTableRow: React.FC<CartTableRowProps> = ({
             className="aspect-square rounded-md object-cover"
             height="64"
             src={
-              data.product.image_url.length > 0 ? data.product.image_url[0] : image
+              data.product.image_url.length > 0
+                ? data.product.image_url[0]
+                : image
             }
             width="64"
           />
@@ -89,7 +91,9 @@ export const CartTableRow: React.FC<CartTableRowProps> = ({
             onChange={handleUpdateCartItemQuantity}
           />
         </TableCell>
-        <TableCell>{formatNumber(data.quantity * data.product.price)}</TableCell>
+        <TableCell>
+          {formatNumber(data.quantity * data.product.price)}
+        </TableCell>
         <TableCell>
           <Button variant="outline" onClick={handleRemove}>
             xóa

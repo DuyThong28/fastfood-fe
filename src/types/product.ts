@@ -23,7 +23,7 @@ export interface CreateProductDetail extends ProductDetail {
 export interface UpdateProductDetail extends CreateProductDetail {
   id: string;
   image_url: string[];
-  initCategory: Category | null
+  initCategory: Category | null;
 }
 
 export interface ResProductDetail extends Product {
@@ -36,7 +36,7 @@ export interface ResProductDetail extends Product {
   sold_quantity: number;
   total_reviews: number;
   avg_stars: number;
-  Category?: Category
+  Category?: Category;
 }
 
 export interface ResGetAllProducts extends Response {
@@ -53,13 +53,13 @@ export interface ResGetProductById extends Response {
 }
 
 export interface ProductQuery {
-  status?: string,
-  order?: string,
-  sortBy?: string,
-  title?: string,
+  status?: string;
+  order?: string;
+  sortBy?: string;
+  title?: string;
   min_price?: number;
   max_price?: number;
   min_star?: number;
-  categoryId?: string
-  categoryStatus?: boolean
+  categoryId?: string;
+  categoryStatus?: boolean;
 }

@@ -34,7 +34,7 @@ export default function AdminProductDetailRoute() {
       const productResponse = await productService.getProductById(id);
       const productData = productResponse.data.data;
       const categoryResponse = await categoryService.getCategoryById(
-        productData.category_id
+        productData.category_id,
       );
 
       setDetailData({

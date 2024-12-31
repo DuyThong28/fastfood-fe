@@ -39,22 +39,16 @@ class ProductService {
       url += `&status=${trimmedData.status}`;
     }
     if (trimmedData.title) {
-      url += `&title=${trimmedData.title}`
+      url += `&title=${trimmedData.title}`;
     }
-    if (trimmedData?.order)
-      url += `&order=${trimmedData.order}`;
-    if (trimmedData?.sortBy)
-      url += `&sortBy=${trimmedData.sortBy}`;
-    if (trimmedData?.max_price)
-      url += `&max_price=${trimmedData.max_price}`;
-    if (trimmedData?.min_price)
-      url += `&min_price=${trimmedData.min_price}`;
-    if (trimmedData?.min_star)
-      url += `&min_star=${trimmedData.min_star}`;
-    if (trimmedData?.categoryId)
-      url += `&categoryId=${trimmedData.categoryId}`;
+    if (trimmedData?.order) url += `&order=${trimmedData.order}`;
+    if (trimmedData?.sortBy) url += `&sortBy=${trimmedData.sortBy}`;
+    if (trimmedData?.max_price) url += `&max_price=${trimmedData.max_price}`;
+    if (trimmedData?.min_price) url += `&min_price=${trimmedData.min_price}`;
+    if (trimmedData?.min_star) url += `&min_star=${trimmedData.min_star}`;
+    if (trimmedData?.categoryId) url += `&categoryId=${trimmedData.categoryId}`;
     if ("categoryStatus" in trimmedData)
-      url += `&categoryStatus=${trimmedData.categoryStatus}`
+      url += `&categoryStatus=${trimmedData.categoryStatus}`;
     return api.get(url);
   }
 

@@ -30,7 +30,6 @@ export const OrderRow: React.FC<OrderRowProps> = ({
     navigate(`/customer/purchase/${data.id}`);
   };
 
-
   const handleCancelOrder = async () => {
     if (data.id) {
       alertDialogRef.current?.onOpen(
@@ -46,7 +45,7 @@ export const OrderRow: React.FC<OrderRowProps> = ({
           } catch (err) {
             console.log(err);
           }
-        }
+        },
       );
     }
   };

@@ -93,7 +93,7 @@ const AddressesDialog = forwardRef<AddressesDialogRef, AddressesDialogProps>(
               defaultValue={addressId}
               onValueChange={(value) => {
                 const selectedAddress = addresses.find(
-                  (item) => item.id === value
+                  (item) => item.id === value,
                 );
                 if (selectedAddress) {
                   setAddressId(selectedAddress.id);
@@ -158,7 +158,7 @@ const AddressesDialog = forwardRef<AddressesDialogRef, AddressesDialogProps>(
         </Dialog>
       </>
     );
-  }
+  },
 );
 
 export default AddressesDialog;

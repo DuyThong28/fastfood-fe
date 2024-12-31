@@ -42,7 +42,7 @@ export const CategoryTableRow: React.FC<CategoryTableRowProps> = ({
         } catch (err) {
           console.log(err);
         }
-      }
+      },
     );
   };
 
@@ -62,7 +62,7 @@ export const CategoryTableRow: React.FC<CategoryTableRowProps> = ({
         } catch (err) {
           console.log(err);
         }
-      }
+      },
     );
   };
 

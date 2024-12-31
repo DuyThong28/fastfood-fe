@@ -14,11 +14,10 @@ class OrderService {
   async getOrdersByUser(
     { page, take }: Page,
     status: string,
-    search: string
+    search: string,
   ): Promise<ResGetOrdersByUser> {
-    let url = `orders/get-all?page=${page}&take=${take}&search=${search.trim()}&sortBy=created_at&order=desc`
-    if (status !== "all")
-      url += `&status=${status}`;
+    let url = `orders/get-all?page=${page}&take=${take}&search=${search.trim()}&sortBy=created_at&order=desc`;
+    if (status !== "all") url += `&status=${status}`;
     return api.get(url);
   }
 
@@ -29,9 +28,9 @@ class OrderService {
   async getOrdersByAdmin(
     { page, take }: Page,
     getOrdersQuery: {
-      status: string,
-      search: string,
-    }
+      status: string;
+      search: string;
+    },
   ): Promise<ResGetOrdersByUser> {
     let url = `/orders/list?page=${page}&take=${take}&search=${getOrdersQuery.search.trim()}&sortBy=created_at&order=desc`;
     if (getOrdersQuery.status in ORDER_STATUS)
