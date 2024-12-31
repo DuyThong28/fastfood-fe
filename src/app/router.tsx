@@ -35,6 +35,7 @@ import PublicProductDetailRoute from "./routes/customers/product-detail";
 import AdminProductDetailRoute from "./routes/admin/product-detail";
 import { AuthorizedAdministrator } from "./authorizedRoute";
 import ReportRoute from "./routes/admin/report";
+import Chatbot from "@/components/chatbot/chatbot";
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -72,39 +73,84 @@ const createAppRouter = () =>
     },
     {
       path: routes.CUSTOMER.HOME,
-      element: <HomeRoute />,
+      element: (
+        <>
+          <HomeRoute />
+          <Chatbot />
+        </>
+      ),
     },
     {
       path: routes.CUSTOMER.ACCOUNT_ADDRESS,
-      element: <AccountAddressRoute />,
+      element: (
+        <>
+          <AccountAddressRoute />
+          <Chatbot />
+        </>
+      ),
     },
     {
       path: routes.CUSTOMER.ACCOUNT_PROFILE,
-      element: <AccountProfileRoute />,
+      element: (
+        <>
+          <AccountProfileRoute />
+          <Chatbot />
+        </>
+      ),
     },
     {
       path: routes.CUSTOMER.PRODUCT_DETAIL,
-      element: <PublicProductDetailRoute />,
+      element: (
+        <>
+          <PublicProductDetailRoute />
+          <Chatbot />
+        </>
+      ),
     },
     {
       path: routes.CUSTOMER.CART,
-      element: <CartRoute />,
+      element: (
+        <>
+          <CartRoute />
+          <Chatbot />
+        </>
+      ),
     },
     {
       path: routes.CUSTOMER.CHANGE_PASSWORD,
-      element: <AccountPasswordRoute />,
+      element: (
+        <>
+          <AccountPasswordRoute />
+          <Chatbot />
+        </>
+      ),
     },
     {
       path: routes.CUSTOMER.CHECKOUT,
-      element: <CheckOutRoute />,
+      element: (
+        <>
+          <CheckOutRoute />
+          <Chatbot />
+        </>
+      ),
     },
     {
       path: routes.CUSTOMER.ORDER_DETAIL,
-      element: <OrderDetailRoute />,
+      element: (
+        <>
+          <OrderDetailRoute />
+          <Chatbot />
+        </>
+      ),
     },
     {
       path: routes.CUSTOMER.PURCHASE,
-      element: <PurchaseRoute />,
+      element: (
+        <>
+          <PurchaseRoute />
+          <Chatbot />
+        </>
+      ),
     },
     {
       path: routes.ADMIN.ACCOUNT_PROFILE,
@@ -116,109 +162,108 @@ const createAppRouter = () =>
     },
     {
       path: routes.ADMIN.ADD_PRODUCT,
-      element:
-        (
-          <AuthorizedAdministrator>
-            <AddProductRoute />
-          </AuthorizedAdministrator>
-        )
+      element: (
+        <AuthorizedAdministrator>
+          <AddProductRoute />
+        </AuthorizedAdministrator>
+      ),
     },
     {
       path: routes.ADMIN.REPORT,
       element: (
-          <AuthorizedAdministrator>
-          <ReportRoute />    
+        <AuthorizedAdministrator>
+          <ReportRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
 
     {
       path: routes.ADMIN.DASHBOAD,
       element: (
-          <AuthorizedAdministrator>
-          <DashboardRoute />    
+        <AuthorizedAdministrator>
+          <DashboardRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
     {
       path: routes.ADMIN.ORDER,
       element: (
-          <AuthorizedAdministrator>
-          <OrderRoute />    
+        <AuthorizedAdministrator>
+          <OrderRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
     {
       path: routes.ADMIN.ORDER_DETAIL,
       element: (
-          <AuthorizedAdministrator>
+        <AuthorizedAdministrator>
           <AdminOrderDetailRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
     {
       path: routes.ADMIN.PRODUCT,
-      element:(
-          <AuthorizedAdministrator>
+      element: (
+        <AuthorizedAdministrator>
           <ProductRoute />
-          </AuthorizedAdministrator>
-      )
+        </AuthorizedAdministrator>
+      ),
     },
     {
       path: routes.ADMIN.CATEGORY,
-      element:  (
+      element: (
         <AuthorizedAdministrator>
-           <CategoryRoute />            
+          <CategoryRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
     {
       path: routes.ADMIN.CHANGE_PASSWORD,
       element: (
         <AuthorizedAdministrator>
-          <AdminPasswordRoute />  
+          <AdminPasswordRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
     {
       path: routes.ADMIN.PRODUCT_DETAIL,
-      element:(
+      element: (
         <AuthorizedAdministrator>
           <AdminProductDetailRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
     {
       path: routes.ADMIN.REVIEW,
       element: (
         <AuthorizedAdministrator>
-          <ReviewRoute />   
-          </AuthorizedAdministrator>
-      )
+          <ReviewRoute />
+        </AuthorizedAdministrator>
+      ),
     },
     {
       path: routes.ADMIN.CUSTOMER,
-      element:(
+      element: (
         <AuthorizedAdministrator>
           <CustomerRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
     {
       path: routes.ADMIN.EMPLOYEE,
       element: (
         <AuthorizedAdministrator>
-          <EmployeeRoute />         
-          </AuthorizedAdministrator>
-      )
+          <EmployeeRoute />
+        </AuthorizedAdministrator>
+      ),
     },
     {
       path: routes.ADMIN.ADD_EMPLOYEE,
-      element:(
+      element: (
         <AuthorizedAdministrator>
           <AddEmployeeRoute />
         </AuthorizedAdministrator>
-      )
+      ),
     },
     {
       path: "*",
