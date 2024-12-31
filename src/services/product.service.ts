@@ -18,7 +18,7 @@ class ProductService {
     formData.append("categoryId", trimmedData.categoryId);
     formData.append("title", trimmedData.title);
     formData.append("price", trimmedData.price.toString());
-    formData.append("stockQuantity", trimmedData.stockQuantity.toString());
+    // formData.append("stockQuantity", trimmedData.stockQuantity.toString());
     formData.append("entryPrice", trimmedData?.entryPrice.toString());
     formData.append("author", "John");
     if (trimmedData.images && trimmedData.images.length > 0) {
@@ -63,7 +63,7 @@ class ProductService {
     formData.append("categoryId", trimmedData.categoryId);
     formData.append("title", trimmedData.title);
     formData.append("price", trimmedData.price.toString());
-    formData.append("stockQuantity", trimmedData.stockQuantity.toString());
+    // formData.append("stockQuantity", trimmedData.stockQuantity.toString());
     formData.append("entryPrice", trimmedData.entryPrice.toString());
     formData.append("author", "John");
     if (trimmedData.image_url && trimmedData.image_url.length > 0) {

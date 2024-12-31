@@ -43,14 +43,14 @@ export const ProductTableHeader: React.FC<ProductTableHeaderProps> = ({
             onClick={(newOrder) => onSort(newOrder, "price")}
           />
         </TableHead>
-        <TableHead>
+        {/* <TableHead>
           <SortButton
             checked={sortBy === "stock_quantity"}
             order={order}
             text="Tồn kho"
             onClick={(newOrder) => onSort(newOrder, "stock_quantity")}
           />
-        </TableHead>
+        </TableHead> */}
         <TableHead>
           <span className="sr-only">Thao tác</span>
         </TableHead>

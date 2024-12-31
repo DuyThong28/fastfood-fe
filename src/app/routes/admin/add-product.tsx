@@ -14,7 +14,7 @@ export type AddProductErrorState = {
   categoryId?: string;
   entryPrice?: string;
   price?: string;
-  stockQuantity?: string;
+  // stockQuantity?: string;
   description?: string;
   images?: string;
 };
@@ -26,7 +26,7 @@ export default function AddProductRoute() {
     categoryId: "",
     entryPrice: 0,
     price: 0,
-    stockQuantity: 0,
+    // stockQuantity: 0,
     description: "",
     images: [],
   });
@@ -56,9 +56,9 @@ export default function AddProductRoute() {
       newErrors.price = "Giá bán không được nhỏ hơn giá nhập";
     }
 
-    if (detailData.stockQuantity < 0) {
-      newErrors.stockQuantity = "Số lượng tồn kho không được nhỏ hơn 0";
-    }
+    // if (detailData.stockQuantity < 0) {
+    //   newErrors.stockQuantity = "Số lượng tồn kho không được nhỏ hơn 0";
+    // }
 
     if (!detailData.description.trim()) {
       newErrors.description = "Mô tả không được để trống";

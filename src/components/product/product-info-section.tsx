@@ -279,7 +279,7 @@ export const ProductInfoSection = ({
               )}
             </div>
           </div>
-          <div className="grid grid-cols-[120px_1fr]  gap-4">
+          {/* <div className="grid grid-cols-[120px_1fr]  gap-4">
             <Label className="text-right">Tồn kho</Label>
             <div>
               <Input
@@ -299,7 +299,7 @@ export const ProductInfoSection = ({
                 <p className="text-red-500 text-xs">{errors.stockQuantity}</p>
               )}
             </div>
-          </div>
+          </div> */}
         </div>
       </CardContent>
     </Card>

@@ -219,7 +219,7 @@ export default function ProductDetailRoute() {
                 >
                   <div className="text-gray-900">Số lượng</div>
                   <CounterInput
-                    max={detailData.stock_quantity}
+                    // max={detailData.stock_quantity}
                     value={quantity}
                     onChange={setQuantity}
                   />
@@ -227,7 +227,7 @@ export default function ProductDetailRoute() {
                 <Button
                   onClick={handleAddToCart}
                   type="button"
-                  disabled={detailData.stock_quantity === 0}
+                  // disabled={detailData.stock_quantity === 0}
                 >
                   Thêm vào giỏ hàng
                 </Button>

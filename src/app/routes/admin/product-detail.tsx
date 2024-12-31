@@ -21,7 +21,7 @@ export default function AdminProductDetailRoute() {
     image_url: [],
     id: "",
     entryPrice: 0,
-    stockQuantity: 0,
+    // stockQuantity: 0,
     categoryId: "",
     images: [],
     initCategory: null,
@@ -45,7 +45,7 @@ export default function AdminProductDetailRoute() {
         image_url: productData.image_url,
         id: productData.id,
         entryPrice: +productData.entry_price,
-        stockQuantity: +productData.stock_quantity,
+        // stockQuantity: +productData.stock_quantity,
         categoryId: productData.category_id,
         images: [],
         initCategory: categoryResponse.data.data,
@@ -78,9 +78,9 @@ export default function AdminProductDetailRoute() {
       newErrors.price = "Giá bán không được nhỏ hơn giá nhập";
     }
 
-    if (detailData.stockQuantity < 0) {
-      newErrors.stockQuantity = "Số lượng tồn kho không được nhỏ hơn 0";
-    }
+    // if (detailData.stockQuantity < 0) {
+    //   newErrors.stockQuantity = "Số lượng tồn kho không được nhỏ hơn 0";
+    // }
 
     if (!detailData.description.trim()) {
       newErrors.description = "Mô tả không được để trống";
