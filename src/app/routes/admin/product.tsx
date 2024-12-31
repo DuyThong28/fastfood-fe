@@ -49,7 +49,7 @@ export default function ProductRoute() {
           order: order,
           sortBy: sortBy,
           title: searchText,
-        },
+        }
       );
 
       setProducts(response.data.data);
@@ -83,9 +83,9 @@ export default function ProductRoute() {
     <DashBoardLayout>
       <main className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto">
         <div className="flex">
-          <h1 className="text-lg font-semibold">Sản phẩm</h1>
+          <h1 className="text-2xl font-bold text-[#A93F15]">Sản Phẩm</h1>
           <Button
-            className="gap-1 ml-auto"
+            className="gap-1 ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
             onClick={() => navigate("/portal/product/new")}
           >
             <PlusCircle className="h-3.5 w-3.5" />
@@ -125,11 +125,16 @@ export default function ProductRoute() {
                 onChange={(e) => setSearchText(e.target.value)}
                 onKeyDown={handleEnterPress}
               />
-              <Button onClick={async () => getAllProducts()}>Áp dụng</Button>
+              <Button
+                className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                onClick={async () => getAllProducts()}
+              >
+                Áp dụng
+              </Button>
             </div>
           </CardHeader>
           <CardContent>
-            <Table>
+            <Table className="text-[#A93F15]">
               <ProductTableHeader
                 onSort={handleOnSort}
                 sortBy={sortBy}

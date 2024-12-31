@@ -23,7 +23,7 @@ export const OrderTableRow: React.FC<OrderTableRowProps> = ({ data }) => {
 
   return (
     <div className="flex flex-col text-sm border border-gray-300 rounded-md">
-      <div className="flex flex-row justify-between py-2 px-4 bg-muted">
+      <div className="flex flex-row justify-between py-2 px-4 bg-[#FFF7E6]">
         <span>{data.user.full_name}</span>
         <span>{`Mã đơn hàng: ${data.id}`}</span>
       </div>
