@@ -116,7 +116,7 @@ export default function ProductTab() {
       const modifiedEndDate = dayjs(endDate).add(1, "day").format("YYYY-MM-DD");
       try {
         const response = await api.get(
-          `/statistics/soldProduct?start=${startDate}&end=${modifiedEndDate}`,
+          `/statistics/soldProduct?start=${startDate}&end=${modifiedEndDate}`
         );
         setSoldProducts(response.data.data);
       } catch (error) {
@@ -252,13 +252,13 @@ export default function ProductTab() {
             </div>
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="text-[#A93F15] font-semibold">
                   <TableCell>STT</TableCell>
                   <TableCell>Tên sản phẩm</TableCell>
                   <TableCell>Số bán ra</TableCell>
                 </TableRow>
               </TableHeader>
-              <TableBody>
+              <TableBody className="text-[#A93F15]">
                 {soldProducts.map((product: any, index: number) => (
                   <TableRow key={index}>
                     <TableCell>{index + 1}</TableCell>
@@ -284,11 +284,11 @@ export default function ProductTab() {
       </div>
       <Card>
         <CardHeader>
-          <h3 className="text-xl font-semibold">
+          <h3 className="text-xl font-semibold text-[#A93F15]">
             Top 5 sản phẩm bán chạy nhất
           </h3>
         </CardHeader>
-        <CardContent>
+        <CardContent className="text-[#A93F15]">
           <Table>
             <ProductTableHeader onSort={() => {}} order="" sortBy="" />
             <TableBody>

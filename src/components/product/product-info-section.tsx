@@ -69,7 +69,7 @@ export const ProductInfoSection = ({
 
   useEffect(() => {
     const imageUrls = detailData.images.map((file: File) =>
-      URL.createObjectURL(file),
+      URL.createObjectURL(file)
     );
     setSelectedImages(imageUrls);
     return () => {
@@ -85,7 +85,7 @@ export const ProductInfoSection = ({
       >
     )((prevData) => {
       const newImages = prevData.images.filter(
-        (_: File, i: number) => i !== index,
+        (_: File, i: number) => i !== index
       );
       return { ...prevData, images: newImages };
     });
@@ -94,7 +94,7 @@ export const ProductInfoSection = ({
   const handleDeleteInitImage = (index: number) => {
     (onChange as Dispatch<SetStateAction<UpdateProductDetail>>)((prevData) => {
       const newImages = prevData.image_url.filter(
-        (_: string, i: number) => i !== index,
+        (_: string, i: number) => i !== index
       );
       return { ...prevData, image_url: newImages };
     });
@@ -103,7 +103,9 @@ export const ProductInfoSection = ({
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Thông Tin Chi Tiết</CardTitle>
+        <CardTitle className="text-[#A93F15] text-lg font-semibold">
+          Thông Tin Chi Tiết
+        </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         <div className="grid grid-cols-[120px_1fr]  gap-4">
@@ -148,7 +150,7 @@ export const ProductInfoSection = ({
                         </div>
                       </div>
                     );
-                  },
+                  }
                 )}
               {selectedImages.map((item, index) => {
                 return (
