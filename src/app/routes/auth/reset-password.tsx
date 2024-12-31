@@ -88,12 +88,16 @@ export default function ResetPasswordRoute() {
     >
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl">Thiết Lập Mật Khẩu Mới</CardTitle>
+          <CardTitle className="text-2xl text-[#A93F15]">
+            Thiết Lập Mật Khẩu Mới
+          </CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
           {!codeParam && (
             <div className="grid gap-2">
-              <Label htmlFor="otp">OTP</Label>
+              <Label htmlFor="otp" className="text-[#A93F15]">
+                OTP
+              </Label>
               <div className="mx-auto">
                 <InputOTPPattern value={code} onChange={setCode} />
               </div>
@@ -103,7 +107,9 @@ export default function ResetPasswordRoute() {
             </div>
           )}
           <div className="grid gap-2">
-            <Label htmlFor="password">Mật khẩu</Label>
+            <Label htmlFor="password" className="text-[#A93F15]">
+              Mật khẩu
+            </Label>
             <PasswordInput
               id="password"
               name="password"
@@ -117,10 +123,17 @@ export default function ResetPasswordRoute() {
           </div>
         </CardContent>
         <CardFooter className="grid grid-cols-2 gap-4">
-          <Button variant="outline" type="button" onClick={handleCancel}>
+          <Button
+            variant="outline"
+            type="button"
+            className="text-[#A93F15] hover:text-[#A93F15]"
+            onClick={handleCancel}
+          >
             Hủy
           </Button>
-          <Button type="submit">Tiếp tục</Button>
+          <Button type="submit" className="bg-[#A93F15] hover:bg-[#FF7E00]">
+            Tiếp tục
+          </Button>
         </CardFooter>
       </Card>
     </form>
