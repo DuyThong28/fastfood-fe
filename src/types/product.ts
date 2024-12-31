@@ -12,7 +12,7 @@ export interface Product {
 export interface ProductDetail extends Product {
   entryPrice: number;
   description: string;
-  stockQuantity: number;
+  // stockQuantity: number;
   categoryId: string;
 }
 
@@ -31,7 +31,7 @@ export interface ResProductDetail extends Product {
   image_url: string[];
   id: string;
   entry_price: number;
-  stock_quantity: number;
+  // stock_quantity: number;
   category_id: string;
   sold_quantity: number;
   total_reviews: number;

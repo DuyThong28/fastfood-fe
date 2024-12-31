@@ -81,7 +81,7 @@ export default function HomeRoute() {
           page: meta.page,
           take: meta.take,
         },
-        { status: ProductStatus.ACTIVE },
+        { status: ProductStatus.ACTIVE }
       );
 
       setProducts(response.data.data);
@@ -95,7 +95,7 @@ export default function HomeRoute() {
     try {
       const response = await categoryService.getAllCategories(
         { page: metaCategory.page, take: metaCategory.take },
-        null,
+        null
       );
       setCategories(response.data.data);
       setMetaCategory(response.data.meta);
@@ -116,12 +116,12 @@ export default function HomeRoute() {
     let fakeProducts = products;
     if (querySearch) {
       fakeProducts = fakeProducts.filter((product) =>
-        product.title.includes(querySearch),
+        product.title.includes(querySearch)
       );
     }
     if (categorySelect.length > 0) {
       fakeProducts = fakeProducts.filter((product) =>
-        categorySelect.includes(product?.Category?.id || ""),
+        categorySelect.includes(product?.Category?.id || "")
       );
     }
     console.log("Pricefilter", priceFilter, priceFilter.to === undefined);
@@ -140,7 +140,7 @@ export default function HomeRoute() {
           "CheckGia",
           product.price.toLocaleString() >= priceFilter.from!,
           product.price.toLocaleString(),
-          priceFilter.from,
+          priceFilter.from
         );
         const convertPrice = Number(priceFilter.from);
         setErrors({});
@@ -161,11 +161,11 @@ export default function HomeRoute() {
         return Math.floor(product.avg_stars) === convertRating;
       });
     }
-    if (checkQuantity) {
-      fakeProducts = fakeProducts.filter(
-        (product) => product.stock_quantity > 0,
-      );
-    }
+    // if (checkQuantity) {
+    //   fakeProducts = fakeProducts.filter(
+    //     (product) => product.stock_quantity > 0,
+    //   );
+    // }
     if (sortPrice === "asc") {
       fakeProducts = fakeProducts.sort((a, b) => a.price - b.price);
     }

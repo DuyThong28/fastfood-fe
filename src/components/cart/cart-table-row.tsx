@@ -86,7 +86,7 @@ export const CartTableRow: React.FC<CartTableRowProps> = ({
         <TableCell>{formatNumber(data.product.price)}</TableCell>
         <TableCell>
           <CartCounterInput
-            max={data.product.stock_quantity}
+            // max={data.product.stock_quantity}
             value={data.quantity}
             onChange={handleUpdateCartItemQuantity}
           />

@@ -99,7 +99,7 @@ export const ProductTableRow: React.FC<ProductTableRowProps> = ({
         </TableCell>
         <TableCell>{data.entry_price}</TableCell>
         <TableCell>{data.price}</TableCell>
-        <TableCell>{data.stock_quantity}</TableCell>
+        {/* <TableCell>{data.stock_quantity}</TableCell> */}
         <TableCell>
           <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
