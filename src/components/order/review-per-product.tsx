@@ -39,8 +39,10 @@ export default function ReviewPerProduct({
       </div>
       {action === ReviewStatus.UNREVIEW && (
         <>
-          <div className="flex items-center">
-            <div>Chất lượng sản phẩm: </div>
+          <div className="flex items-center gap-x-2">
+            <div className="text-[#A93F15] font-medium">
+              Chất lượng sản phẩm:{" "}
+            </div>
             <div className="flex items-center">
               {[0, 1, 2, 3, 4].map((rating) => {
                 return (
@@ -68,7 +70,7 @@ export default function ReviewPerProduct({
               onChange(
                 (data as Review).productId,
                 "description",
-                e.target.value,
+                e.target.value
               )
             }
             disabled={action !== ReviewStatus.UNREVIEW}
@@ -101,7 +103,9 @@ export default function ReviewPerProduct({
                   );
                 })}
               </div>
-              <div>{data.description}</div>
+              <div className="text-[#A93F15] mt-2 font-medium">
+                {data.description}
+              </div>
             </div>
           </div>
         </>

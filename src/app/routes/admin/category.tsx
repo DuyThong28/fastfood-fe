@@ -137,7 +137,7 @@ export default function CategoryRoute() {
             </div>
           </CardHeader>
           <CardContent>
-            <Table className="text-[#A93F15]">
+            <Table>
               <CategoryTableHeader />
               <TableBody>
                 {categories.map((item, index) => (

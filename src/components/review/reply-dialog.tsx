@@ -82,7 +82,7 @@ const ReplyDialog = forwardRef<ReplyDialogRef, ReplyDialogProps>(
           } catch (err) {
             console.log(err);
           }
-        },
+        }
       );
     };
 
@@ -93,7 +93,7 @@ const ReplyDialog = forwardRef<ReplyDialogRef, ReplyDialogProps>(
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogContent className="max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>Đánh Giá</DialogTitle>
+                <DialogTitle className="text-[#A93F15]">Đánh Giá</DialogTitle>
               </DialogHeader>
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="space-y-4">
@@ -111,8 +111,10 @@ const ReplyDialog = forwardRef<ReplyDialogRef, ReplyDialogProps>(
                     </div>
                     <div>{review.product_id}</div>
                   </div>
-                  <div className="flex items-center">
-                    <div>Chất lượng sản phẩm: </div>
+                  <div className="flex items-center gap-x-3">
+                    <div className="text-[#A93F15] font-medium">
+                      Chất lượng sản phẩm:{" "}
+                    </div>
                     <div className="flex items-center">
                       {[0, 1, 2, 3, 4].map((rating) => (
                         <StarIcon
@@ -126,8 +128,11 @@ const ReplyDialog = forwardRef<ReplyDialogRef, ReplyDialogProps>(
                       ))}
                     </div>
                   </div>
-                  <div className="flex items-center">
-                    <div>{`Bình luận: ${review.description}`}</div>
+                  <div className="flex items-center gap-x-3">
+                    <div className="text-[#A93F15] font-medium">
+                      Bình luận:{" "}
+                    </div>
+                    <div>{review.description}</div>
                   </div>
                   <Textarea
                     placeholder="Hãy phản hồi bình luận."
@@ -139,6 +144,7 @@ const ReplyDialog = forwardRef<ReplyDialogRef, ReplyDialogProps>(
                   <Button
                     type="button"
                     variant="outline"
+                    className="text-[#A93F15] hover:text-[#A93F15]"
                     onClick={() => {
                       setReply("");
                       setIsOpen(false);
@@ -146,7 +152,12 @@ const ReplyDialog = forwardRef<ReplyDialogRef, ReplyDialogProps>(
                   >
                     Trở lại
                   </Button>
-                  <Button type="submit">Hoàn thành</Button>
+                  <Button
+                    type="submit"
+                    className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                  >
+                    Hoàn thành
+                  </Button>
                 </div>
               </form>
             </DialogContent>
@@ -154,7 +165,7 @@ const ReplyDialog = forwardRef<ReplyDialogRef, ReplyDialogProps>(
         </>
       )
     );
-  },
+  }
 );
 
 export default ReplyDialog;

@@ -37,7 +37,7 @@ export default function PurchaseRoute() {
           take: meta.take,
         },
         tabState,
-        searchText.trim(),
+        searchText.trim()
       );
       setOrders(response.data.data);
       setMeta(response.data.meta);
@@ -119,7 +119,12 @@ export default function PurchaseRoute() {
               onKeyDown={handleEnterPress}
             />
           </div>
-          <Button onClick={async () => getAllOrdersByUser()}>Áp dụng</Button>
+          <Button
+            className="bg-[#A93F15] hover:bg-[#FF7E00]"
+            onClick={async () => getAllOrdersByUser()}
+          >
+            Áp dụng
+          </Button>
         </div>
         <div className="flex flex-col gap-3">
           {orders.map((item, index) => {

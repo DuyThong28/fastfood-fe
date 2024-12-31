@@ -126,7 +126,7 @@ const ProductLayout = forwardRef<ProductLayoutRef, ProductLayoutProps>(
               className="w-11"
               onClick={() => navigate(routes.CUSTOMER.CART)}
             >
-              <ShoppingCart className="h-7 w-7 text-white" />
+              <ShoppingCart className="h-7 w-7 text-[#A93F15]" />
             </div>
             <div className="w-11">
               <UserDropDownMenu />

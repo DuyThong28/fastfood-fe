@@ -68,7 +68,9 @@ const CustomAlertDialog = forwardRef<
       <AlertDialogContent>
         <AlertDialogHeader>
           {alertInfo.title && (
-            <AlertDialogTitle>{alertInfo.title}</AlertDialogTitle>
+            <AlertDialogTitle className="text-[#A93F15] hover:text-[#A93F15]">
+              {alertInfo.title}
+            </AlertDialogTitle>
           )}
           {alertInfo.description && (
             <AlertDialogDescription>
@@ -77,8 +79,16 @@ const CustomAlertDialog = forwardRef<
           )}
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={handleCancel}>Hủy</AlertDialogCancel>
-          <AlertDialogAction onClick={handleContinue}>
+          <AlertDialogCancel
+            onClick={handleCancel}
+            className="text-[#A93F15] hover:text-[#A93F15]"
+          >
+            Hủy
+          </AlertDialogCancel>
+          <AlertDialogAction
+            onClick={handleContinue}
+            className="bg-[#A93F15] hover:bg-[#FF7E00]"
+          >
             Tiếp tục
           </AlertDialogAction>
         </AlertDialogFooter>

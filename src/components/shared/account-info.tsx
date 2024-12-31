@@ -213,9 +213,9 @@ export default function AccountInfo() {
             onChange={handleFileChange}
             style={{ display: "none" }}
           />
-          <div className="grid grid-cols-2 gap-6 text-[#A93F15]">
+          <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label className="font-semibold">Họ và tên</Label>
+              <Label className="font-semibold text-[#A93F15]">Họ và tên</Label>
               <Input
                 id="fullName"
                 type="fullName"
@@ -232,7 +232,7 @@ export default function AccountInfo() {
               )}
             </div>
             <div className="space-y-2">
-              <Label className="font-semibold">Ngày sinh</Label>
+              <Label className="font-semibold text-[#A93F15]">Ngày sinh</Label>
               <Input
                 id="birthday"
                 type="date"
@@ -250,9 +250,9 @@ export default function AccountInfo() {
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-6 text-[#A93F15]">
+          <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label className="font-semibold">Giới tính</Label>
+              <Label className="font-semibold text-[#A93F15]">Giới tính</Label>
               <Select
                 defaultValue={Gender.MALE}
                 value={accountData?.gender}
@@ -275,11 +275,12 @@ export default function AccountInfo() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="font-semibold">Số điện thoại</Label>
+              <Label className="font-semibold text-[#A93F15]">
+                Số điện thoại
+              </Label>
               <Input
                 id="phone"
                 type="number"
-                className="placeholder:text-[#A93F15]"
                 placeholder="Số điện thoại"
                 value={accountData.phone}
                 onChange={(e) =>
@@ -294,9 +295,9 @@ export default function AccountInfo() {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-6 text-[#A93F15]">
+          <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label className="font-semibold">Email</Label>
+              <Label className="font-semibold text-[#A93F15]">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -314,7 +315,7 @@ export default function AccountInfo() {
               )}
             </div>
             <div className="flex flex-col gap-2">
-              <Label className="font-semibold">Mật khẩu</Label>
+              <Label className="font-semibold text-[#A93F15]">Mật khẩu</Label>
               <Button
                 variant="secondary"
                 className="bg-[#fbf9f6] text-[#A93F15]"

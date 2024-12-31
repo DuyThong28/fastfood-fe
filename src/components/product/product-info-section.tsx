@@ -107,9 +107,9 @@ export const ProductInfoSection = ({
           Thông Tin Chi Tiết
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-6">
-        <div className="grid grid-cols-[120px_1fr]  gap-4">
-          <Label className="text-right">Tên sản phẩm</Label>
+      <CardContent className="flex flex-col gap-6 ">
+        <div className="grid grid-cols-[120px_1fr] gap-4">
+          <Label className="text-right text-[#A93F15]">Tên sản phẩm</Label>
           <div>
             <Input
               id="title"
@@ -126,7 +126,7 @@ export const ProductInfoSection = ({
           </div>
         </div>
         <div className="grid grid-cols-[120px_1fr_1fr] gap-4">
-          <Label className="text-right">Hình ảnh sản phẩm</Label>
+          <Label className="text-right text-[#A93F15]">Hình ảnh sản phẩm</Label>
           <div>
             <div className="flex flex-row gap-4">
               {isUpdate &&
@@ -208,7 +208,7 @@ export const ProductInfoSection = ({
           </div>
         </div>
         <div className="grid grid-cols-[120px_1fr]  gap-4">
-          <Label className="text-right">Danh mục</Label>
+          <Label className="text-right text-[#A93F15]">Danh mục</Label>
           <div>
             <Combobox
               onChange={(value) =>
@@ -222,7 +222,7 @@ export const ProductInfoSection = ({
           </div>
         </div>
         <div className="grid grid-cols-[120px_1fr]  gap-4">
-          <Label className="text-right">Mô tả sản phẩm</Label>
+          <Label className="text-right text-[#A93F15]">Mô tả sản phẩm</Label>
           <div>
             <Textarea
               placeholder="Mô tả sản phẩm"
@@ -243,7 +243,7 @@ export const ProductInfoSection = ({
         </div>
         <div className="grid grid-cols-3 gap-4">
           <div className="grid grid-cols-[120px_1fr]  gap-4">
-            <Label className="text-right">Giá đầu vào</Label>
+            <Label className="text-right text-[#A93F15]">Giá đầu vào</Label>
             <div>
               <Input
                 id="entryPrice"
@@ -264,7 +264,7 @@ export const ProductInfoSection = ({
             </div>
           </div>
           <div className="grid grid-cols-[120px_1fr]  gap-4 ">
-            <Label className="text-right">Giá bán</Label>
+            <Label className="text-right text-[#A93F15]">Giá bán</Label>
             <div>
               <Input
                 id="price"

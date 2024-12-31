@@ -23,7 +23,7 @@ export default function ProductOrderTableRow({
       <div className="flex flex-col gap-1">
         <div>{data.product.title}</div>
         <div className="text-sm">
-          <span className="text-[#A93F15]">Số lượng: </span>
+          <span>Số lượng: </span>
           {data.quantity}
         </div>
       </div>

@@ -242,7 +242,7 @@ export default function DashboardRoute() {
               Đơn hàng gần đây
             </h3>
           </CardHeader>
-          <CardContent className="flex flex-col gap-6 text-[#A93F15]">
+          <CardContent className="flex flex-col gap-6">
             <div className="space-y-4">
               <OrderTableHeader />
               {recentOrders.map((item, index) => {

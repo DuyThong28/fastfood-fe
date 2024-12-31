@@ -257,7 +257,7 @@ export default function RevenueTab() {
             </Select>
             <button
               onClick={handleExportReport}
-              className="bg-[#198754] text-white px-4 py-2 rounded"
+              className="bg-[#A93F15] text-white px-4 py-2 rounded"
             >
               Xuất Excel
             </button>
@@ -271,7 +271,7 @@ export default function RevenueTab() {
                 <TableCell>Doanh thu</TableCell>
               </TableRow>
             </TableHeader>
-            <TableBody className="text-[#A93F15]">
+            <TableBody>
               {statistics.map((stat, index) => (
                 <TableRow key={index}>
                   <TableCell>{index + 1}</TableCell>

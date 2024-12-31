@@ -34,9 +34,14 @@ export default function AccountAddressRoute() {
       <AddressDialog ref={dialogRef} onRefetch={getAllAddress} />
       <main className="flex flex-1 flex-col gap-6 py-6 pl-6">
         <div className="flex items-center">
-          <h1 className="text-lg font-semibold md:text-2xl">Địa Chỉ Của Tôi</h1>
+          <h1 className="text-lg font-semibold md:text-2xl text-[#A93F15]">
+            Địa Chỉ Của Tôi
+          </h1>
           <div className="ml-auto flex items-center gap-2">
-            <Button className="gap-1" onClick={handleAddNew}>
+            <Button
+              className="gap-1 bg-[#A93F15] hover:bg-[#FF7E00]"
+              onClick={handleAddNew}
+            >
               <PlusCircle className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                 Thêm mới địa chỉ

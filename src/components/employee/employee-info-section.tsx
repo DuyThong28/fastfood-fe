@@ -95,11 +95,11 @@ export const EmployeeInfoSection = ({
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Thông Tin Nhân viên</CardTitle>
+        <CardTitle className="text-[#A93F15]">Thông Tin Nhân viên</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         <div className="grid grid-cols-[120px_1fr]  gap-4">
-          <Label>Tên nhân viên</Label>
+          <Label className="text-[#A93F15]">Tên nhân viên</Label>
           <Input
             id="full_name"
             name="full_name"
@@ -115,7 +115,7 @@ export const EmployeeInfoSection = ({
         </div>
         {!isUpdate && (
           <div className="grid grid-cols-[120px_1fr]  gap-4">
-            <Label>Mật khẩu</Label>
+            <Label className="text-[#A93F15]">Mật khẩu</Label>
             <Input
               id="password"
               name="password"
@@ -132,7 +132,7 @@ export const EmployeeInfoSection = ({
         )}
         {isUpdate && (
           <div className="grid grid-cols-[120px_1fr_1fr] gap-4">
-            <Label>Hình ảnh nhân viên</Label>
+            <Label className="text-[#A93F15]">Hình ảnh nhân viên</Label>
             <div className="relative">
               <img
                 className="w-28 h-28 rounded-full border-4 border-[#C2E1FF]"
@@ -160,7 +160,7 @@ export const EmployeeInfoSection = ({
         )}
         <div className="grid grid-cols-[1fr_1fr] gap-4">
           <div className="space-y-2">
-            <Label>Giới tính</Label>
+            <Label className="text-[#A93F15]">Giới tính</Label>
             <Select
               defaultValue={Gender.MALE}
               value={detailData?.gender}
@@ -183,7 +183,7 @@ export const EmployeeInfoSection = ({
             </Select>
           </div>
           <div className="space-y-2">
-            <Label>Số diện thoại</Label>
+            <Label className="text-[#A93F15]">Số diện thoại</Label>
             <Input
               id="phone"
               type="number"
@@ -200,7 +200,7 @@ export const EmployeeInfoSection = ({
             )}
           </div>
           <div className="space-y-2">
-            <Label>Email</Label>
+            <Label className="text-[#A93F15]">Email</Label>
             <Input
               id="email"
               type="email"
@@ -217,14 +217,14 @@ export const EmployeeInfoSection = ({
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-right">Ngày sinh</Label>
+            <Label className="text-right text-[#A93F15]">Ngày sinh</Label>
             <Input
               id="birthday"
               type="date"
               required
               value={dateToString(
                 (detailData?.birthday && new Date(detailData?.birthday)) ||
-                  new Date(),
+                  new Date()
               )}
               onChange={(e) =>
                 handleChangeInput({

@@ -45,7 +45,7 @@ export const OrderRow: React.FC<OrderRowProps> = ({
           } catch (err) {
             console.log(err);
           }
-        },
+        }
       );
     }
   };
@@ -54,7 +54,7 @@ export const OrderRow: React.FC<OrderRowProps> = ({
     <>
       <CustomAlertDialog ref={alertDialogRef} />
       <SectionCard>
-        <div className="flex flex-row justify-between p-4">
+        <div className="flex flex-row justify-between p-4 text-[#A93F15] font-semibold">
           <span>{`Mã đơn hàng: ${data.id}`}</span>
           <span>{ORDER_STATUS[data.status]}</span>
         </div>
@@ -64,12 +64,16 @@ export const OrderRow: React.FC<OrderRowProps> = ({
           })}
         </div>
         <div className="w-full  flex flex-col gap-4 p-4 items-end">
-          <div>{`Tong tien: ${formatNumber(data.total_price)}`}</div>
+          <div className="text-[#A93F15] font-semibold">{`Tổng tiền: ${formatNumber(data.total_price)}`}</div>
           <div className="w-full flex flex-row">
             <div className="flex flex-row gap-4 ml-auto">
               {(data.status === OrderStatus.PENDING ||
                 data.status === OrderStatus.PROCESSING) && (
-                <Button variant="outline" onClick={handleCancelOrder}>
+                <Button
+                  variant="outline"
+                  className="text-[#A93F15] hover:text-[#A93F15]"
+                  onClick={handleCancelOrder}
+                >
                   Hủy đơn hàng
                 </Button>
               )}
@@ -77,6 +81,7 @@ export const OrderRow: React.FC<OrderRowProps> = ({
                 data.review_state === ReviewStatus.UNREVIEW && (
                   <Button
                     onClick={() => onReview(data.id, ReviewStatus.UNREVIEW)}
+                    className="bg-[#A93F15] hover:bg-[#FF7E00]"
                   >
                     Đánh giá
                   </Button>
@@ -85,6 +90,7 @@ export const OrderRow: React.FC<OrderRowProps> = ({
                 data.review_state === ReviewStatus.REVIEWED && (
                   <Button
                     onClick={() => onReview(data.id, ReviewStatus.REVIEWED)}
+                    className="bg-[#A93F15] hover:bg-[#FF7E00]"
                   >
                     Xem đánh giá
                   </Button>
@@ -93,11 +99,16 @@ export const OrderRow: React.FC<OrderRowProps> = ({
                 data.review_state === ReviewStatus.REPLIED && (
                   <Button
                     onClick={() => onReview(data.id, ReviewStatus.REPLIED)}
+                    className="bg-[#A93F15] hover:bg-[#FF7E00]"
                   >
                     Xem phản hồi
                   </Button>
                 )}
-              <Button variant="outline" onClick={handleShowDetail}>
+              <Button
+                variant="outline"
+                className="text-[#A93F15] hover:text-[#A93F15]"
+                onClick={handleShowDetail}
+              >
                 Xem chi tiết
               </Button>
             </div>

@@ -131,14 +131,17 @@ export default function AddEmployeeRoute() {
         <div className="flex flex-row gap-4 mx-auto mb-12">
           <Button
             variant="outline"
-            className="w-40"
+            className="w-40 text-[#A93F15] hover:text-[#A93F15]"
             type="button"
             onClick={() => navigate(routes.ADMIN.EMPLOYEE)}
           >
-            Huy
+            Hủy
           </Button>
-          <Button className="w-40" type="submit">
-            Luu
+          <Button
+            className="w-40 bg-[#A93F15] hover:bg-[#FF7E00]"
+            type="submit"
+          >
+            Lưu
           </Button>
         </div>
       </form>

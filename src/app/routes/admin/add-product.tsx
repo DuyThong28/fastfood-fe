@@ -101,7 +101,7 @@ export default function AddProductRoute() {
         <div className="flex flex-row gap-4 mx-auto mb-12">
           <Button
             variant="outline"
-            className="w-40 text-[#A93F15]"
+            className="w-40 text-[#A93F15] hover:text-[#A93F15]"
             type="button"
             onClick={() => navigate(routes.ADMIN.PRODUCT)}
           >

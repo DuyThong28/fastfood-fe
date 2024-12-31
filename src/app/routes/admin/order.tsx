@@ -108,7 +108,7 @@ export default function OrderRoute() {
           </TabsList>
         </Tabs>
         <Card x-chunk="dashboard-06-chunk-0">
-          <CardContent className="flex flex-col gap-6 mt-6 text-[#A93F15]">
+          <CardContent className="flex flex-col gap-6 mt-6">
             <div className="flex flex-row gap-4">
               <div className="relative w-full">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />

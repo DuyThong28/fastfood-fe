@@ -134,7 +134,7 @@ export default function ProductRoute() {
             </div>
           </CardHeader>
           <CardContent>
-            <Table className="text-[#A93F15]">
+            <Table>
               <ProductTableHeader
                 onSort={handleOnSort}
                 sortBy={sortBy}

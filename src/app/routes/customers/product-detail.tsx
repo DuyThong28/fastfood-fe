@@ -81,7 +81,7 @@ export default function ProductDetailRoute() {
           take: meta.take,
         },
         id,
-        { rating },
+        { rating }
       );
 
       setMeta(response.data.meta);
@@ -101,7 +101,7 @@ export default function ProductDetailRoute() {
   const handleAddToCart = async () => {
     if (
       detailData?.id &&
-      quantity <= detailData.stock_quantity &&
+      /* quantity <= detailData.stock_quantity && */
       quantity > 0
     ) {
       try {
@@ -179,7 +179,7 @@ export default function ProductDetailRoute() {
               </div>
             </div>
             <p className="text-xl text-gray-900">{`${formatNumber(
-              detailData.price,
+              detailData.price
             )}`}</p>
             <section aria-labelledby="options-heading">
               <div className="space-y-6">
@@ -227,6 +227,7 @@ export default function ProductDetailRoute() {
                 <Button
                   onClick={handleAddToCart}
                   type="button"
+                  className="bg-[#A93F15] hover:bg-[#FF7E00]"
                   // disabled={detailData.stock_quantity === 0}
                 >
                   Thêm vào giỏ hàng
@@ -237,7 +238,7 @@ export default function ProductDetailRoute() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Mô Tả Sản Phẩm</CardTitle>
+            <CardTitle className="text-[#A93F15]">Mô Tả Sản Phẩm</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-justify indent-4">{detailData.description}</p>
@@ -245,7 +246,7 @@ export default function ProductDetailRoute() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Đánh Giá Sản Phẩm</CardTitle>
+            <CardTitle className="text-[#A93F15]">Đánh Giá Sản Phẩm</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-6">
             <div className="border border-gray-300 rounded-md p-6 w-full flex flex-row gap-10 items-start bg-muted/50">

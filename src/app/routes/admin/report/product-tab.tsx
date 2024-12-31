@@ -245,7 +245,7 @@ export default function ProductTab() {
               </Select>
               <button
                 onClick={handleExportReport}
-                className="bg-[#198754] text-white px-4 py-2 rounded"
+                className="bg-[#A93F15] text-white px-4 py-2 rounded"
               >
                 Xuất Excel
               </button>
@@ -258,7 +258,7 @@ export default function ProductTab() {
                   <TableCell>Số bán ra</TableCell>
                 </TableRow>
               </TableHeader>
-              <TableBody className="text-[#A93F15]">
+              <TableBody>
                 {soldProducts.map((product: any, index: number) => (
                   <TableRow key={index}>
                     <TableCell>{index + 1}</TableCell>
@@ -288,7 +288,7 @@ export default function ProductTab() {
             Top 5 sản phẩm bán chạy nhất
           </h3>
         </CardHeader>
-        <CardContent className="text-[#A93F15]">
+        <CardContent>
           <Table>
             <ProductTableHeader onSort={() => {}} order="" sortBy="" />
             <TableBody>

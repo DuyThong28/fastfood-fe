@@ -36,9 +36,11 @@ export const ReviewItem: React.FC<ReviewItemProps> = ({ data }) => {
         <div>{dateToVNString(new Date(data.created_at))}</div>
         <div>{data.description}</div>
         {(data as ResReview).ReplyReviews && (
-          <div className="bg-muted p-4 rounded-md">
-            <p className="mb-2">Phản hồi của người bán</p>
-            <div>
+          <div className="bg-[#FFFBF7] p-4 rounded-md">
+            <p className="mb-2 text-[#A93F15] font-semibold">
+              Phản hồi của người bán
+            </p>
+            <div className="ml-3 mt-5">
               {(data as ResReview).ReplyReviews &&
                 (data as ResReview).ReplyReviews?.reply}
             </div>
