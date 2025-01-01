@@ -53,7 +53,10 @@ export default function Chatbot() {
       });
       const botMessage = {
         sender: "bot",
-        text: response.data.message,
+        text:
+          response.data.message === ""
+            ? "Xin lỗi, tôi không thể xử lý yêu cầu của bạn. Vui lòng thử lại!"
+            : response.data.message,
         results:
           type === "TRACK_ORDER"
             ? Array.isArray(response.data.data)
@@ -205,10 +208,12 @@ export default function Chatbot() {
                   msg.results &&
                   ((Array.isArray(msg.results) && msg.type === "BEST_SELLER") ||
                     msg.type === "CATEGORY") && (
-                    <div className="mt-3 ml-8 overflow-x-scroll thin-scrollbar">
-                      <div className="flex space-x-4 pb-2">
+                    <div className="mt-3 ml-8 overflow-x-auto">
+                      <div className="flex space-x-4 min-w-max pb-2">
                         {msg.results.map((result, index) => (
-                          <ProductItemCard key={index} data={result} />
+                          <div className="w-48">
+                            <ProductItemCard key={index} data={result} />
+                          </div>
                         ))}
                       </div>
                     </div>
@@ -221,12 +226,18 @@ export default function Chatbot() {
                         const orderDetail = tracking[0];
 
                         return (
-                          <div className="flex flex-col justify-center gap-y-3">
+                          <div className="flex flex-col justify-center items-center gap-y-3">
                             <div className="ml-8 mt-3 flex flex-col gap-y-3 w-11/12">
                               <div className="flex flex-col space-y-2">
-                                <p>
-                                  Trạng thái: {ORDER_STATUS[orderDetail.status]}
-                                </p>
+                                <SectionCard className="p-4 space-y-4">
+                                  <div className="font-medium">Trạng thái</div>
+                                  <div className="space-y-2 text-muted-foreground">
+                                    <div>
+                                      {ORDER_STATUS[orderDetail.status]}
+                                    </div>
+                                  </div>
+                                </SectionCard>
+
                                 <SectionCard className="p-4 space-y-4">
                                   <div className="font-medium">
                                     Địa chỉ nhận hàng
@@ -240,7 +251,7 @@ export default function Chatbot() {
                               </div>
                             </div>
                             <button
-                              className="px-6 py-2 rounded-lg bg-[#0A0A0A] text-white"
+                              className="px-6 py-2 rounded-lg text-sm bg-[#A93F15] hover:bg-[#FF7E00] w-fit text-white"
                               onClick={() =>
                                 navigate(`/customer/purchase/${tracking[0].id}`)
                               }
