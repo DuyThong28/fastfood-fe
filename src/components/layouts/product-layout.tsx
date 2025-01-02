@@ -9,6 +9,8 @@ import {
   useImperativeHandle,
   useState,
 } from "react";
+import useAuth from "@/hooks/useAuth";
+import { UserRole } from "@/common/enums";
 
 export interface ProductLayoutRef {
   getSearchText: () => string;
@@ -24,7 +26,7 @@ const ProductLayout = forwardRef<ProductLayoutRef, ProductLayoutProps>(
     const [searchText, setSearchText] = useState<string>("");
     const navigate = useNavigate();
     const location = useLocation();
-
+    const [auth, setAuth] = useAuth();
     useImperativeHandle(ref, () => {
       return {
         getSearchText() {
@@ -71,7 +73,7 @@ const ProductLayout = forwardRef<ProductLayoutRef, ProductLayoutProps>(
 
     return (
       <div className="h-screen w-full grid grid-rows-[96px_1fr]">
-        <div className="px-40 h-full w-full flex flex-row items-center bg-[#fff] gap-16">
+        <div className="px-40 h-full w-full flex flex-row items-center bg-[#fff] gap-16 border-b">
           <a href="/" className="text-white text-nowrap  text-2xl font-bold">
             <svg
               width="239"
@@ -121,17 +123,35 @@ const ProductLayout = forwardRef<ProductLayoutRef, ProductLayoutProps>(
               <Search className="w-6 h-6 text-white" />
             </Button>
           </div>
-          <div className="flex flex-row gap-4 w-fit items-center">
-            <div
-              className="w-11"
-              onClick={() => navigate(routes.CUSTOMER.CART)}
-            >
-              <ShoppingCart className="h-7 w-7 text-[#A93F15]" />
+          {!auth && (
+            <div className="flex flex-row gap-4 w-fit items-center">
+              <div
+                className="text-[#A93F15] font-bold text-nowrap hover:text-[#FF7E00]"
+                onClick={() => navigate(routes.AUTH.SIGN_UP)}
+              >
+                Đăng ký
+              </div>
+              <div
+                className="text-[#A93F15] font-bold text-nowrap hover:text-[#FF7E00]"
+                onClick={() => navigate(routes.AUTH.SIGN_IN)}
+              >
+                Đăng Nhập
+              </div>
             </div>
-            <div className="w-11">
-              <UserDropDownMenu />
+          )}
+          {auth && auth.role === UserRole.CUSTOMER && (
+            <div className="flex flex-row gap-4 w-fit items-center">
+              <div
+                className="w-11"
+                onClick={() => navigate(routes.CUSTOMER.CART)}
+              >
+                <ShoppingCart className="h-7 w-7 text-[#A93F15]" />
+              </div>
+              <div className="w-11">
+                <UserDropDownMenu />
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="px-[10%] flex flex-col gap-6 bg-[#f9f9f9] overflow-y-auto">
           {children}

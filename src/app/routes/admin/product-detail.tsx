@@ -9,7 +9,6 @@ import categoryService from "@/services/category.service";
 import { routes } from "@/config";
 import { AddProductErrorState } from "./add-product";
 import { toastSuccess } from "@/utils/toast";
-// import { ProductInfoSection } from "@/components/product/product-info-section";
 
 export default function AdminProductDetailRoute() {
   const param = useParams();
@@ -20,8 +19,6 @@ export default function AdminProductDetailRoute() {
     description: "",
     image_url: [],
     id: "",
-    entryPrice: 0,
-    // stockQuantity: 0,
     categoryId: "",
     images: [],
     initCategory: null,
@@ -34,7 +31,7 @@ export default function AdminProductDetailRoute() {
       const productResponse = await productService.getProductById(id);
       const productData = productResponse.data.data;
       const categoryResponse = await categoryService.getCategoryById(
-        productData.category_id,
+        productData.category_id
       );
 
       setDetailData({
@@ -44,8 +41,6 @@ export default function AdminProductDetailRoute() {
         description: productData.description,
         image_url: productData.image_url,
         id: productData.id,
-        entryPrice: +productData.entry_price,
-        // stockQuantity: +productData.stock_quantity,
         categoryId: productData.category_id,
         images: [],
         initCategory: categoryResponse.data.data,
@@ -66,21 +61,9 @@ export default function AdminProductDetailRoute() {
       newErrors.categoryId = "Danh mục không được để trống";
     }
 
-    if (detailData.entryPrice <= 0) {
-      newErrors.entryPrice = "Giá nhập phải lớn hơn 0";
-    }
-
     if (detailData.price <= 0) {
       newErrors.price = "Giá bán phải lớn hơn 0";
     }
-
-    if (detailData.price < detailData.entryPrice) {
-      newErrors.price = "Giá bán không được nhỏ hơn giá nhập";
-    }
-
-    // if (detailData.stockQuantity < 0) {
-    //   newErrors.stockQuantity = "Số lượng tồn kho không được nhỏ hơn 0";
-    // }
 
     if (!detailData.description.trim()) {
       newErrors.description = "Mô tả không được để trống";
@@ -120,30 +103,24 @@ export default function AdminProductDetailRoute() {
         onSubmit={handleSubmit}
         noValidate
       >
-        {/* <Tabs defaultValue="detail">
-          <div className="flex items-center">
-            <TabsList>
-              <TabsTrigger value="detail">Thong tin chi tiet</TabsTrigger>
-              <TabsTrigger value="sale">Thong tin ban hang</TabsTrigger>
-            </TabsList>
-          </div>
-        </Tabs> */}
         <ProductInfoSection
           detailData={detailData}
           onChange={setDetailData}
           errors={errors}
         />
-        {/* <ProductSaleSection /> */}
         <div className="flex flex-row gap-4 mx-auto mb-12">
           <Button
             variant="outline"
-            className="w-40"
+            className="w-40 text-[#A93F15] hover:text-[#A93F15]"
             type="button"
             onClick={() => navigate(routes.ADMIN.PRODUCT)}
           >
             Hủy
           </Button>
-          <Button className="w-40" type="submit">
+          <Button
+            type="submit"
+            className=" w-40 rounded-sm bg-[#A93F15] hover:bg-[#FF7E00]"
+          >
             Lưu
           </Button>
         </div>

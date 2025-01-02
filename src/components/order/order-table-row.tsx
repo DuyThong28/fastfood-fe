@@ -60,9 +60,9 @@ export const OrderTableRow: React.FC<OrderTableRowProps> = ({ data }) => {
               >
                 Xem chi tiết
               </div>
-              <div className="py-2 px-3 w-full hover:bg-[#F4F4F5]">
+              {/* <div className="py-2 px-3 w-full hover:bg-[#F4F4F5]">
                 In phiếu giao
-              </div>
+              </div> */}
             </PopoverContent>
           </Popover>
         </div>

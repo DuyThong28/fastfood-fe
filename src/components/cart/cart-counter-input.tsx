@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
 interface CounterInputProps {
-  max: number;
   value: number;
   onChange: (value: number) => Promise<void>;
 }
 
 export const CartCounterInput: React.FC<CounterInputProps> = ({
-  max,
   value,
   onChange,
 }) => {
@@ -21,9 +19,7 @@ export const CartCounterInput: React.FC<CounterInputProps> = ({
   };
 
   const handleIncrease = async () => {
-    if (inputValue < max) {
       await onChange(inputValue + 1);
-    }
   };
 
   const handleDerease = async () => {

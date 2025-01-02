@@ -56,7 +56,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
           {slides.map((imageUrl, index) => (
             <div
               className={"flex-shrink-0 flex-grow-0 border border-#3b74a6-500 aspect-square w-[25%]".concat(
-                index === selectedIndex ? " border border-black" : "",
+                index === selectedIndex ? " border border-[#A93F15]" : "",
               )}
               key={index}
               onClick={() => onThumbClick(index)}

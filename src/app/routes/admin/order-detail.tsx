@@ -65,6 +65,26 @@ export default function AdminOrderDetailRoute() {
     }
   };
 
+  const handleFailDelivery = async () => {
+    if (orderDetail?.id) {
+      alertDialogRef.current?.onOpen(
+        {
+          title: `Đơn hàng giao thất bại?`,
+          description: "Xác nhận đơn hàng giao thất bại",
+        },
+        async () => {
+          try {
+            await orderService.cancelOrder(orderDetail.id);
+            await getOrderById(orderDetail.id);
+            toastSuccess("Cập nhật trạng thái đơn hàng thành công");
+          } catch (err) {
+            console.log(err);
+          }
+        }
+      );
+    }
+  };
+
   const handleUpdateOrderStatus = async () => {
     if (
       orderDetail?.id &&

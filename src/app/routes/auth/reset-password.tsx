@@ -86,7 +86,7 @@ export default function ResetPasswordRoute() {
       onSubmit={handleSubmit}
       noValidate
     >
-      <Card className="w-full max-w-sm">
+      <Card className="w-full max-w-sm z-10">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl text-[#A93F15]">
             Thiết Lập Mật Khẩu Mới
@@ -136,6 +136,7 @@ export default function ResetPasswordRoute() {
           </Button>
         </CardFooter>
       </Card>
+      <div className="w-full h-2/5 z-0 absolute bottom-0 left-0 bg-[#A93F15]" />
     </form>
   );
 }

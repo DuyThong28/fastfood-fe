@@ -346,18 +346,6 @@ export default function HomeRoute() {
                 <SelectItem value="des">Giá: Cao đến thấp</SelectItem>
               </SelectContent>
             </Select>
-            <div className="flex items-center w-full gap-2">
-              <Checkbox
-                className="bg-white p-0"
-                id="quantity"
-                checked={checkQuantity}
-                onCheckedChange={() => setCheckQuantity(!checkQuantity)}
-                onClick={(e) => e.stopPropagation()}
-              />
-              <label htmlFor="quantity" className="w-full text-base text-black">
-                Còn hàng
-              </label>
-            </div>
           </div>
           <div className="w-full grid grid-cols-3 gap-4 py-4">
             {filterProducts.map((item, index) => {

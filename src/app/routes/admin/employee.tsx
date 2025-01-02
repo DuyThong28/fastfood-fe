@@ -75,7 +75,9 @@ export default function EmployeeRoute() {
     <DashBoardLayout>
       <main className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto">
         <div className="flex">
-          <h1 className="text-lg font-semibold">Danh Sách Nhân Viên</h1>
+          <h1 className="text-2xl font-bold text-[#A93F15]">
+            Danh Sách Nhân Viên
+          </h1>
           <Button
             className="gap-1 ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
             onClick={() => navigate(routes.ADMIN.ADD_EMPLOYEE)}
@@ -116,7 +118,9 @@ export default function EmployeeRoute() {
                   onKeyDown={handleEnterPress}
                 />
               </div>
-              <Button>Áp dụng</Button>
+              <Button className="bg-[#A93F15] hover:bg-[#FF7E00]">
+                Áp dụng
+              </Button>
             </div>
             <Table>
               <CustomerTableHeader />

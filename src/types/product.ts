@@ -10,9 +10,7 @@ export interface Product {
 }
 
 export interface ProductDetail extends Product {
-  entryPrice: number;
   description: string;
-  // stockQuantity: number;
   categoryId: string;
 }
 

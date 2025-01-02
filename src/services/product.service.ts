@@ -18,9 +18,6 @@ class ProductService {
     formData.append("categoryId", trimmedData.categoryId);
     formData.append("title", trimmedData.title);
     formData.append("price", trimmedData.price.toString());
-    // formData.append("stockQuantity", trimmedData.stockQuantity.toString());
-    formData.append("entryPrice", trimmedData?.entryPrice.toString());
-    formData.append("author", "John");
     if (trimmedData.images && trimmedData.images.length > 0) {
       trimmedData.images.forEach((image) => {
         formData.append("images", image);
@@ -31,7 +28,7 @@ class ProductService {
 
   async getAllProducts(
     { page, take }: Page,
-    query: ProductQuery,
+    query: ProductQuery
   ): Promise<ResGetAllProducts> {
     let url = `/products/get-all?page=${page}&take=${take}`;
     const trimmedData = trimObjectAttributes(query);
@@ -63,8 +60,6 @@ class ProductService {
     formData.append("categoryId", trimmedData.categoryId);
     formData.append("title", trimmedData.title);
     formData.append("price", trimmedData.price.toString());
-    // formData.append("stockQuantity", trimmedData.stockQuantity.toString());
-    formData.append("entryPrice", trimmedData.entryPrice.toString());
     formData.append("author", "John");
     if (trimmedData.image_url && trimmedData.image_url.length > 0) {
       trimmedData.image_url.forEach((image) => {
