@@ -19,11 +19,14 @@ export default function SignInSuccess() {
         userId: id,
         role,
       });
+      localStorage.setItem("role", role);
       toastSuccess("Đăng nhập thành công");
       if (role === UserRole.ADMIN) {
         navigate("/dashboad");
       } else if (role === UserRole.CUSTOMER) {
         navigate("/");
+      } else if (role === UserRole.STAFF) {
+        navigate("/dashboad");
       }
     }
   }, [accessToken]);
