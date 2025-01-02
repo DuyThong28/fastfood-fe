@@ -1,12 +1,12 @@
 import { ClipboardList, MapPin, UserRound } from "lucide-react";
 import { routes } from "@/config";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ProductLayout from "./product-layout";
 
 const inActive =
-  "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary";
+  "flex items-center gap-3 rounded-lg px-3 py-2 text-[#A93F15] transition-all hover:text-[#FF7E00]";
 const active =
-  "flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary";
+  "flex items-center gap-3 rounded-lg bg-[#A93F15] px-3 py-2 text-white transition-all hover:text-white";
 
 export default function CustomerLayout({
   children,
@@ -15,15 +15,16 @@ export default function CustomerLayout({
 }) {
   const location = useLocation();
   const { pathname } = location;
+  const navigate = useNavigate();
 
   return (
     <ProductLayout>
-      <div className="grid w-full grid-cols-[220px_1fr]">
+      <div className="grid w-full h-full grid-cols-[220px_1fr]">
         <div className=" border-x bg-white">
           <div className="flex-1">
             <nav className="grid items-start  text-sm font-medium px-4 mt-6">
-              <a
-                href={routes.CUSTOMER.ACCOUNT_PROFILE}
+              <button
+                onClick={() => navigate(routes.CUSTOMER.ACCOUNT_PROFILE)}
                 className={
                   pathname === routes.CUSTOMER.ACCOUNT_PROFILE
                     ? active
@@ -31,10 +32,10 @@ export default function CustomerLayout({
                 }
               >
                 <UserRound className="h-4 w-4" />
-                Tai khoan
-              </a>
-              <a
-                href={routes.CUSTOMER.PURCHASE}
+                Tài Khoản
+              </button>
+              <button
+                onClick={() => navigate(routes.CUSTOMER.PURCHASE)}
                 className={
                   pathname.includes(routes.CUSTOMER.PURCHASE)
                     ? active
@@ -42,10 +43,10 @@ export default function CustomerLayout({
                 }
               >
                 <ClipboardList className="w-4 h-4" />
-                Don Mua
-              </a>
-              <a
-                href={routes.CUSTOMER.ACCOUNT_ADDRESS}
+                Đơn Mua
+              </button>
+              <button
+                onClick={() => navigate(routes.CUSTOMER.ACCOUNT_ADDRESS)}
                 className={
                   pathname === routes.CUSTOMER.ACCOUNT_ADDRESS
                     ? active
@@ -53,8 +54,8 @@ export default function CustomerLayout({
                 }
               >
                 <MapPin className="h-4 w-4" />
-                Dia Chi
-              </a>
+                Địa Chỉ
+              </button>
             </nav>
           </div>
         </div>

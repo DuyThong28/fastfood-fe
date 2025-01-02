@@ -29,7 +29,7 @@ export function Combobox({ onChange, initCategory }: ComboboxProps) {
   const [textSearch, setTextSearch] = useState<string>("");
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    null,
+    null
   );
 
   const getAllCategories = useCallback(
@@ -46,9 +46,9 @@ export function Combobox({ onChange, initCategory }: ComboboxProps) {
       {
         leading: true,
         trailing: true,
-      },
+      }
     ),
-    [],
+    []
   );
 
   useEffect(() => {
@@ -86,9 +86,9 @@ export function Combobox({ onChange, initCategory }: ComboboxProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="justify-between font-medium"
+          className="justify-between font-medium text-muted-foreground"
         >
-          {selectedCategory ? selectedCategory.name : "Chon mot danh muc..."}
+          {selectedCategory ? selectedCategory.name : "Chọn một danh mục..."}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -104,13 +104,13 @@ export function Combobox({ onChange, initCategory }: ComboboxProps) {
             <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
             <input
               className="flex h-9 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-              placeholder="Chon mot danh muc..."
+              placeholder="Chọn một danh mục..."
               value={textSearch}
               onChange={handleOnChangeInput}
             />
           </div>
           <CommandList>
-            <CommandEmpty>Khong tim thay danh muc</CommandEmpty>
+            <CommandEmpty>Không tìm thấy danh mục</CommandEmpty>
             <CommandGroup>
               {categories.map((category) => (
                 <CommandItem
@@ -121,7 +121,7 @@ export function Combobox({ onChange, initCategory }: ComboboxProps) {
                     setSelectedCategory(
                       selectedCategory && selectedCategory.id === currentValue
                         ? null
-                        : category,
+                        : category
                     );
                     setOpen(false);
                   }}
@@ -132,7 +132,7 @@ export function Combobox({ onChange, initCategory }: ComboboxProps) {
                       "ml-auto h-4 w-4",
                       selectedCategory && selectedCategory.id === category.id
                         ? "opacity-100"
-                        : "opacity-0",
+                        : "opacity-0"
                     )}
                   />
                 </CommandItem>

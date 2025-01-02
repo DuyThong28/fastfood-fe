@@ -8,19 +8,17 @@ import {
   ResGetOrdersByUser,
 } from "@/types/order";
 import { Review } from "@/types/review";
+import { trimObjectAttributes } from "@/utils/format";
 
 class OrderService {
   async getOrdersByUser(
     { page, take }: Page,
     status: string,
-    search: string
+    search: string,
   ): Promise<ResGetOrdersByUser> {
-    if (status === "all")
-      return api.get(`orders/get-all?page=${page}&take=${take}&search=${search}`);
-    else
-      return api.get(
-        `orders/get-all?page=${page}&take=${take}&status=${status}&search=${search}`,
-      );
+    let url = `orders/get-all?page=${page}&take=${take}&search=${search.trim()}&sortBy=created_at&order=desc`;
+    if (status !== "all") url += `&status=${status}`;
+    return api.get(url);
   }
 
   async getOrderDetail(id: string): Promise<ResGetOrderById> {
@@ -30,11 +28,11 @@ class OrderService {
   async getOrdersByAdmin(
     { page, take }: Page,
     getOrdersQuery: {
-      status: string,
-      search: string,
-    }
+      status: string;
+      search: string;
+    },
   ): Promise<ResGetOrdersByUser> {
-    let url = `/orders/list?page=${page}&take=${take}&search=${getOrdersQuery.search}`;
+    let url = `/orders/list?page=${page}&take=${take}&search=${getOrdersQuery.search.trim()}&sortBy=created_at&order=desc`;
     if (getOrdersQuery.status in ORDER_STATUS)
       url += `&status=${getOrdersQuery.status}`;
     return api.get(url);
@@ -49,23 +47,24 @@ class OrderService {
   }
 
   async createOrder(data: CreateOrder) {
-    return api.post("orders/create", data);
+    const trimmedData = trimObjectAttributes(data);
+    return api.post("orders/create", trimmedData);
   }
 
   async updateOrderStatus({ id, status }: { id: string; status: OrderStatus }) {
     return api.post(`orders/status/update/${id}`, { status: status });
   }
 
-  async reviewBook({
+  async reviewProduct({
     orderId,
     orderDetailId,
-    bookId,
+    productId,
     rating,
     description,
     title,
   }: Review) {
     return api.post(
-      `orders/get-details/${orderId}/order-details/${orderDetailId}/${bookId}`,
+      `orders/get-details/${orderId}/order-details/${orderDetailId}/${productId}`,
       {
         star: rating,
         description,

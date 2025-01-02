@@ -27,11 +27,12 @@ export const ReviewTableRow: React.FC<ReviewTableRowProps> = ({
           className="aspect-square rounded-md object-cover"
           height="64"
           src={
-            (data.book.image_url.length > 0 && data.book.image_url[0]) || image
+            (data.product.image_url.length > 0 && data.product.image_url[0]) ||
+            image
           }
           width="64"
         />
-        {data.book.title}
+        {data.product.title}
       </TableCell>
 
       <TableCell>{data.rating}</TableCell>

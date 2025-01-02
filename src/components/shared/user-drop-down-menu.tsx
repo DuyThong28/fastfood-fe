@@ -18,6 +18,7 @@ import authService from "@/services/auth.service";
 import { removeAccessToken } from "@/lib/api-client";
 import useUser from "@/hooks/useUser";
 import { DEFAULT_AVATAR_URL } from "@/common/constants/user";
+import { toastSuccess } from "@/utils/toast";
 
 export default function UserDropDownMenu() {
   const [auth, setAuth] = useAuth();
@@ -27,6 +28,7 @@ export default function UserDropDownMenu() {
   const handleLogOut = async () => {
     try {
       const response = await authService.logOut();
+      toastSuccess("Đăng xuất thành công");
       if (response) {
         setAuth(null);
         removeAccessToken();
@@ -68,7 +70,7 @@ export default function UserDropDownMenu() {
             onClick={() => navigate(routes.ADMIN.ACCOUNT_PROFILE)}
           >
             <User className="w-4 h-4 mr-2" />
-            <span>Tai khoan cua toi</span>
+            <span>Tài khoản của tôi</span>
           </DropdownMenuItem>
         )}
         {auth && auth.role === UserRole.CUSTOMER && (
@@ -77,20 +79,20 @@ export default function UserDropDownMenu() {
               onClick={() => navigate(routes.CUSTOMER.ACCOUNT_PROFILE)}
             >
               <User className="w-4 h-4 mr-2" />
-              <span>Tai khoan cua toi</span>
+              <span>Tài khoản của tôi</span>
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => navigate(routes.CUSTOMER.PURCHASE)}
             >
               <ClipboardList className="w-4 h-4 mr-2" />
-              <span>Don mua</span>
+              <span>Đơn mua</span>
             </DropdownMenuItem>
           </>
         )}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogOut}>
           <LogOut className="w-4 h-4 mr-2" />
-          <span>Dang xuat</span>
+          <span>Đăng xuất</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

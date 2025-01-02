@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
 interface CounterInputProps {
-  max: number;
   value: number;
   onChange: (value: number) => Promise<void>;
 }
 
 export const CartCounterInput: React.FC<CounterInputProps> = ({
-  max,
   value,
   onChange,
 }) => {
@@ -21,9 +19,7 @@ export const CartCounterInput: React.FC<CounterInputProps> = ({
   };
 
   const handleIncrease = async () => {
-    if (inputValue < max) {
       await onChange(inputValue + 1);
-    }
   };
 
   const handleDerease = async () => {
@@ -35,7 +31,6 @@ export const CartCounterInput: React.FC<CounterInputProps> = ({
   const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      await onChange(inputValue);
       if (inputRef.current) {
         inputRef.current.blur();
       }
@@ -44,6 +39,9 @@ export const CartCounterInput: React.FC<CounterInputProps> = ({
 
   const handleBlur = async () => {
     await onChange(inputValue);
+    if (inputValue === 0) {
+      setInputValue(value);
+    }
   };
 
   useEffect(() => {

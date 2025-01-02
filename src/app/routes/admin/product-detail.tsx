@@ -1,115 +1,127 @@
 import DashBoardLayout from "@/components/layouts/dashboard-layout";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useParams } from "react-router-dom";
-import bookService from "@/services/book.service";
+import productService from "@/services/product.service";
 import { FormEvent, useEffect, useState } from "react";
-import { UpdateBookDetail } from "@/types/book";
+import { UpdateProductDetail } from "@/types/product";
 import { ProductInfoSection } from "@/components/product/product-info-section";
 import categoryService from "@/services/category.service";
 import { routes } from "@/config";
-// import { ProductInfoSection } from "@/components/product/product-info-section";
+import { AddProductErrorState } from "./add-product";
+import { toastSuccess } from "@/utils/toast";
 
-export default function ProductDetailRoute() {
+export default function AdminProductDetailRoute() {
   const param = useParams();
-  const [detailData, setDetailData] = useState<UpdateBookDetail>({
+  const [detailData, setDetailData] = useState<UpdateProductDetail>({
     title: "",
     author: "NXBVN",
     price: 0,
     description: "",
     image_url: [],
     id: "",
-    entryPrice: 0,
-    stockQuantity: 0,
     categoryId: "",
     images: [],
     initCategory: null,
   });
-
+  const [errors, setErrors] = useState<AddProductErrorState>({});
   const navigate = useNavigate();
 
-  const getBookDetail = async (id: string) => {
+  const getProductDetail = async (id: string) => {
     try {
-      const bookResponse = await bookService.getBookById(id);
-      const bookData = bookResponse.data.data;
+      const productResponse = await productService.getProductById(id);
+      const productData = productResponse.data.data;
       const categoryResponse = await categoryService.getCategoryById(
-        bookData.category_id,
+        productData.category_id
       );
 
       setDetailData({
-        title: bookData.title,
-        author: bookData.author,
-        price: bookData.price,
-        description: bookData.description,
-        image_url: bookData.image_url,
-        id: bookData.id,
-        entryPrice: bookData.entry_price,
-        stockQuantity: bookData.stock_quantity,
-        categoryId: bookData.category_id,
+        title: productData.title,
+        author: productData.author,
+        price: +productData.price,
+        description: productData.description,
+        image_url: productData.image_url,
+        id: productData.id,
+        categoryId: productData.category_id,
         images: [],
         initCategory: categoryResponse.data.data,
       });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-      // const imagePreview =
-      //   bookData.image_url.length > 0 && bookData.image_url[0];
-      // setDetailData({
-      //   title: bookData.title,
-      //   author: bookData.author,
-      //   categoryId: bookData.category_id,
-      //   entryPrice: bookData.entry_price,
-      //   price: bookData.price,
-      //   stockQuantity: bookData.stock_quantity,
-      //   description: bookData.description,
-      //   images: [],
-      //   preview: imagePreview || "",
-      //   id: bookData.id,
-      // });
+  const validateInputs = () => {
+    const newErrors: AddProductErrorState = {};
+
+    if (!detailData.title.trim()) {
+      newErrors.title = "Tên sản phẩm không được để trống";
+    }
+
+    if (!detailData.categoryId.trim()) {
+      newErrors.categoryId = "Danh mục không được để trống";
+    }
+
+    if (detailData.price <= 0) {
+      newErrors.price = "Giá bán phải lớn hơn 0";
+    }
+
+    if (!detailData.description.trim()) {
+      newErrors.description = "Mô tả không được để trống";
+    }
+
+    if (detailData.images.length + detailData.image_url.length < 1) {
+      newErrors.images = "Hình ảnh không được để trống";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!validateInputs()) return;
+    try {
+      await productService.updateProductById(detailData);
+      toastSuccess("Cập nhật sản phẩm thành công");
+      navigate(routes.ADMIN.PRODUCT);
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
-    if (param?.bookId) {
-      getBookDetail(param.bookId);
+    if (param?.productId) {
+      getProductDetail(param.productId);
     }
   }, [param]);
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      await bookService.updateBookById(detailData);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   return (
     <DashBoardLayout>
       <form
         className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto"
         onSubmit={handleSubmit}
+        noValidate
       >
-        {/* <Tabs defaultValue="detail">
-          <div className="flex items-center">
-            <TabsList>
-              <TabsTrigger value="detail">Thong tin chi tiet</TabsTrigger>
-              <TabsTrigger value="sale">Thong tin ban hang</TabsTrigger>
-            </TabsList>
-          </div>
-        </Tabs> */}
-        <ProductInfoSection detailData={detailData} onChange={setDetailData} />
-        {/* <ProductSaleSection /> */}
+        <ProductInfoSection
+          detailData={detailData}
+          onChange={setDetailData}
+          errors={errors}
+        />
         <div className="flex flex-row gap-4 mx-auto mb-12">
           <Button
             variant="outline"
-            className="w-40"
+            className="w-40 text-[#A93F15] hover:text-[#A93F15]"
             type="button"
             onClick={() => navigate(routes.ADMIN.PRODUCT)}
           >
-            Huy
+            Hủy
           </Button>
-          <Button className="w-40" type="submit">
-            Luu
+          <Button
+            type="submit"
+            className=" w-40 rounded-sm bg-[#A93F15] hover:bg-[#FF7E00]"
+          >
+            Lưu
           </Button>
         </div>
       </form>

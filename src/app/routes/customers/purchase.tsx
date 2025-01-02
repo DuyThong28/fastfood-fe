@@ -37,7 +37,7 @@ export default function PurchaseRoute() {
           take: meta.take,
         },
         tabState,
-        searchText
+        searchText.trim()
       );
       setOrders(response.data.data);
       setMeta(response.data.meta);
@@ -67,7 +67,7 @@ export default function PurchaseRoute() {
         <Tabs value={tabState} className="mx-auto">
           <TabsList>
             <TabsTrigger value="all" onClick={() => setTabState("all")}>
-              Tat ca
+              Tất cả
             </TabsTrigger>
             <TabsTrigger
               value={OrderStatus.PENDING}
@@ -112,14 +112,19 @@ export default function PurchaseRoute() {
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Nhap ID don hang"
+              placeholder="Nhập mã đơn hàng"
               className="w-full rounded-lg bg-background pl-8"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               onKeyDown={handleEnterPress}
             />
           </div>
-          <Button onClick={async () => getAllOrdersByUser()}>Ap dung</Button>
+          <Button
+            className="bg-[#A93F15] hover:bg-[#FF7E00]"
+            onClick={async () => getAllOrdersByUser()}
+          >
+            Áp dụng
+          </Button>
         </div>
         <div className="flex flex-col gap-3">
           {orders.map((item, index) => {

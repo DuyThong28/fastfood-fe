@@ -8,7 +8,7 @@ import {
   useEffect,
 } from "react";
 import { jwtDecode } from "jwt-decode";
-import { api, getAccessToken } from "@/lib/api-client";
+import { getAccessToken } from "@/lib/api-client";
 import customerService from "@/services/customer.service";
 import { UserBasicInfo } from "@/types/user";
 
@@ -57,6 +57,7 @@ const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       setUser({
         full_name: response.data.data.full_name,
         avatar_url: response.data.data.avatar_url,
+        email: response.data.data.email,
       });
     } catch (err) {
       console.log(err);

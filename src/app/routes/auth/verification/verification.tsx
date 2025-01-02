@@ -24,15 +24,18 @@ export default function VerificationRoute() {
   };
   return (
     <div className="flex flex-col justify-center items-center h-[100vh] gap-10">
-      <MdMarkEmailUnread size={48} color="#4caf50" />
-      <span className="text-2xl text-[#4caf50] font-bold">
-      Xác minh tài khoản
+      <MdMarkEmailUnread size={48} color="#A93F15" />
+      <span className="text-2xl text-[#A93F15] font-bold">
+        Xác minh tài khoản
       </span>
-      <span className="font-bold">Bạn đã có tài khoản BookNow</span>
+      <span className="font-bold">Bạn đã có tài khoản</span>
       <div className="flex flex-col items-center gap-5">
         <span>Để tiếp tục:</span>
-        <Button className="h-10" onClick={handleClickVerify}>
-        Xác minh email của bạn tại đây
+        <Button
+          className="h-10 bg-[#A93F15] hover:bg-[#FF7E00]"
+          onClick={handleClickVerify}
+        >
+          Xác minh email của bạn tại đây
         </Button>
       </div>
     </div>

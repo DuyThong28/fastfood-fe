@@ -1,6 +1,5 @@
 export const REVIEW_sTATUS = {
-    REPLIED: "Da tra loi",
-    UNREVIEW: "Can phan hoi",
-    REVIEWED: "Can phan hoi",
-  };
-  
+  REPLIED: "Đã trả lời",
+  UNREVIEW: "Cần phản hồi",
+  REVIEWED: "Cần phản hồi",
+};

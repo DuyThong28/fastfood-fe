@@ -15,14 +15,15 @@ export default function ProductOrderTableRow({
           alt="Product image"
           className="object-cover w-full h-full"
           src={
-            (data.book.image_url.length > 0 && data.book.image_url[0]) || image
+            (data.product.image_url.length > 0 && data.product.image_url[0]) ||
+            image
           }
         />
       </div>
       <div className="flex flex-col gap-1">
-        <div>{data.book.title}</div>
+        <div>{data.product.title}</div>
         <div className="text-sm">
-          <span className="text-[#787C80]">So luong: </span>
+          <span>Số lượng: </span>
           {data.quantity}
         </div>
       </div>

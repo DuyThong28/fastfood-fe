@@ -9,7 +9,7 @@ import { DEFAULT_AVATAR_URL } from "@/common/constants/user";
 
 interface ReviewPerProductProps {
   data: Review | ResReview;
-  onChange: (bookId: string, name: string, value: string | number) => void;
+  onChange: (productId: string, name: string, value: string | number) => void;
   action: ReviewStatus;
 }
 
@@ -29,18 +29,20 @@ export default function ReviewPerProduct({
             alt="Product image"
             className="object-cover w-full h-full"
             src={
-              data?.book && data.book.image_url.length > 0
-                ? data.book.image_url[0]
+              data?.product && data.product.image_url.length > 0
+                ? data.product.image_url[0]
                 : image
             }
           />
         </div>
-        <div>{(data?.book && data?.book.title) || ""}</div>
+        <div>{(data?.product && data?.product.title) || ""}</div>
       </div>
       {action === ReviewStatus.UNREVIEW && (
         <>
-          <div className="flex items-center">
-            <div>Chat luong san pham: </div>
+          <div className="flex items-center gap-x-2">
+            <div className="text-[#A93F15] font-medium">
+              Chất lượng sản phẩm:{" "}
+            </div>
             <div className="flex items-center">
               {[0, 1, 2, 3, 4].map((rating) => {
                 return (
@@ -54,7 +56,7 @@ export default function ReviewPerProduct({
                     onMouseEnter={() => setHoveredStar(rating + 1)}
                     onMouseLeave={() => setHoveredStar(null)}
                     onClick={() =>
-                      onChange((data as Review).bookId, "rating", rating + 1)
+                      onChange((data as Review).productId, "rating", rating + 1)
                     }
                   />
                 );
@@ -62,10 +64,14 @@ export default function ReviewPerProduct({
             </div>
           </div>
           <Textarea
-            placeholder="Hay chia se nhung gi ban thich ve san pham."
+            placeholder="Hãy chia sẻ những gì bạn thích về sản phẩm."
             value={data.description}
             onChange={(e) =>
-              onChange((data as Review).bookId, "description", e.target.value)
+              onChange(
+                (data as Review).productId,
+                "description",
+                e.target.value
+              )
             }
             disabled={action !== ReviewStatus.UNREVIEW}
           />
@@ -82,7 +88,7 @@ export default function ReviewPerProduct({
               />
             </div>
             <div className="flex flex-col gap-1">
-              <div>Duy Thong</div>
+              <div>{user?.full_name}</div>
               <div className="flex">
                 {[0, 1, 2, 3, 4].map((rating) => {
                   return (
@@ -97,14 +103,16 @@ export default function ReviewPerProduct({
                   );
                 })}
               </div>
-              <div>{data.description}</div>
+              <div className="text-[#A93F15] mt-2 font-medium">
+                {data.description}
+              </div>
             </div>
           </div>
         </>
       )}
       {(data as ResReview).ReplyReviews && (
         <div className="bg-muted p-4 rounded-md">
-          <p className="mb-2">Phan hoi cua nguoi ban</p>
+          <p className="mb-2">Phản hồi của người bán</p>
           <div>
             {(data as ResReview).ReplyReviews &&
               (data as ResReview).ReplyReviews?.reply}

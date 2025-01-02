@@ -1,34 +1,56 @@
-import { Dispatch, SetStateAction } from "react";
+import { formatNumber } from "@/utils/format";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 interface CounterInputProps {
-  max: number;
   value: number;
   onChange: Dispatch<SetStateAction<number>>;
 }
 
 export const CounterInput: React.FC<CounterInputProps> = ({
-  max,
   value,
   onChange,
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState<number>(value);
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const eValue = Number(e.target.value);
-    if (!isNaN(eValue)) {
-      onChange(eValue);
+    if (!isNaN(eValue) && eValue >= 0) {
+      setInputValue(eValue);
     }
   };
 
   const handleIncrease = () => {
-    if (value < max) {
-      onChange(value + 1);
-    }
+    onChange(value + 1);
   };
 
   const handleDerease = () => {
-    if (value > 0) {
+    if (value > 1) {
       onChange(value - 1);
     }
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (inputRef.current) {
+        inputRef.current.blur();
+      }
+    }
+  };
+
+  const handleBlur = () => {
+    if (inputValue == 0) {
+      onChange(1);
+      setInputValue(1);
+    } else {
+      onChange(inputValue);
+    }
+  };
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+
   return (
     <div className="max-w-xs flex flex-row items-center gap-4">
       <div className="relative flex items-center max-w-[8rem]">
@@ -56,16 +78,15 @@ export const CounterInput: React.FC<CounterInputProps> = ({
           </svg>
         </button>
         <input
-          type="number"
           id="quantity-input"
           data-input-counter
           aria-describedby="helper-text-explanation"
-          className="bg-gray-50 border-x-0 border-gray-300 h-8 text-center text-gray-900 text-sm"
-          value={value}
+          className="bg-gray-50 border-y border-gray-300 p-[2px] h-8 text-center text-gray-900 text-sm w-9"
+          value={inputValue}
           onChange={handleChangeInput}
-          min={0}
-          max={max}
-          required
+          onKeyDown={handleKeyDown}
+          onBlur={handleBlur}
+          min={1}
         />
         <button
           type="button"
@@ -91,7 +112,6 @@ export const CounterInput: React.FC<CounterInputProps> = ({
           </svg>
         </button>
       </div>
-      <p>{`${max} san pham co san`}</p>
     </div>
   );
 };

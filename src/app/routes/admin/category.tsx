@@ -56,7 +56,7 @@ export default function CategoryRoute() {
             page: meta.page,
             take: meta.take,
           },
-          isDisable,
+          isDisable
         );
       }
       setCategories(response.data.data);
@@ -89,26 +89,29 @@ export default function CategoryRoute() {
       <CategoryDialog ref={dialogRef} onRefetch={getAllCategories} />
       <main className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto">
         <div className="flex">
-          <h1 className="text-lg font-semibold">Danh Muc</h1>
-          <Button className="gap-1 ml-auto" onClick={handleAddNew}>
+          <h1 className="text-2xl font-bold text-[#A93F15]">Danh Mục</h1>
+          <Button
+            className="gap-1 ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
+            onClick={handleAddNew}
+          >
             <PlusCircle className="h-3.5 w-3.5" />
-            <span>Them danh muc moi</span>
+            <span>Thêm danh mục mới</span>
           </Button>
         </div>
         <Tabs value={tabState}>
           <div className="flex items-center">
             <TabsList>
               <TabsTrigger value="all" onClick={() => setTabState("all")}>
-                Tat ca
+                Tất cả
               </TabsTrigger>
               <TabsTrigger value="active" onClick={() => setTabState("active")}>
-                Dang hoat dong
+                Đang hoạt động
               </TabsTrigger>
               <TabsTrigger
                 value="inactive"
                 onClick={() => setTabState("inactive")}
               >
-                Da an
+                Đã ẩn
               </TabsTrigger>
             </TabsList>
           </div>
@@ -119,13 +122,18 @@ export default function CategoryRoute() {
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Nhap ten danh muc"
+                placeholder="Nhập tên danh mục"
                 className="w-full rounded-lg bg-background pl-8"
                 value={textSearch}
                 onChange={(e) => setTextSearch(e.target.value)}
                 onKeyDown={handleEnterPress}
               />
-              <Button onClick={async () => getAllCategories()}>Ap dung</Button>
+              <Button
+                className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                onClick={async () => getAllCategories()}
+              >
+                Áp dụng
+              </Button>
             </div>
           </CardHeader>
           <CardContent>

@@ -4,13 +4,10 @@ import { routes } from "@/config";
 import CustomerRoute from "./routes/admin/customer";
 import NotFoundRoute from "./routes/not-found";
 import ReviewRoute from "./routes/admin/review";
-import ProductDetailRoute from "./routes/admin/product-detail";
 import AdminPasswordRoute from "./routes/admin/account-password";
 import ProductRoute from "./routes/admin/product";
 import OrderRoute from "./routes/admin/order";
-import IncomeReportRoute from "./routes/admin/income-report";
 import DashboardRoute from "./routes/admin/dashboard";
-import BookReportRoute from "./routes/admin/book-report";
 import AddProductRoute from "./routes/admin/add-product";
 import AdminProfileRoute from "./routes/admin/account-profile";
 import PurchaseRoute from "./routes/customers/purchase";
@@ -18,7 +15,6 @@ import OrderDetailRoute from "./routes/customers/order-detail";
 import CheckOutRoute from "./routes/customers/checkout";
 import AccountPasswordRoute from "./routes/customers/account-password";
 import CartRoute from "./routes/customers/cart";
-import BookDetailRoute from "./routes/customers/book-detail";
 import AccountProfileRoute from "./routes/customers/account-profile";
 import AccountAddressRoute from "./routes/customers/account-address";
 import HomeRoute from "./routes/customers/home";
@@ -32,24 +28,52 @@ import SignInRoute from "./routes/auth/sign-in";
 import CategoryRoute from "./routes/admin/category";
 import AdminOrderDetailRoute from "./routes/admin/order-detail";
 import SignInSuccess from "./routes/auth/sign-in-success";
+import AddEmployeeRoute from "./routes/admin/add-employee";
+import EmployeeRoute from "./routes/admin/employee";
+import PublicProductDetailRoute from "./routes/customers/product-detail";
+import AdminProductDetailRoute from "./routes/admin/product-detail";
+import {
+  AuthorizedAdministrator,
+  AuthorizedCustomer,
+  AuthorizedStaff,
+  UnauthorizedUser,
+} from "./authorizedRoute";
+import ReportRoute from "./routes/admin/report";
+import Chatbot from "@/components/chatbot/chatbot";
 
 const createAppRouter = () =>
   createBrowserRouter([
     {
       path: routes.AUTH.SIGN_IN,
-      element: <SignInRoute />,
+      element: (
+        <UnauthorizedUser>
+          <SignInRoute />
+        </UnauthorizedUser>
+      ),
     },
     {
       path: routes.AUTH.SIGN_UP,
-      element: <SignUpRoute />,
+      element: (
+        <UnauthorizedUser>
+          <SignUpRoute />
+        </UnauthorizedUser>
+      ),
     },
     {
       path: routes.AUTH.FORGOT_PASSWORD,
-      element: <ForgotPasswordRoute />,
+      element: (
+        <UnauthorizedUser>
+          <ForgotPasswordRoute />
+        </UnauthorizedUser>
+      ),
     },
     {
       path: routes.AUTH.RESET_PASSWORD,
-      element: <ResetPasswordRoute />,
+      element: (
+        <UnauthorizedUser>
+          <ResetPasswordRoute />
+        </UnauthorizedUser>
+      ),
     },
     {
       path: routes.AUTH.VERIFICATION,
@@ -69,91 +93,197 @@ const createAppRouter = () =>
     },
     {
       path: routes.CUSTOMER.HOME,
-      element: <HomeRoute />,
+      element: (
+        <>
+          <HomeRoute />
+          <Chatbot />
+        </>
+      ),
     },
     {
       path: routes.CUSTOMER.ACCOUNT_ADDRESS,
-      element: <AccountAddressRoute />,
+      element: (
+        <AuthorizedCustomer>
+          <AccountAddressRoute />
+          <Chatbot />
+        </AuthorizedCustomer>
+      ),
     },
     {
       path: routes.CUSTOMER.ACCOUNT_PROFILE,
-      element: <AccountProfileRoute />,
+      element: (
+        <AuthorizedCustomer>
+          <AccountProfileRoute />
+          <Chatbot />
+        </AuthorizedCustomer>
+      ),
     },
     {
-      path: routes.CUSTOMER.BOOK_DETAIL,
-      element: <BookDetailRoute />,
+      path: routes.CUSTOMER.PRODUCT_DETAIL,
+      element: (
+        <>
+          <PublicProductDetailRoute />
+          <Chatbot />
+        </>
+      ),
     },
     {
       path: routes.CUSTOMER.CART,
-      element: <CartRoute />,
+      element: (
+        <AuthorizedCustomer>
+          <CartRoute />
+          <Chatbot />
+        </AuthorizedCustomer>
+      ),
     },
     {
       path: routes.CUSTOMER.CHANGE_PASSWORD,
-      element: <AccountPasswordRoute />,
+      element: (
+        <AuthorizedCustomer>
+          <AccountPasswordRoute />
+          <Chatbot />
+        </AuthorizedCustomer>
+      ),
     },
     {
       path: routes.CUSTOMER.CHECKOUT,
-      element: <CheckOutRoute />,
+      element: (
+        <AuthorizedCustomer>
+          <CheckOutRoute />
+          <Chatbot />
+        </AuthorizedCustomer>
+      ),
     },
     {
       path: routes.CUSTOMER.ORDER_DETAIL,
-      element: <OrderDetailRoute />,
+      element: (
+        <AuthorizedCustomer>
+          <OrderDetailRoute />
+          <Chatbot />
+        </AuthorizedCustomer>
+      ),
     },
     {
       path: routes.CUSTOMER.PURCHASE,
-      element: <PurchaseRoute />,
+      element: (
+        <AuthorizedCustomer>
+          <PurchaseRoute />
+          <Chatbot />
+        </AuthorizedCustomer>
+      ),
     },
     {
       path: routes.ADMIN.ACCOUNT_PROFILE,
-      element: <AdminProfileRoute />,
+      element: (
+        <AuthorizedStaff>
+          <AdminProfileRoute />
+        </AuthorizedStaff>
+      ),
     },
     {
       path: routes.ADMIN.ADD_PRODUCT,
-      element: <AddProductRoute />,
+      element: (
+        <AuthorizedAdministrator>
+          <AddProductRoute />
+        </AuthorizedAdministrator>
+      ),
     },
     {
-      path: routes.ADMIN.BOOK_REPORT,
-      element: <BookReportRoute />,
+      path: routes.ADMIN.REPORT,
+      element: (
+        <AuthorizedStaff>
+          <ReportRoute />
+        </AuthorizedStaff>
+      ),
     },
+
     {
       path: routes.ADMIN.DASHBOAD,
-      element: <DashboardRoute />,
-    },
-    {
-      path: routes.ADMIN.INCOME_REPORT,
-      element: <IncomeReportRoute />,
+      element: (
+        <AuthorizedStaff>
+          <DashboardRoute />
+        </AuthorizedStaff>
+      ),
     },
     {
       path: routes.ADMIN.ORDER,
-      element: <OrderRoute />,
+      element: (
+        <AuthorizedStaff>
+          <OrderRoute />
+        </AuthorizedStaff>
+      ),
     },
     {
       path: routes.ADMIN.ORDER_DETAIL,
-      element: <AdminOrderDetailRoute />,
+      element: (
+        <AuthorizedStaff>
+          <AdminOrderDetailRoute />
+        </AuthorizedStaff>
+      ),
     },
     {
       path: routes.ADMIN.PRODUCT,
-      element: <ProductRoute />,
+      element: (
+        <AuthorizedAdministrator>
+          <ProductRoute />
+        </AuthorizedAdministrator>
+      ),
     },
     {
       path: routes.ADMIN.CATEGORY,
-      element: <CategoryRoute />,
+      element: (
+        <AuthorizedAdministrator>
+          <CategoryRoute />
+        </AuthorizedAdministrator>
+      ),
     },
     {
       path: routes.ADMIN.CHANGE_PASSWORD,
-      element: <AdminPasswordRoute />,
+      element: (
+        <AuthorizedStaff>
+          <AdminPasswordRoute />
+        </AuthorizedStaff>
+      ),
     },
     {
       path: routes.ADMIN.PRODUCT_DETAIL,
-      element: <ProductDetailRoute />,
+      element: (
+        <AuthorizedAdministrator>
+          <AdminProductDetailRoute />
+        </AuthorizedAdministrator>
+      ),
     },
     {
       path: routes.ADMIN.REVIEW,
-      element: <ReviewRoute />,
+      element: (
+        <AuthorizedAdministrator>
+          <ReviewRoute />
+        </AuthorizedAdministrator>
+      ),
     },
     {
       path: routes.ADMIN.CUSTOMER,
-      element: <CustomerRoute />,
+      element: (
+        <AuthorizedStaff>
+          <CustomerRoute />
+        </AuthorizedStaff>
+      ),
+    },
+    {
+      path: routes.ADMIN.EMPLOYEE,
+      element: (
+        <AuthorizedAdministrator>
+          <EmployeeRoute />
+        </AuthorizedAdministrator>
+      ),
+    },
+    {
+      path: routes.ADMIN.ADD_EMPLOYEE,
+      element: (
+        <AuthorizedAdministrator>
+          <AddEmployeeRoute />
+        </AuthorizedAdministrator>
+      ),
     },
     {
       path: "*",

@@ -4,6 +4,9 @@ import AddressesDialog, {
   AddressesDialogRef,
 } from "@/components/customer/addresses-dialog";
 import ProductLayout from "@/components/layouts/product-layout";
+import CustomAlertDialog, {
+  CustomAlertDialogRef,
+} from "@/components/shared/alert-dialog";
 import SectionCard from "@/components/shared/section-card";
 import { Button } from "@/components/ui/button";
 import { routes } from "@/config";
@@ -12,6 +15,7 @@ import cartService from "@/services/cart.service";
 import orderService from "@/services/order.service";
 import { ResAddress } from "@/types/address";
 import { ResCartItem } from "@/types/cart";
+import { toastSuccess, toastWarning } from "@/utils/toast";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -19,24 +23,20 @@ export default function CheckOutRoute() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const state = queryParams.get("state") || "";
-  const selectedBookIds = state.split(",");
+  const selectedProductIds = state.split(",");
   const [cartItemsSelected, setCartItemsSelected] = useState<
     Array<ResCartItem>
   >([]);
-  const [addressInfo, setAddressInfo] = useState<ResAddress>({
-    full_name: "",
-    phone_number: undefined,
-    address: "",
-    id: "",
-  });
+  const [addressInfo, setAddressInfo] = useState<ResAddress | null>(null);
   const dialogRef = useRef<AddressesDialogRef>(null);
+  const alertDialogRef = useRef<CustomAlertDialogRef | null>(null);
   const navigate = useNavigate();
   const getCartItemsSelected = async () => {
     try {
       const response = await cartService.getCart();
       setCartItemsSelected(
         response.data.data.filter((item) =>
-          selectedBookIds.includes(item.book_id)
+          selectedProductIds.includes(item.product_id)
         )
       );
     } catch (err) {
@@ -62,60 +62,93 @@ export default function CheckOutRoute() {
 
   const handleCountTotalPrice = () =>
     cartItemsSelected.reduce((total, curr) => {
-      return total + curr.book.price * curr.quantity;
+      return total + curr.product.price * curr.quantity;
     }, 0);
 
   const handleOrder = async () => {
     if (cartItemsSelected.length === 0) return;
-    const items = cartItemsSelected.map((item) => {
-      return {
-        bookId: item.book_id,
-        quantity: item.quantity,
-      };
-    });
-    try {
-      await orderService.createOrder({
-        fullName: addressInfo.full_name,
-        address: addressInfo.address,
-        phoneNumber: addressInfo.phone_number,
-        items: items,
-      });
-      navigate(routes.CUSTOMER.PURCHASE);
-    } catch (err) {
-      console.log(err);
+    if (!addressInfo) {
+      toastWarning(
+        "Vui lòng cung cấp địa chỉ giao hàng trước khi xác nhận đơn hàng."
+      );
+      return;
     }
+    alertDialogRef.current?.onOpen(
+      {
+        title: `Xác nhận đặt hàng?`,
+      },
+      async () => {
+        const items = cartItemsSelected.map((item) => {
+          return {
+            productId: item.product_id,
+            quantity: item.quantity,
+          };
+        });
+        try {
+          await orderService.createOrder({
+            fullName: addressInfo.full_name,
+            address: addressInfo.address,
+            phoneNumber: addressInfo.phone_number,
+            items: items,
+          });
+          toastSuccess("Đặt hàng thành công");
+          navigate(routes.CUSTOMER.PURCHASE);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    );
   };
 
   return (
     <ProductLayout>
+      <CustomAlertDialog ref={alertDialogRef} />
       <AddressesDialog ref={dialogRef} onSetAddress={setAddressInfo} />
       <main className="flex flex-1 flex-col gap-6 py-6 pl-6">
         <div className="space-y-4">
-          <h1 className="text-lg font-semibold">Dia Chi Nhan Hang</h1>
-          <SectionCard className="flex flex-row justify-between  p-4">
-            <div className="flex flex-col gap-1">
-              <div>{addressInfo.full_name}</div>
-              <div className="text-sm">
-                <span className="text-[#787C80]">Dia chi:</span>{" "}
-                {addressInfo.address}
-              </div>
-              <div className="text-sm">
-                <span className="text-[#787C80]">Dien thoai:</span>{" "}
-                {addressInfo.phone_number}
-              </div>
-            </div>
-            <div className="flex flex-row gap-4 items-center">
-              <Button
-                variant="secondary"
-                onClick={() => dialogRef.current?.onOpen(addressInfo)}
-              >
-                Thay doi
-              </Button>
-            </div>
+          <h1 className="text-lg font-semibold text-[#A93F15]">
+            Địa Chỉ Nhận Hàng
+          </h1>
+          <SectionCard className="flex flex-row justify-between items-center p-4">
+            {addressInfo ? (
+              <>
+                <div className="flex flex-col gap-1">
+                  <div>{addressInfo.full_name}</div>
+                  <div className="text-sm">
+                    <span className="text-[#787C80]">Địa chỉ:</span>{" "}
+                    {addressInfo.address}
+                  </div>
+                  <div className="text-sm">
+                    <span className="text-[#787C80]">Điện thoại:</span>{" "}
+                    {addressInfo.phone_number}
+                  </div>
+                </div>
+                <Button
+                  variant="secondary"
+                  className="text-[#A93F15]"
+                  onClick={() => dialogRef.current?.onOpen(addressInfo)}
+                >
+                  Thay đổi
+                </Button>
+              </>
+            ) : (
+              <>
+                <div>
+                  Cung cấp địa chỉ giao hàng giúp chúng tôi gửi hàng đúng nơi.
+                  Thêm địa chỉ ngay!
+                </div>
+                <Button
+                  className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                  onClick={() => dialogRef.current?.onOpen()}
+                >
+                  Thêm địa chỉ
+                </Button>
+              </>
+            )}
           </SectionCard>
         </div>
         <div className="space-y-4">
-          <h1 className="text-lg font-semibold">San Pham</h1>
+          <h1 className="text-lg font-semibold text-[#A93F15]">Sản Phẩm</h1>
           <SectionCard className="p-2">
             <CheckoutTableHeader />
             <div>
@@ -124,15 +157,18 @@ export default function CheckOutRoute() {
               })}
             </div>
             <div className="flex p-4">
-              <div className="ml-auto font-medium">{`Tong so tien (${
+              <div className="ml-auto font-semibold text-[#A93F15]">{`Tổng số tiền (${
                 cartItemsSelected.length
-              } san pham): ${handleCountTotalPrice()}d`}</div>
+              } sản phẩm): ${handleCountTotalPrice()}`}</div>
             </div>
           </SectionCard>
         </div>
         <SectionCard className="p-4 flex">
-          <Button className="ml-auto" onClick={handleOrder}>
-            Dat hang
+          <Button
+            className="ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
+            onClick={handleOrder}
+          >
+            Đặt hàng
           </Button>
         </SectionCard>
       </main>

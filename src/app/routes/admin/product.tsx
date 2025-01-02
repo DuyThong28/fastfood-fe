@@ -14,14 +14,15 @@ import { TablePagination } from "@/components/shared/table-pagination";
 import { ProductTableHeader } from "@/components/product/product-table-header";
 import { ProductTableRow } from "@/components/product/product-table-row";
 import { useNavigate } from "react-router-dom";
-import bookService from "@/services/book.service";
+import productService from "@/services/product.service";
 import { KeyboardEvent, useEffect, useState } from "react";
 import { Meta } from "@/types/api";
-import { ResBookDetail } from "@/types/book";
-import { BookStatus } from "@/common/enums";
+import { ResProductDetail } from "@/types/product";
+import { ProductStatus } from "@/common/enums";
+import { PRODUCT_STATUS } from "@/common/constants";
 
 export default function ProductRoute() {
-  const [books, setBooks] = useState<ResBookDetail[]>([]);
+  const [products, setProducts] = useState<ResProductDetail[]>([]);
   const [meta, setMeta] = useState<Meta>({
     page: 1,
     take: 20,
@@ -36,9 +37,9 @@ export default function ProductRoute() {
   const [sortBy, setSortBy] = useState<string>("created_at");
   const [order, setOrder] = useState<string>("desc");
 
-  const getAllBooks = async () => {
+  const getAllProducts = async () => {
     try {
-      const response = await bookService.getAllBooks(
+      const response = await productService.getAllProducts(
         {
           page: meta.page,
           take: meta.take,
@@ -51,7 +52,7 @@ export default function ProductRoute() {
         }
       );
 
-      setBooks(response.data.data);
+      setProducts(response.data.data);
       setMeta(response.data.meta);
     } catch (err) {
       console.log(err);
@@ -59,12 +60,12 @@ export default function ProductRoute() {
   };
 
   useEffect(() => {
-    getAllBooks();
+    getAllProducts();
   }, [meta.page, tabState, sortBy, order]);
 
   const handleEnterPress = async (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      await getAllBooks();
+      await getAllProducts();
     }
   };
 
@@ -82,32 +83,32 @@ export default function ProductRoute() {
     <DashBoardLayout>
       <main className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto">
         <div className="flex">
-          <h1 className="text-lg font-semibold">San Pham</h1>
+          <h1 className="text-2xl font-bold text-[#A93F15]">Sản Phẩm</h1>
           <Button
-            className="gap-1 ml-auto"
-            onClick={() => navigate("/portal/book/new")}
+            className="gap-1 ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
+            onClick={() => navigate("/portal/product/new")}
           >
             <PlusCircle className="h-3.5 w-3.5" />
-            <span>Them san pham moi</span>
+            <span>Thêm sản phẩm mới</span>
           </Button>
         </div>
         <Tabs value={tabState}>
           <div className="flex items-center">
             <TabsList>
               <TabsTrigger value="all" onClick={() => setTabState("all")}>
-                Tat ca
+                Tất cả
               </TabsTrigger>
               <TabsTrigger
-                value={BookStatus.ACTIVE}
-                onClick={() => setTabState(BookStatus.ACTIVE)}
+                value={ProductStatus.ACTIVE}
+                onClick={() => setTabState(ProductStatus.ACTIVE)}
               >
-                Dang ban
+                {PRODUCT_STATUS[ProductStatus.ACTIVE]}
               </TabsTrigger>
               <TabsTrigger
-                value={BookStatus.INACTIVE}
-                onClick={() => setTabState(BookStatus.INACTIVE)}
+                value={ProductStatus.INACTIVE}
+                onClick={() => setTabState(ProductStatus.INACTIVE)}
               >
-                Da an
+                {PRODUCT_STATUS[ProductStatus.INACTIVE]}
               </TabsTrigger>
             </TabsList>
           </div>
@@ -118,13 +119,18 @@ export default function ProductRoute() {
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Nhap ten san pham"
+                placeholder="Nhập tên sản phẩm"
                 className="w-full rounded-lg bg-background pl-8"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
                 onKeyDown={handleEnterPress}
               />
-              <Button onClick={async () => getAllBooks()}>Ap dung</Button>
+              <Button
+                className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                onClick={async () => getAllProducts()}
+              >
+                Áp dụng
+              </Button>
             </div>
           </CardHeader>
           <CardContent>
@@ -135,13 +141,13 @@ export default function ProductRoute() {
                 order={order}
               />
               <TableBody>
-                {books &&
-                  books.map((item, index) => {
+                {products &&
+                  products.map((item, index) => {
                     return (
                       <ProductTableRow
                         key={index}
                         data={item}
-                        onRefetch={getAllBooks}
+                        onRefetch={getAllProducts}
                       />
                     );
                   })}

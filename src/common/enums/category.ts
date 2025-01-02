@@ -1,6 +1,4 @@
 export enum CategoryState {
-    ACTIVE = "Hoat dong",
-    HIDE = "Da an",
-  }
-  
-  
+  ACTIVE = "Hoạt động",
+  HIDE = "Đã ẩn",
+}

@@ -8,11 +8,11 @@ export const CategoryTableHeader = () => {
         {/* <TableHead className="w-[30px]">
           <Checkbox />
         </TableHead> */}
-        <TableHead>Ma danh muc</TableHead>
-        <TableHead>Ten danh muc</TableHead>
-        <TableHead>Trang thai</TableHead>
+        <TableHead>Mã danh mục</TableHead>
+        <TableHead>Tên danh mục</TableHead>
+        <TableHead>Trạng thái</TableHead>
         <TableHead className="w-[30px]">
-          <span className="sr-only">Thao tac</span>
+          <span className="sr-only">Thao tác</span>
         </TableHead>
       </TableRow>
     </TableHeader>

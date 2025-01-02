@@ -1,20 +1,20 @@
 import { ReviewStatus } from "@/common/enums";
-import { ResBookDetail } from "./book";
+import { ResProductDetail } from "./product";
 import { Meta } from "./api";
 import { ResUser } from "./user";
 
 export interface Review {
-  book?: ResBookDetail;
+  product?: ResProductDetail;
   orderId: string;
   orderDetailId: string;
-  bookId: string;
+  productId: string;
   rating: number;
   description: string | undefined;
   title: string;
 }
 
 export interface ResReview {
-  book_id: string;
+  product_id: string;
   created_at: string;
   description: string;
   id: string;
@@ -24,7 +24,7 @@ export interface ResReview {
   title: string;
   user_id: string;
   order_item_id: string;
-  book: ResBookDetail;
+  product: ResProductDetail;
   user: ResUser;
   ReplyReviews: ReplyReviews | null;
 }
@@ -38,7 +38,7 @@ export interface ReplyReviews {
 
 export interface ResReviewOfAdmin extends ResReview {
   OrderItem: {
-    order_id: string
+    order_id: string;
   };
 }
 
@@ -56,9 +56,9 @@ export interface GetAllReviewQueries {
   state: string;
 }
 
-export interface GetReviewByBookId {
+export interface GetReviewByProductId {
   data: {
-    data: ResReview[],
-    meta: Meta
-  }
+    data: ResReview[];
+    meta: Meta;
+  };
 }
