@@ -1,37 +1,13 @@
 import { useEffect, useState } from "react";
-import { RadioGroup } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { EmblaOptionsType } from "embla-carousel";
 import image from "@/assets/placeholder.svg";
-
-const product = {
-  name: "Cho Tôi Xin Một Vé Đi Tuổi Thơ (Bìa Mềm) (Tái Bản)",
-  price: "68.100d",
-  rating: 3.9,
-  reviewCount: 117,
-  href: "#",
-  imageSrc:
-    "https://salt.tikicdn.com/cache/750x750/ts/product/8f/63/5d/e17ddc42fbf8bf15b1958222ed1939dc.jpg.webp",
-  imageAlt: "Two each of gray, white, and black shirts arranged on table.",
-
-  sizes: [
-    { name: "XXS", inStock: true },
-    { name: "XS", inStock: true },
-    { name: "S", inStock: true },
-    { name: "M", inStock: true },
-    { name: "L", inStock: true },
-    { name: "XL", inStock: true },
-    { name: "XXL", inStock: true },
-    { name: "XXXL", inStock: false },
-  ],
-};
 
 import ProductLayout from "@/components/layouts/product-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import EmblaCarousel from "@/components/shared/embla-carousel";
 import { CounterInput } from "@/components/shared/counter-input";
-import { ProductVariation } from "@/components/product/product-variation";
 import { useParams } from "react-router-dom";
 import productService from "@/services/product.service";
 import { ResProductDetail } from "@/types/product";
@@ -81,7 +57,7 @@ export default function ProductDetailRoute() {
           take: meta.take,
         },
         id,
-        { rating },
+        { rating }
       );
 
       setMeta(response.data.meta);
@@ -101,7 +77,7 @@ export default function ProductDetailRoute() {
   const handleAddToCart = async () => {
     if (
       detailData?.id &&
-      quantity <= detailData.stock_quantity &&
+      /* quantity <= detailData.stock_quantity && */
       quantity > 0
     ) {
       try {
@@ -160,74 +136,40 @@ export default function ProductDetailRoute() {
 
             <div>
               <div className="flex items-center ">
-                <p className=" text-sm">{detailData.avg_stars} </p>
+                <p className=" text-sm pr">{detailData.avg_stars}</p>
                 <div className="flex items-center">
                   {[0, 1, 2, 3, 4].map((rating) => (
                     <StarIcon
                       key={rating}
                       aria-hidden="true"
                       className={(detailData.avg_stars > rating
-                        ? "text-gray-900"
+                        ? "text-[#A93F15]"
                         : "text-gray-200"
                       ).concat(" h-4 w-4 flex-shrink-0")}
                     />
                   ))}
                 </div>
                 <p className="ml-3 text-sm">
-                  {detailData.total_reviews} đánh giá
+                  {`${detailData.total_reviews} đánh giá`}
                 </p>
               </div>
             </div>
             <p className="text-xl text-gray-900">{`${formatNumber(
-              detailData.price,
-            )}`}</p>
+              detailData.price
+            )} đ`}</p>
             <section aria-labelledby="options-heading">
               <div className="space-y-6">
-                {/* <fieldset
-                aria-label="Choose a size"
-                className="grid grid-cols-[100px_1fr]"
-              >
-                <div className="text-gray-900">Phan loai</div>
-                <RadioGroup
-                  value={selectedSize}
-                  onChange={setSelectedSize}
-                  className="grid grid-cols-5 gap-4"
-                >
-                  {product.sizes.map((size, index) => (
-                    <ProductVariation key={index} size={size} />
-                  ))}
-                </RadioGroup>
-              </fieldset>
-              <fieldset
-                aria-label="Choose a size"
-                className="grid grid-cols-[100px_1fr]"
-              >
-                <div className="text-gray-900">Phan loai</div>
-                <RadioGroup
-                  value={selectedSize}
-                  onChange={setSelectedSize}
-                  className="grid grid-cols-5 gap-4"
-                >
-                  {product.sizes.map((size, index) => (
-                    <ProductVariation size={size} key={index} />
-                  ))}
-                </RadioGroup>
-              </fieldset> */}
                 <fieldset
                   aria-label="Choose a size"
                   className="grid grid-cols-[100px_1fr]"
                 >
                   <div className="text-gray-900">Số lượng</div>
-                  <CounterInput
-                    // max={detailData.stock_quantity}
-                    value={quantity}
-                    onChange={setQuantity}
-                  />
+                  <CounterInput value={quantity} onChange={setQuantity} />
                 </fieldset>
                 <Button
                   onClick={handleAddToCart}
                   type="button"
-                  // disabled={detailData.stock_quantity === 0}
+                  className="bg-[#A93F15] hover:bg-[#FF7E00]"
                 >
                   Thêm vào giỏ hàng
                 </Button>
@@ -237,7 +179,7 @@ export default function ProductDetailRoute() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Mô Tả Sản Phẩm</CardTitle>
+            <CardTitle className="text-[#A93F15]">Mô Tả Sản Phẩm</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-justify indent-4">{detailData.description}</p>
@@ -245,14 +187,16 @@ export default function ProductDetailRoute() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Đánh Giá Sản Phẩm</CardTitle>
+            <CardTitle className="text-[#A93F15]">Đánh Giá Sản Phẩm</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-6">
             <div className="border border-gray-300 rounded-md p-6 w-full flex flex-row gap-10 items-start bg-muted/50">
               <div>
                 <div className="mb-2">
-                  <span className=" text-[30px]">{detailData.avg_stars}</span>
-                  <span className="text-[20px]"> trên 5</span>
+                  <span className=" text-[30px] text-[#A93F15]">
+                    {detailData.avg_stars}
+                  </span>
+                  <span className="text-[20px] text-[#A93F15]"> trên 5</span>
                 </div>
                 <div className="flex items-center">
                   {[0, 1, 2, 3, 4].map((rating) => (
@@ -260,7 +204,7 @@ export default function ProductDetailRoute() {
                       key={rating}
                       aria-hidden="true"
                       className={(detailData.avg_stars > rating
-                        ? "text-gray-900"
+                        ? "text-[#A93F15]"
                         : "text-gray-200"
                       ).concat(" h-5 w-5 flex-shrink-0")}
                     />

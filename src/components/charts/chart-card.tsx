@@ -10,7 +10,7 @@ export function ChartCard({ title, children }: ChartCardProps) {
   return (
     <Card className="flex-1">
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="text-[#A93F15]">{title}</CardTitle>
       </CardHeader>
       <CardContent>{children}</CardContent>
     </Card>

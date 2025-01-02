@@ -95,11 +95,15 @@ export default function AccountPassword() {
     >
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl">Đổi Mật Khẩu</CardTitle>
+          <CardTitle className="text-2xl text-[#A93F15]">
+            Đổi Mật Khẩu
+          </CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="otp">OTP</Label>
+            <Label htmlFor="otp" className="text-[#A93F15]">
+              OTP
+            </Label>
             <div className="mx-auto">
               <InputOTPPattern value={code} onChange={setCode} />
             </div>
@@ -108,7 +112,9 @@ export default function AccountPassword() {
             )}
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="password">Mật khẩu</Label>
+            <Label htmlFor="password" className="text-[#A93F15]">
+              Mật khẩu
+            </Label>
             <PasswordInput
               id="password"
               name="password"
@@ -122,10 +128,17 @@ export default function AccountPassword() {
           </div>
         </CardContent>
         <CardFooter className="grid grid-cols-2 gap-4">
-          <Button variant="outline" type="button" onClick={handleCancel}>
+          <Button
+            className="text-[#A93F15] hover:text-[#A93F15]"
+            variant="outline"
+            type="button"
+            onClick={handleCancel}
+          >
             Hủy
           </Button>
-          <Button type="submit">Tiếp tục</Button>
+          <Button type="submit" className="bg-[#A93F15] hover:bg-[#FF7E00]">
+            Tiếp tục
+          </Button>
         </CardFooter>
       </Card>
     </form>

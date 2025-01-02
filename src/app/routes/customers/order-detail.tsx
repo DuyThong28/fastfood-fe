@@ -62,7 +62,7 @@ export default function OrderDetailRoute() {
           } catch (err) {
             console.log(err);
           }
-        },
+        }
       );
     }
   };
@@ -86,13 +86,15 @@ export default function OrderDetailRoute() {
                 onClick={handleBack}
                 className="hover:cursor-pointer flex flexp-row gap-1 items-center"
               >
-                <ChevronLeft className="h-5 w-5" />
-                <span>TRỞ LẠI</span>
+                <ChevronLeft className="h-5 w-5 text-[#A93F15]" />
+                <span className="text-[#A93F15] font-semibold">TRỞ LẠI</span>
               </div>
-              <span className="ml-auto">{`MÃ ĐƠN HÀNG: ${orderDetail.id}`}</span>
+              <span className="ml-auto text-[#A93F15] font-semibold">{`MÃ ĐƠN HÀNG: ${orderDetail.id}`}</span>
             </SectionCard>
             <SectionCard className="p-4 flex flex-row  items-center">
-              <div>{ORDER_STATUS[orderDetail.status]}</div>
+              <div className="text-[#A93F15] font-semibold">
+                {ORDER_STATUS[orderDetail.status]}
+              </div>
               {(orderDetail.status === OrderStatus.PENDING ||
                 orderDetail.status === OrderStatus.PROCESSING) && (
                 <Button
@@ -106,7 +108,7 @@ export default function OrderDetailRoute() {
               {orderDetail.status === OrderStatus.SUCCESS &&
                 orderDetail.review_state === ReviewStatus.UNREVIEW && (
                   <Button
-                    className="ml-auto"
+                    className="ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
                     onClick={() =>
                       handleReview(orderDetail.id, ReviewStatus.UNREVIEW)
                     }
@@ -117,7 +119,7 @@ export default function OrderDetailRoute() {
               {orderDetail.status === OrderStatus.SUCCESS &&
                 orderDetail.review_state === ReviewStatus.REVIEWED && (
                   <Button
-                    className="ml-auto"
+                    className="ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
                     onClick={() =>
                       handleReview(orderDetail.id, ReviewStatus.REVIEWED)
                     }
@@ -128,7 +130,7 @@ export default function OrderDetailRoute() {
               {orderDetail.status === OrderStatus.SUCCESS &&
                 orderDetail.review_state === ReviewStatus.REPLIED && (
                   <Button
-                    className="ml-auto"
+                    className="ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
                     onClick={() =>
                       handleReview(orderDetail.id, ReviewStatus.REPLIED)
                     }
@@ -138,7 +140,9 @@ export default function OrderDetailRoute() {
                 )}
             </SectionCard>
             <SectionCard className="p-4 space-y-4">
-              <div className="font-medium">Địa chỉ nhận hàng</div>
+              <div className="font-semibold text-[#A93F15]">
+                Địa chỉ nhận hàng
+              </div>
               <div className="space-y-2 text-muted-foreground">
                 <div>{`Người nhận: ${orderDetail.full_name}`}</div>
                 <div>{`Số điện thoại: ${orderDetail.phone_number}`}</div>
@@ -161,8 +165,8 @@ export default function OrderDetailRoute() {
                 })}
               </div>
               <div className="flex p-4">
-                <div className="ml-auto font-medium">{`Tổng tiền hàng: ${formatNumber(
-                  orderDetail.total_price,
+                <div className="ml-auto font-semibold text-[#A93F15]">{`Tổng tiền hàng: ${formatNumber(
+                  orderDetail.total_price
                 )}`}</div>
               </div>
             </SectionCard>

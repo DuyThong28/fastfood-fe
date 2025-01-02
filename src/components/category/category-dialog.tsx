@@ -114,13 +114,15 @@ const CategoryDialog = forwardRef<CategoryDialogRef, CategoryDialogProps>(
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="text-[#A93F15]">
               {category.id ? "Chỉnh sửa danh mục" : "Thêm danh mục mới"}
             </DialogTitle>
           </DialogHeader>
           <form className="space-y-6" onSubmit={handleSubmit} noValidate>
             <div className="flex flex-col gap-4">
-              <Label htmlFor="name">Tên danh mục</Label>
+              <Label htmlFor="name" className=" text-[#A93F15]">
+                Tên danh mục
+              </Label>
               <Input
                 id="name"
                 placeholder="Tên danh mục"
@@ -134,18 +136,21 @@ const CategoryDialog = forwardRef<CategoryDialogRef, CategoryDialogProps>(
             <div className="grid grid-cols-2 gap-4">
               <Button
                 type="button"
+                className=" text-[#A93F15] hover:text-[#A93F15]"
                 variant="outline"
                 onClick={() => setIsOpen(false)}
               >
                 Hủy
               </Button>
-              <Button type="submit">Lưu</Button>
+              <Button type="submit" className="bg-[#A93F15] hover:bg-[#A93F15]">
+                Lưu
+              </Button>
             </div>
           </form>
         </DialogContent>
       </Dialog>
     );
-  },
+  }
 );
 
 export default CategoryDialog;

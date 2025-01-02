@@ -19,6 +19,7 @@ import { PasswordInput } from "@/components/shared/password-input";
 import { AxiosError } from "axios";
 import { toastSuccess } from "@/utils/toast";
 import { routes } from "@/config";
+import Background from "../../../assets/background_2.png";
 
 type ErrorState = {
   email?: string;
@@ -116,11 +117,13 @@ export default function SignUpRoute() {
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
-            <h1 className="text-3xl font-bold">Đăng Ký</h1>
+            <h1 className="text-3xl font-bold text-[#A93F15]">Đăng Ký</h1>
           </div>
           <form className="grid gap-4" onSubmit={handleSubmit} noValidate>
             <div className="grid gap-2">
-              <Label htmlFor="name">Họ và tên</Label>
+              <Label htmlFor="name" className="text-[#A93F15]">
+                Họ và tên
+              </Label>
               <Input
                 id="name"
                 type="text"
@@ -140,7 +143,9 @@ export default function SignUpRoute() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="birthday">Ngày sinh</Label>
+                <Label htmlFor="birthday" className="text-[#A93F15]">
+                  Ngày sinh
+                </Label>
                 <Input
                   id="birthday"
                   type="date"
@@ -159,7 +164,9 @@ export default function SignUpRoute() {
                 )}
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="gender">Giới tính</Label>
+                <Label htmlFor="gender" className="text-[#A93F15]">
+                  Giới tính
+                </Label>
                 <Select
                   value={input.gender}
                   onValueChange={(e) =>
@@ -183,7 +190,9 @@ export default function SignUpRoute() {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-[#A93F15]">
+                Email
+              </Label>
               <Input
                 id="email"
                 type="email"
@@ -198,7 +207,9 @@ export default function SignUpRoute() {
               )}
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="password">Mật khẩu</Label>
+              <Label htmlFor="password" className="text-[#A93F15]">
+                Mật khẩu
+              </Label>
               <PasswordInput
                 id="password"
                 name="password"
@@ -212,20 +223,26 @@ export default function SignUpRoute() {
                 <p className="text-red-500 text-xs">{errors.password}</p>
               )}
             </div>
-            <Button className="w-full" type="submit">
+            <Button
+              className="w-full bg-[#A93F15] hover:bg-[#FF7E00]"
+              type="submit"
+            >
               Tiếp tục
             </Button>
           </form>
 
           <div className="mt-4 text-center text-sm">
             Đã có tài khoản?{" "}
-            <Link to={routes.AUTH.SIGN_IN} className="underline">
+            <Link
+              to={routes.AUTH.SIGN_IN}
+              className="underline text-[#A93F15] font-medium"
+            >
               Đăng nhập
             </Link>
           </div>
         </div>
       </div>
-      <div className="bg-black"></div>
+      <img src={Background} className="flex-1 h-screen" />
     </div>
   );
 }

@@ -12,9 +12,7 @@ import { toastSuccess } from "@/utils/toast";
 export type AddProductErrorState = {
   title?: string;
   categoryId?: string;
-  entryPrice?: string;
   price?: string;
-  // stockQuantity?: string;
   description?: string;
   images?: string;
 };
@@ -24,9 +22,7 @@ export default function AddProductRoute() {
     title: "",
     author: "NXBVN",
     categoryId: "",
-    entryPrice: 0,
     price: 0,
-    // stockQuantity: 0,
     description: "",
     images: [],
   });
@@ -44,21 +40,9 @@ export default function AddProductRoute() {
       newErrors.categoryId = "Danh mục không được để trống";
     }
 
-    if (detailData.entryPrice <= 0) {
-      newErrors.entryPrice = "Giá nhập phải lớn hơn 0";
-    }
-
     if (detailData.price <= 0) {
       newErrors.price = "Giá bán phải lớn hơn 0";
     }
-
-    if (detailData.price < detailData.entryPrice) {
-      newErrors.price = "Giá bán không được nhỏ hơn giá nhập";
-    }
-
-    // if (detailData.stockQuantity < 0) {
-    //   newErrors.stockQuantity = "Số lượng tồn kho không được nhỏ hơn 0";
-    // }
 
     if (!detailData.description.trim()) {
       newErrors.description = "Mô tả không được để trống";
@@ -97,17 +81,19 @@ export default function AddProductRoute() {
           onChange={setDetailData}
           errors={errors}
         />
-        {/* <ProductSaleSection /> */}
         <div className="flex flex-row gap-4 mx-auto mb-12">
           <Button
             variant="outline"
-            className="w-40"
+            className="w-40 text-[#A93F15] hover:text-[#A93F15]"
             type="button"
             onClick={() => navigate(routes.ADMIN.PRODUCT)}
           >
             Hủy
           </Button>
-          <Button className="w-40" type="submit">
+          <Button
+            className="w-40 bg-[#A93F15] hover:bg-[#FF7E00]"
+            type="submit"
+          >
             Lưu
           </Button>
         </div>

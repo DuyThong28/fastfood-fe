@@ -53,7 +53,7 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
               title: "comment",
               product: item.product,
             };
-          }),
+          })
         );
         setIsOpen(true);
       } catch (err) {
@@ -66,7 +66,7 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
         const response = await reviewService.getReviewsByOrderId(id);
         console.log(response);
         (setReviews as Dispatch<SetStateAction<ResReview[]>>)(
-          response.data.data,
+          response.data.data
         );
         setIsOpen(true);
       } catch (err) {
@@ -92,7 +92,7 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
 
     const reviewProduct = async () => {
       const unreviewItem = reviews.find(
-        (item) => item.rating < 1 || !item.description?.trim(),
+        (item) => item.rating < 1 || !item.description?.trim()
       );
       if (unreviewItem) {
         if (unreviewItem.rating < 1 && !unreviewItem.description?.trim())
@@ -114,8 +114,8 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
           try {
             await Promise.all(
               (reviews as Review[]).map((reivew) =>
-                orderService.reviewProduct(reivew),
-              ),
+                orderService.reviewProduct(reivew)
+              )
             );
             toastSuccess("Đánh giá thành công");
             setIsOpen(false);
@@ -124,21 +124,19 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
           } catch (err) {
             console.log(err);
           }
-        },
+        }
       );
     };
 
     const handleOnChangeInput = (
       productId: string,
       name: string,
-      value: string | number,
+      value: string | number
     ) => {
       (setReviews as Dispatch<SetStateAction<Review[]>>)((preState) =>
         preState.map((review) =>
-          review.productId === productId
-            ? { ...review, [name]: value }
-            : review,
-        ),
+          review.productId === productId ? { ...review, [name]: value } : review
+        )
       );
     };
 
@@ -148,7 +146,7 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogContent className="max-w-[425px] max-h-[80%] flex flex-col">
             <DialogHeader className="flex-none">
-              <DialogTitle>Đánh Giá</DialogTitle>
+              <DialogTitle className="text-[#A93F15]">Đánh Giá</DialogTitle>
             </DialogHeader>
             <div className="overflow-y-auto flex-1 flex flex-col gap-6 p-1">
               {reviews.map((item, index) => {
@@ -166,7 +164,7 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
               <Button
                 type="button"
                 variant="outline"
-                className="w-1/2"
+                className="w-1/2 text-[#A93F15] hover:text-[#A93F15]"
                 onClick={() => {
                   setReviews([]);
                   setIsOpen(false);
@@ -175,7 +173,11 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
                 Trở lại
               </Button>
               {action === ReviewStatus.UNREVIEW && (
-                <Button type="button" onClick={reviewProduct} className="w-1/2">
+                <Button
+                  type="button"
+                  onClick={reviewProduct}
+                  className="w-1/2 bg-[#A93F15] hover:bg-[#FF7E00]"
+                >
                   Hoàn thành
                 </Button>
               )}
@@ -184,7 +186,7 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
         </Dialog>
       </>
     );
-  },
+  }
 );
 
 export default ReviewDialog;

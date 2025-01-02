@@ -4,9 +4,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ProductLayout from "./product-layout";
 
 const inActive =
-  "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary";
+  "flex items-center gap-3 rounded-lg px-3 py-2 text-[#A93F15] transition-all hover:text-[#FF7E00]";
 const active =
-  "flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary";
+  "flex items-center gap-3 rounded-lg bg-[#A93F15] px-3 py-2 text-white transition-all hover:text-white";
 
 export default function CustomerLayout({
   children,

@@ -51,7 +51,7 @@ export default function EmployeeRoute() {
             page: meta.page,
             take: meta.take,
           },
-          isDisable,
+          isDisable
         );
       }
       setMeta(response.data.meta);
@@ -75,29 +75,31 @@ export default function EmployeeRoute() {
     <DashBoardLayout>
       <main className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto">
         <div className="flex">
-          <h1 className="text-lg font-semibold">Danh Sach Nhan vien</h1>
+          <h1 className="text-2xl font-bold text-[#A93F15]">
+            Danh Sách Nhân Viên
+          </h1>
           <Button
-            className="gap-1 ml-auto"
+            className="gap-1 ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
             onClick={() => navigate(routes.ADMIN.ADD_EMPLOYEE)}
           >
             <PlusCircle className="h-3.5 w-3.5" />
-            <span>Them nhan vien moi</span>
+            <span>Thêm nhân viên mới</span>
           </Button>
         </div>
         <Tabs value={tabState}>
           <div className="flex items-center">
             <TabsList>
               <TabsTrigger value="all" onClick={() => setTabState("all")}>
-                Tat ca
+                Tất cả
               </TabsTrigger>
               <TabsTrigger value="active" onClick={() => setTabState("active")}>
-                Hoat dong
+                Hoạt động
               </TabsTrigger>
               <TabsTrigger
                 value="inactive"
                 onClick={() => setTabState("inactive")}
               >
-                Da khoa
+                Đã khóa
               </TabsTrigger>
             </TabsList>
           </div>
@@ -109,14 +111,16 @@ export default function EmployeeRoute() {
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Nhap ten khach hang"
+                  placeholder="Nhập tên nhân viên"
                   className="w-full rounded-lg bg-background pl-8"
                   value={textSearch}
                   onChange={(e) => setTextSearch(e.target.value)}
                   onKeyDown={handleEnterPress}
                 />
               </div>
-              <Button>Ap dung</Button>
+              <Button className="bg-[#A93F15] hover:bg-[#FF7E00]">
+                Áp dụng
+              </Button>
             </div>
             <Table>
               <CustomerTableHeader />

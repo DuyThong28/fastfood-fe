@@ -69,7 +69,7 @@ export const ProductInfoSection = ({
 
   useEffect(() => {
     const imageUrls = detailData.images.map((file: File) =>
-      URL.createObjectURL(file),
+      URL.createObjectURL(file)
     );
     setSelectedImages(imageUrls);
     return () => {
@@ -85,7 +85,7 @@ export const ProductInfoSection = ({
       >
     )((prevData) => {
       const newImages = prevData.images.filter(
-        (_: File, i: number) => i !== index,
+        (_: File, i: number) => i !== index
       );
       return { ...prevData, images: newImages };
     });
@@ -94,7 +94,7 @@ export const ProductInfoSection = ({
   const handleDeleteInitImage = (index: number) => {
     (onChange as Dispatch<SetStateAction<UpdateProductDetail>>)((prevData) => {
       const newImages = prevData.image_url.filter(
-        (_: string, i: number) => i !== index,
+        (_: string, i: number) => i !== index
       );
       return { ...prevData, image_url: newImages };
     });
@@ -103,11 +103,13 @@ export const ProductInfoSection = ({
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Thông Tin Chi Tiết</CardTitle>
+        <CardTitle className="text-[#A93F15] text-lg font-semibold">
+          Thông Tin Chi Tiết
+        </CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-6">
-        <div className="grid grid-cols-[120px_1fr]  gap-4">
-          <Label className="text-right">Tên sản phẩm</Label>
+      <CardContent className="flex flex-col gap-6 ">
+        <div className="grid grid-cols-[120px_1fr] gap-4">
+          <Label className="text-right text-[#A93F15]">Tên sản phẩm</Label>
           <div>
             <Input
               id="title"
@@ -124,7 +126,7 @@ export const ProductInfoSection = ({
           </div>
         </div>
         <div className="grid grid-cols-[120px_1fr_1fr] gap-4">
-          <Label className="text-right">Hình ảnh sản phẩm</Label>
+          <Label className="text-right text-[#A93F15]">Hình ảnh sản phẩm</Label>
           <div>
             <div className="flex flex-row gap-4">
               {isUpdate &&
@@ -148,7 +150,7 @@ export const ProductInfoSection = ({
                         </div>
                       </div>
                     );
-                  },
+                  }
                 )}
               {selectedImages.map((item, index) => {
                 return (
@@ -206,7 +208,7 @@ export const ProductInfoSection = ({
           </div>
         </div>
         <div className="grid grid-cols-[120px_1fr]  gap-4">
-          <Label className="text-right">Danh mục</Label>
+          <Label className="text-right text-[#A93F15]">Danh mục</Label>
           <div>
             <Combobox
               onChange={(value) =>
@@ -220,7 +222,7 @@ export const ProductInfoSection = ({
           </div>
         </div>
         <div className="grid grid-cols-[120px_1fr]  gap-4">
-          <Label className="text-right">Mô tả sản phẩm</Label>
+          <Label className="text-right text-[#A93F15]">Mô tả sản phẩm</Label>
           <div>
             <Textarea
               placeholder="Mô tả sản phẩm"
@@ -240,29 +242,8 @@ export const ProductInfoSection = ({
           </div>
         </div>
         <div className="grid grid-cols-3 gap-4">
-          <div className="grid grid-cols-[120px_1fr]  gap-4">
-            <Label className="text-right">Giá đầu vào</Label>
-            <div>
-              <Input
-                id="entryPrice"
-                name="entryPrice"
-                type="number"
-                min={0}
-                value={detailData.entryPrice}
-                onChange={(e) =>
-                  handleChangeInput({
-                    name: "entryPrice",
-                    value: e.target.value,
-                  })
-                }
-              />
-              {errors?.entryPrice && (
-                <p className="text-red-500 text-xs">{errors.entryPrice}</p>
-              )}
-            </div>
-          </div>
           <div className="grid grid-cols-[120px_1fr]  gap-4 ">
-            <Label className="text-right">Giá bán</Label>
+            <Label className="text-right text-[#A93F15]">Giá bán</Label>
             <div>
               <Input
                 id="price"
@@ -279,27 +260,6 @@ export const ProductInfoSection = ({
               )}
             </div>
           </div>
-          {/* <div className="grid grid-cols-[120px_1fr]  gap-4">
-            <Label className="text-right">Tồn kho</Label>
-            <div>
-              <Input
-                id="stockQuantity"
-                name="stockQuantity"
-                type="number"
-                min={0}
-                value={detailData.stockQuantity}
-                onChange={(e) =>
-                  handleChangeInput({
-                    name: "stockQuantity",
-                    value: e.target.value,
-                  })
-                }
-              />
-              {errors?.stockQuantity && (
-                <p className="text-red-500 text-xs">{errors.stockQuantity}</p>
-              )}
-            </div>
-          </div> */}
         </div>
       </CardContent>
     </Card>

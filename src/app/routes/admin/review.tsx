@@ -57,7 +57,7 @@ export default function ReviewRoute() {
           page: meta.page,
           take: meta.take,
         },
-        { rating: rating, search: searchText, date: date, state: reviewwState },
+        { rating: rating, search: searchText, date: date, state: reviewwState }
       );
       setReviews(response.data.data);
       setMeta(response.data.meta);
@@ -103,10 +103,12 @@ export default function ReviewRoute() {
     <DashBoardLayout>
       <ReplyDialog ref={replyDialogRef} onRefetch={getAllReviews} />
       <main className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto w-full">
-        <h1 className="text-lg font-semibold ">Danh Sách Đánh Giá</h1>
+        <h1 className="text-2xl font-bold text-[#A93F15]">
+          Danh Sách Đánh Giá
+        </h1>
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader className="flex flex-col gap-4">
-            <div className="flex flex-row gap-6">
+            <div className="flex flex-row gap-6 text-[#A93F15]">
               <Label className="font-medium">Số sao đánh giá</Label>
               <div className="flex items-center space-x-2">
                 <Checkbox
@@ -184,7 +186,7 @@ export default function ReviewRoute() {
                 <SelectTrigger className="w-[200px]">
                   <SelectValue placeholder="Chọn trạng thái" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="text-[#A93F15]">
                   <SelectItem value="all">Tất cả</SelectItem>
                   <SelectItem value={ReviewStatus.UNREVIEW}>
                     {REVIEW_sTATUS[ReviewStatus.UNREVIEW]}
@@ -194,7 +196,12 @@ export default function ReviewRoute() {
                   </SelectItem>
                 </SelectContent>
               </Select>
-              <Button onClick={async () => getAllReviews()}>Áp dụng</Button>
+              <Button
+                className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                onClick={async () => getAllReviews()}
+              >
+                Áp dụng
+              </Button>
             </div>
           </CardHeader>
           <CardContent className="w-full">

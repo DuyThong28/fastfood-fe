@@ -23,16 +23,15 @@ export default function ProductItemCard({ data }: ProductItemCardProps) {
         />
       </div>
       <div className="flex flex-col justify-between h-[60px]">
-        <p className="overflow-hidden text-ellipsis line-clamp-2">
+        <p className="overflow-hidden text-ellipsis line-clamp-2 font-bold">
           {data.title}
         </p>
-        <p>{formatNumber(data.price)}</p>
+        <p className="text-gray-500 ">{`${formatNumber(data.price)} đ`}</p>
         <div className="flex flex-row justify-between">
           <span className="flex flex-row">
-            <StarIcon className="text-gray-900  h-4 w-4 flex-shrink-0" />
+            <StarIcon className="text-[#A93F15]  h-4 w-4 flex-shrink-0" />
             {data.avg_stars}
           </span>
-          <span>{`Đã bán: ${data.sold_quantity}`}</span>
         </div>
       </div>
     </div>

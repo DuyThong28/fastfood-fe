@@ -116,7 +116,7 @@ export default function ProductTab() {
       const modifiedEndDate = dayjs(endDate).add(1, "day").format("YYYY-MM-DD");
       try {
         const response = await api.get(
-          `/statistics/soldProduct?start=${startDate}&end=${modifiedEndDate}`,
+          `/statistics/soldProduct?start=${startDate}&end=${modifiedEndDate}`
         );
         setSoldProducts(response.data.data);
       } catch (error) {
@@ -245,14 +245,14 @@ export default function ProductTab() {
               </Select>
               <button
                 onClick={handleExportReport}
-                className="bg-[#198754] text-white px-4 py-2 rounded"
+                className="bg-[#A93F15] text-white px-4 py-2 rounded"
               >
                 Xuất Excel
               </button>
             </div>
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="text-[#A93F15] font-semibold">
                   <TableCell>STT</TableCell>
                   <TableCell>Tên sản phẩm</TableCell>
                   <TableCell>Số bán ra</TableCell>
@@ -284,7 +284,7 @@ export default function ProductTab() {
       </div>
       <Card>
         <CardHeader>
-          <h3 className="text-xl font-semibold">
+          <h3 className="text-xl font-semibold text-[#A93F15]">
             Top 5 sản phẩm bán chạy nhất
           </h3>
         </CardHeader>

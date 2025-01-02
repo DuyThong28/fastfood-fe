@@ -36,8 +36,8 @@ export default function CheckOutRoute() {
       const response = await cartService.getCart();
       setCartItemsSelected(
         response.data.data.filter((item) =>
-          selectedProductIds.includes(item.product_id),
-        ),
+          selectedProductIds.includes(item.product_id)
+        )
       );
     } catch (err) {
       console.log(err);
@@ -69,7 +69,7 @@ export default function CheckOutRoute() {
     if (cartItemsSelected.length === 0) return;
     if (!addressInfo) {
       toastWarning(
-        "Vui lòng cung cấp địa chỉ giao hàng trước khi xác nhận đơn hàng.",
+        "Vui lòng cung cấp địa chỉ giao hàng trước khi xác nhận đơn hàng."
       );
       return;
     }
@@ -96,7 +96,7 @@ export default function CheckOutRoute() {
         } catch (err) {
           console.log(err);
         }
-      },
+      }
     );
   };
 
@@ -106,7 +106,9 @@ export default function CheckOutRoute() {
       <AddressesDialog ref={dialogRef} onSetAddress={setAddressInfo} />
       <main className="flex flex-1 flex-col gap-6 py-6 pl-6">
         <div className="space-y-4">
-          <h1 className="text-lg font-semibold">Địa Chỉ Nhận Hàng</h1>
+          <h1 className="text-lg font-semibold text-[#A93F15]">
+            Địa Chỉ Nhận Hàng
+          </h1>
           <SectionCard className="flex flex-row justify-between items-center p-4">
             {addressInfo ? (
               <>
@@ -123,6 +125,7 @@ export default function CheckOutRoute() {
                 </div>
                 <Button
                   variant="secondary"
+                  className="text-[#A93F15]"
                   onClick={() => dialogRef.current?.onOpen(addressInfo)}
                 >
                   Thay đổi
@@ -134,7 +137,10 @@ export default function CheckOutRoute() {
                   Cung cấp địa chỉ giao hàng giúp chúng tôi gửi hàng đúng nơi.
                   Thêm địa chỉ ngay!
                 </div>
-                <Button onClick={() => dialogRef.current?.onOpen()}>
+                <Button
+                  className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                  onClick={() => dialogRef.current?.onOpen()}
+                >
                   Thêm địa chỉ
                 </Button>
               </>
@@ -142,7 +148,7 @@ export default function CheckOutRoute() {
           </SectionCard>
         </div>
         <div className="space-y-4">
-          <h1 className="text-lg font-semibold">Sản Phẩm</h1>
+          <h1 className="text-lg font-semibold text-[#A93F15]">Sản Phẩm</h1>
           <SectionCard className="p-2">
             <CheckoutTableHeader />
             <div>
@@ -151,14 +157,17 @@ export default function CheckOutRoute() {
               })}
             </div>
             <div className="flex p-4">
-              <div className="ml-auto font-medium">{`Tổng số tiền (${
+              <div className="ml-auto font-semibold text-[#A93F15]">{`Tổng số tiền (${
                 cartItemsSelected.length
               } sản phẩm): ${handleCountTotalPrice()}`}</div>
             </div>
           </SectionCard>
         </div>
         <SectionCard className="p-4 flex">
-          <Button className="ml-auto" onClick={handleOrder}>
+          <Button
+            className="ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
+            onClick={handleOrder}
+          >
             Đặt hàng
           </Button>
         </SectionCard>

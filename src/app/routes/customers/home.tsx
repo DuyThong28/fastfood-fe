@@ -193,10 +193,10 @@ export default function HomeRoute() {
             className="w-full rounded-none border-b-[1px] border-black text-xl"
           >
             <AccordionItem value="item-1">
-              <AccordionTrigger className="bg-white px-5 py-4 font-semibold text-black">
+              <AccordionTrigger className="bg-white px-5 py-4 font-semibold text-[#A93F15]">
                 Danh mục
               </AccordionTrigger>
-              <AccordionContent className="bg-white px-5 py-4 font-normal text-black">
+              <AccordionContent className="bg-white px-5 py-4 font-normal text-[#A93F15]">
                 {categories &&
                   categories.map((val) => (
                     <div
@@ -229,10 +229,10 @@ export default function HomeRoute() {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
-              <AccordionTrigger className="bg-white px-5 py-4 font-semibold text-black">
+              <AccordionTrigger className="bg-white px-5 py-4 font-semibold text-[#A93F15]">
                 Giá bán (VND)
               </AccordionTrigger>
-              <AccordionContent className="bg-white px-5 py-4 font-normal text-black">
+              <AccordionContent className="bg-white px-5 py-4 font-normal text-[#A93F15]">
                 <div className="flex flex-col gap-2">
                   <div className="w-full flex items-center justify-between gap-2">
                     <Input
@@ -262,10 +262,10 @@ export default function HomeRoute() {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
-              <AccordionTrigger className="bg-white px-5 py-4 font-semibold text-black">
+              <AccordionTrigger className="bg-white px-5 py-4 font-semibold text-[#A93F15]">
                 Đánh giá
               </AccordionTrigger>
-              <AccordionContent className="bg-white px-5 py-4 font-normal text-black">
+              <AccordionContent className="bg-white px-5 py-4 font-normal text-[#A93F15]">
                 <div className="flex flex-col">
                   <RadioGroup
                     className="text-base"
@@ -346,18 +346,6 @@ export default function HomeRoute() {
                 <SelectItem value="des">Giá: Cao đến thấp</SelectItem>
               </SelectContent>
             </Select>
-            <div className="flex items-center w-full gap-2">
-              <Checkbox
-                className="bg-white p-0"
-                id="quantity"
-                checked={checkQuantity}
-                onCheckedChange={() => setCheckQuantity(!checkQuantity)}
-                onClick={(e) => e.stopPropagation()}
-              />
-              <label htmlFor="quantity" className="w-full text-base text-black">
-                Còn hàng
-              </label>
-            </div>
           </div>
           <div className="w-full grid grid-cols-3 gap-4 py-4">
             {filterProducts.map((item, index) => {

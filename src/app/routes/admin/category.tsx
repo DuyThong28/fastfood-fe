@@ -56,7 +56,7 @@ export default function CategoryRoute() {
             page: meta.page,
             take: meta.take,
           },
-          isDisable,
+          isDisable
         );
       }
       setCategories(response.data.data);
@@ -89,8 +89,11 @@ export default function CategoryRoute() {
       <CategoryDialog ref={dialogRef} onRefetch={getAllCategories} />
       <main className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto">
         <div className="flex">
-          <h1 className="text-lg font-semibold">Danh Mục</h1>
-          <Button className="gap-1 ml-auto" onClick={handleAddNew}>
+          <h1 className="text-2xl font-bold text-[#A93F15]">Danh Mục</h1>
+          <Button
+            className="gap-1 ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
+            onClick={handleAddNew}
+          >
             <PlusCircle className="h-3.5 w-3.5" />
             <span>Thêm danh mục mới</span>
           </Button>
@@ -108,7 +111,7 @@ export default function CategoryRoute() {
                 value="inactive"
                 onClick={() => setTabState("inactive")}
               >
-                Đã ấn
+                Đã ẩn
               </TabsTrigger>
             </TabsList>
           </div>
@@ -125,7 +128,12 @@ export default function CategoryRoute() {
                 onChange={(e) => setTextSearch(e.target.value)}
                 onKeyDown={handleEnterPress}
               />
-              <Button onClick={async () => getAllCategories()}>Áp dụng</Button>
+              <Button
+                className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                onClick={async () => getAllCategories()}
+              >
+                Áp dụng
+              </Button>
             </div>
           </CardHeader>
           <CardContent>

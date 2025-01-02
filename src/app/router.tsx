@@ -30,10 +30,14 @@ import AdminOrderDetailRoute from "./routes/admin/order-detail";
 import SignInSuccess from "./routes/auth/sign-in-success";
 import AddEmployeeRoute from "./routes/admin/add-employee";
 import EmployeeRoute from "./routes/admin/employee";
-import ProductDetailRoute from "./routes/customers/product-detail";
 import PublicProductDetailRoute from "./routes/customers/product-detail";
 import AdminProductDetailRoute from "./routes/admin/product-detail";
-import { AuthorizedAdministrator, AuthorizedStaff } from "./authorizedRoute";
+import {
+  AuthorizedAdministrator,
+  AuthorizedCustomer,
+  AuthorizedStaff,
+  UnauthorizedUser,
+} from "./authorizedRoute";
 import ReportRoute from "./routes/admin/report";
 import Chatbot from "@/components/chatbot/chatbot";
 
@@ -41,19 +45,35 @@ const createAppRouter = () =>
   createBrowserRouter([
     {
       path: routes.AUTH.SIGN_IN,
-      element: <SignInRoute />,
+      element: (
+        <UnauthorizedUser>
+          <SignInRoute />
+        </UnauthorizedUser>
+      ),
     },
     {
       path: routes.AUTH.SIGN_UP,
-      element: <SignUpRoute />,
+      element: (
+        <UnauthorizedUser>
+          <SignUpRoute />
+        </UnauthorizedUser>
+      ),
     },
     {
       path: routes.AUTH.FORGOT_PASSWORD,
-      element: <ForgotPasswordRoute />,
+      element: (
+        <UnauthorizedUser>
+          <ForgotPasswordRoute />
+        </UnauthorizedUser>
+      ),
     },
     {
       path: routes.AUTH.RESET_PASSWORD,
-      element: <ResetPasswordRoute />,
+      element: (
+        <UnauthorizedUser>
+          <ResetPasswordRoute />
+        </UnauthorizedUser>
+      ),
     },
     {
       path: routes.AUTH.VERIFICATION,
@@ -83,19 +103,19 @@ const createAppRouter = () =>
     {
       path: routes.CUSTOMER.ACCOUNT_ADDRESS,
       element: (
-        <>
+        <AuthorizedCustomer>
           <AccountAddressRoute />
           <Chatbot />
-        </>
+        </AuthorizedCustomer>
       ),
     },
     {
       path: routes.CUSTOMER.ACCOUNT_PROFILE,
       element: (
-        <>
+        <AuthorizedCustomer>
           <AccountProfileRoute />
           <Chatbot />
-        </>
+        </AuthorizedCustomer>
       ),
     },
     {
@@ -110,46 +130,46 @@ const createAppRouter = () =>
     {
       path: routes.CUSTOMER.CART,
       element: (
-        <>
+        <AuthorizedCustomer>
           <CartRoute />
           <Chatbot />
-        </>
+        </AuthorizedCustomer>
       ),
     },
     {
       path: routes.CUSTOMER.CHANGE_PASSWORD,
       element: (
-        <>
+        <AuthorizedCustomer>
           <AccountPasswordRoute />
           <Chatbot />
-        </>
+        </AuthorizedCustomer>
       ),
     },
     {
       path: routes.CUSTOMER.CHECKOUT,
       element: (
-        <>
+        <AuthorizedCustomer>
           <CheckOutRoute />
           <Chatbot />
-        </>
+        </AuthorizedCustomer>
       ),
     },
     {
       path: routes.CUSTOMER.ORDER_DETAIL,
       element: (
-        <>
+        <AuthorizedCustomer>
           <OrderDetailRoute />
           <Chatbot />
-        </>
+        </AuthorizedCustomer>
       ),
     },
     {
       path: routes.CUSTOMER.PURCHASE,
       element: (
-        <>
+        <AuthorizedCustomer>
           <PurchaseRoute />
           <Chatbot />
-        </>
+        </AuthorizedCustomer>
       ),
     },
     {
@@ -188,17 +208,17 @@ const createAppRouter = () =>
     {
       path: routes.ADMIN.ORDER,
       element: (
-        <AuthorizedAdministrator>
+        <AuthorizedStaff>
           <OrderRoute />
-        </AuthorizedAdministrator>
+        </AuthorizedStaff>
       ),
     },
     {
       path: routes.ADMIN.ORDER_DETAIL,
       element: (
-        <AuthorizedAdministrator>
+        <AuthorizedStaff>
           <AdminOrderDetailRoute />
-        </AuthorizedAdministrator>
+        </AuthorizedStaff>
       ),
     },
     {
@@ -220,9 +240,9 @@ const createAppRouter = () =>
     {
       path: routes.ADMIN.CHANGE_PASSWORD,
       element: (
-        <AuthorizedAdministrator>
+        <AuthorizedStaff>
           <AdminPasswordRoute />
-        </AuthorizedAdministrator>
+        </AuthorizedStaff>
       ),
     },
     {

@@ -85,7 +85,7 @@ export default function RevenueTab() {
           for (let i = 0; i < 7; i++) {
             const currentDay = startOfWeek.add(i, "day");
             const response = await api.get(
-              `/statistics?year=${currentDay.year()}&month=${currentDay.month() + 1}&day=${currentDay.date()}`,
+              `/statistics?year=${currentDay.year()}&month=${currentDay.month() + 1}&day=${currentDay.date()}`
             );
             weekStatistics.push(...response.data.data);
           }
@@ -96,12 +96,12 @@ export default function RevenueTab() {
             (sum: number, stat: Statistic) => {
               return sum + stat.total_revenue;
             },
-            0,
+            0
           );
           setTotalRevenue(total);
         } else if (selectedView === "month") {
           const response = await api.get(
-            `/statistics?year=${year}&month=${month}`,
+            `/statistics?year=${year}&month=${month}`
           );
           setStatistics(response.data.data);
 
@@ -109,7 +109,7 @@ export default function RevenueTab() {
             (sum: number, stat: Statistic) => {
               return sum + stat.total_revenue;
             },
-            0,
+            0
           );
           setTotalRevenue(total);
         } else if (selectedView === "year") {
@@ -120,7 +120,7 @@ export default function RevenueTab() {
             (sum: number, stat: Statistic) => {
               return sum + stat.total_revenue;
             },
-            0,
+            0
           );
           setTotalRevenue(total);
         }
@@ -257,13 +257,13 @@ export default function RevenueTab() {
             </Select>
             <button
               onClick={handleExportReport}
-              className="bg-[#198754] text-white px-4 py-2 rounded"
+              className="bg-[#A93F15] text-white px-4 py-2 rounded"
             >
               Xuất Excel
             </button>
           </div>
           <Table>
-            <TableHeader>
+            <TableHeader className="text-[#A93F15] font-semibold">
               <TableRow>
                 <TableCell>STT</TableCell>
                 <TableCell>Ngày</TableCell>
@@ -287,7 +287,7 @@ export default function RevenueTab() {
         </CardContent>
         <CardFooter className="bg-muted/50">
           <div className="mt-4 flex justify-between items-center">
-            <h2 className="text-lg font-semibold">
+            <h2 className="text-lg font-semibold text-[#A93F15]">
               Tổng doanh thu: {formatNumber(totalRevenue)} VNĐ
             </h2>
           </div>

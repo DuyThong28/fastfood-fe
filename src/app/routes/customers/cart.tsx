@@ -106,7 +106,7 @@ export default function CartRoute() {
       async () => {
         try {
           await Promise.all(
-            rowSelection.map((item) => cartService.removeFromCart(item)),
+            rowSelection.map((item) => cartService.removeFromCart(item))
           );
           toastSuccess(`Xóa ${rowSelection.length} sản phẩm thành công`);
           setRowSelection([]);
@@ -114,7 +114,7 @@ export default function CartRoute() {
         } catch (err) {
           console.log(err);
         }
-      },
+      }
     );
   };
 
@@ -149,21 +149,29 @@ export default function CartRoute() {
               checked={isAllSelected}
               onCheckedChange={handleSelectAll}
             />
-            <div
-              className="hover:text-gray-500"
+            <Button
+              className="bg-[#A93F15] hover:bg-[#FF7E00]"
               onClick={() => handleSelectAll(!isAllSelected)}
             >
               Chọn tất cả
-            </div>
-            <div className="hover:text-gray-500" onClick={handleDeleteMany}>
+            </Button>
+            <Button
+              className="bg-[#A93F15] hover:bg-[#FF7E00]"
+              onClick={handleDeleteMany}
+            >
               Xóa
-            </div>
+            </Button>
           </div>
           <div className="flex flex-row items-center gap-4">
             <div>{`Tổng thanh toán (${
               rowSelection.length
             } sản phẩm): ${formatNumber(handleCountTotalPrice())}`}</div>
-            <Button onClick={handlePurchase}>Mua hàng</Button>
+            <Button
+              className="bg-[#A93F15] hover:bg-[#FF7E00]"
+              onClick={handlePurchase}
+            >
+              Mua hàng
+            </Button>
           </div>
         </div>
       </main>

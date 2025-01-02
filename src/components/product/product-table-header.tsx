@@ -14,9 +14,6 @@ export const ProductTableHeader: React.FC<ProductTableHeaderProps> = ({
   return (
     <TableHeader>
       <TableRow className=" hover:bg-transparent">
-        {/* <TableHead className="w-[30px]">
-          <Checkbox />
-        </TableHead> */}
         <TableHead className="w-1/2">
           <SortButton
             checked={sortBy === "title"}
@@ -29,28 +26,12 @@ export const ProductTableHeader: React.FC<ProductTableHeaderProps> = ({
         <TableHead>Trạng thái</TableHead>
         <TableHead>
           <SortButton
-            checked={sortBy === "entry_price"}
-            order={order}
-            text="Giá nhập kho"
-            onClick={(newOrder) => onSort(newOrder, "entry_price")}
-          />
-        </TableHead>
-        <TableHead>
-          <SortButton
             checked={sortBy === "price"}
             order={order}
             text="Giá bán"
             onClick={(newOrder) => onSort(newOrder, "price")}
           />
         </TableHead>
-        {/* <TableHead>
-          <SortButton
-            checked={sortBy === "stock_quantity"}
-            order={order}
-            text="Tồn kho"
-            onClick={(newOrder) => onSort(newOrder, "stock_quantity")}
-          />
-        </TableHead> */}
         <TableHead>
           <span className="sr-only">Thao tác</span>
         </TableHead>

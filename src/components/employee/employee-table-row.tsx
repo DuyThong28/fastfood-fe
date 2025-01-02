@@ -61,7 +61,7 @@ export const EmployeeTableRow: React.FC<EmployeeTableRowProps> = ({
       </TableCell>
       <TableCell>{data.full_name}</TableCell>
       <TableCell>{dateToVNString(new Date(data.birthday))}</TableCell>
-      <TableCell>{data.gender === Gender.MALE ? "Nam" : "Nu"}</TableCell>
+      <TableCell>{data.gender === Gender.MALE ? "Nam" : "Nữ"}</TableCell>
       <TableCell>{data.phone}</TableCell>
       <TableCell>{data.email}</TableCell>
       <TableCell className="w-40">
@@ -81,21 +81,21 @@ export const EmployeeTableRow: React.FC<EmployeeTableRowProps> = ({
               className="py-2 px-3  w-full hover:bg-[#F4F4F5]"
               onClick={handleEditStaff}
             >
-              Chinh sua thong tin
+              Chỉnh sửa thông tin
             </div>
             {data.is_disable ? (
               <div
                 className="py-2 px-3  w-full hover:bg-[#F4F4F5]"
                 onClick={handleActive}
               >
-                Kich hoat
+                Kích hoạt
               </div>
             ) : (
               <div
                 className="py-2 px-3  w-full hover:bg-[#F4F4F5]"
                 onClick={handleDisable}
               >
-                Khoa
+                Khóa
               </div>
             )}
           </PopoverContent>

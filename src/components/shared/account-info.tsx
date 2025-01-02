@@ -114,7 +114,7 @@ export default function AccountInfo() {
     try {
       const response = await customerService.updateAccount(
         accountData,
-        imageFile,
+        imageFile
       );
       setUser({
         avatar_url: response.data.data.avatar_url,
@@ -215,7 +215,7 @@ export default function AccountInfo() {
           />
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label>Họ và tên</Label>
+              <Label className="font-semibold text-[#A93F15]">Họ và tên</Label>
               <Input
                 id="fullName"
                 type="fullName"
@@ -232,13 +232,13 @@ export default function AccountInfo() {
               )}
             </div>
             <div className="space-y-2">
-              <Label>Ngày sinh</Label>
+              <Label className="font-semibold text-[#A93F15]">Ngày sinh</Label>
               <Input
                 id="birthday"
                 type="date"
                 value={dateToString(
                   (accountData?.birthday && new Date(accountData?.birthday)) ||
-                    new Date(),
+                    new Date()
                 )}
                 onChange={(e) =>
                   handleChangeInput({
@@ -252,7 +252,7 @@ export default function AccountInfo() {
           </div>
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label>Giới tính</Label>
+              <Label className="font-semibold text-[#A93F15]">Giới tính</Label>
               <Select
                 defaultValue={Gender.MALE}
                 value={accountData?.gender}
@@ -275,7 +275,9 @@ export default function AccountInfo() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Số điện thoại</Label>
+              <Label className="font-semibold text-[#A93F15]">
+                Số điện thoại
+              </Label>
               <Input
                 id="phone"
                 type="number"
@@ -295,7 +297,7 @@ export default function AccountInfo() {
           </div>
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label>Email</Label>
+              <Label className="font-semibold text-[#A93F15]">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -313,9 +315,10 @@ export default function AccountInfo() {
               )}
             </div>
             <div className="flex flex-col gap-2">
-              <Label>Mật khẩu</Label>
+              <Label className="font-semibold text-[#A93F15]">Mật khẩu</Label>
               <Button
                 variant="secondary"
+                className="bg-[#fbf9f6] text-[#A93F15]"
                 type="button"
                 onClick={handleChangePass}
               >
@@ -325,14 +328,17 @@ export default function AccountInfo() {
           </div>
           <div className="flex flex-row gap-6 mx-auto">
             <Button
-              className="w-40"
+              className="w-40 text-[#A93F15]"
               variant="outline"
               type="button"
               onClick={handleCancel}
             >
               Hủy
             </Button>
-            <Button className="w-40" type="submit">
+            <Button
+              className="w-40 bg-[#A93F15] hover:bg-[#FF7E00]"
+              type="submit"
+            >
               Xác Nhận
             </Button>
           </div>

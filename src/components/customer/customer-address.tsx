@@ -32,7 +32,7 @@ export const CustomerAddress: React.FC<CustomerAddressProps> = ({
         } catch (err) {
           console.log(err);
         }
-      },
+      }
     );
   };
   return (
@@ -55,10 +55,18 @@ export const CustomerAddress: React.FC<CustomerAddressProps> = ({
           </div>
         </div>
         <div className="flex flex-row gap-4 items-center">
-          <Button variant="secondary" onClick={onUpdate}>
+          <Button
+            variant="secondary"
+            onClick={onUpdate}
+            className="text-white bg-[#A93F15] hover:bg-[#FF7E00]"
+          >
             Chỉnh sửa
           </Button>
-          <Button variant="outline" onClick={handleDeleteAddress}>
+          <Button
+            variant="outline"
+            className="text-[#A93F15] hover:text-[#A93F15]"
+            onClick={handleDeleteAddress}
+          >
             Xóa
           </Button>
         </div>

@@ -23,7 +23,7 @@ export const OrderTableRow: React.FC<OrderTableRowProps> = ({ data }) => {
 
   return (
     <div className="flex flex-col text-sm border border-gray-300 rounded-md">
-      <div className="flex flex-row justify-between py-2 px-4 bg-muted">
+      <div className="flex flex-row justify-between py-2 px-4 bg-[#FFF7E6] text-[#A93F15]">
         <span>{data.user.full_name}</span>
         <span>{`Mã đơn hàng: ${data.id}`}</span>
       </div>
@@ -60,9 +60,9 @@ export const OrderTableRow: React.FC<OrderTableRowProps> = ({ data }) => {
               >
                 Xem chi tiết
               </div>
-              <div className="py-2 px-3 w-full hover:bg-[#F4F4F5]">
+              {/* <div className="py-2 px-3 w-full hover:bg-[#F4F4F5]">
                 In phiếu giao
-              </div>
+              </div> */}
             </PopoverContent>
           </Popover>
         </div>

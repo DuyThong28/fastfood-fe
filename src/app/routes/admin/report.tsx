@@ -11,7 +11,7 @@ export default function ReportRoute() {
   return (
     <DashBoardLayout>
       <main className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto">
-        <h1 className="text-lg font-semibold">Báo cáo</h1>
+        <h1 className="text-2xl font-bold text-[#A93F15]">Báo cáo</h1>
         <Tabs value={tabState}>
           <div className="flex items-center">
             <TabsList>

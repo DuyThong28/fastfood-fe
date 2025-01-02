@@ -38,7 +38,7 @@ export default function OrderRoute() {
         {
           search: searchText,
           status: tabState,
-        },
+        }
       );
 
       setOrders(response.data.data);
@@ -61,7 +61,9 @@ export default function OrderRoute() {
   return (
     <DashBoardLayout>
       <main className="flex flex-1 flex-col gap-6 p-6  bg-muted/40 overflow-y-auto">
-        <h1 className="text-lg font-semibold">Danh Sách Đơn Hàng</h1>
+        <h1 className="text-2xl font-bold text-[#A93F15]">
+          Danh Sách Đơn Hàng
+        </h1>
         <Tabs value={tabState}>
           <TabsList>
             <TabsTrigger value="all" onClick={() => setTabState("all")}>
@@ -119,7 +121,12 @@ export default function OrderRoute() {
                   onKeyDown={handleEnterPress}
                 />
               </div>
-              <Button onClick={async () => getOrdersByAdmin()}>Áp dụng</Button>
+              <Button
+                className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                onClick={async () => getOrdersByAdmin()}
+              >
+                Áp dụng
+              </Button>
             </div>
             <div className="space-y-4">
               <OrderTableHeader />

@@ -112,7 +112,7 @@ const AddressDialog = forwardRef<AddressDialogRef, AddressDialogProps>(
 
     const handleChangeInput = (
       name: string,
-      value: string | number | undefined,
+      value: string | number | undefined
     ) => {
       setAddress((prevData) => {
         return {
@@ -126,13 +126,15 @@ const AddressDialog = forwardRef<AddressDialogRef, AddressDialogProps>(
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="text-[#A93F15] font-semibold">
               {address.id ? "Chỉnh Sửa Địa Chỉ" : "Thêm Địa Chỉ Mới"}
             </DialogTitle>
           </DialogHeader>
           <form className="space-y-6" onSubmit={handleSubmit} noValidate>
             <div className="flex flex-col gap-4">
-              <Label htmlFor="fullName">Họ và tên</Label>
+              <Label htmlFor="fullName" className="text-[#A93F15]">
+                Họ và tên
+              </Label>
               <Input
                 id="fullName"
                 placeholder="Họ và tên"
@@ -144,7 +146,9 @@ const AddressDialog = forwardRef<AddressDialogRef, AddressDialogProps>(
               )}
             </div>
             <div className="flex flex-col gap-4">
-              <Label htmlFor="phoneNumber">Số điện thoại</Label>
+              <Label htmlFor="phoneNumber" className="text-[#A93F15]">
+                Số điện thoại
+              </Label>
               <Input
                 type="number"
                 min={0}
@@ -160,7 +164,9 @@ const AddressDialog = forwardRef<AddressDialogRef, AddressDialogProps>(
               )}
             </div>
             <div className="flex flex-col gap-4">
-              <Label htmlFor="name">Địa chỉ</Label>
+              <Label htmlFor="name" className="text-[#A93F15]">
+                Địa chỉ
+              </Label>
               <Input
                 id="address"
                 placeholder="Địa chỉ"
@@ -175,17 +181,20 @@ const AddressDialog = forwardRef<AddressDialogRef, AddressDialogProps>(
               <Button
                 type="button"
                 variant="outline"
+                className="text-[#A93F15] hover:text-[#A93F15]"
                 onClick={() => setIsOpen(false)}
               >
                 Hủy
               </Button>
-              <Button type="submit">Lưu</Button>
+              <Button type="submit" className="bg-[#A93F15] hover:bg-[#FF7E00]">
+                Lưu
+              </Button>
             </div>
           </form>
         </DialogContent>
       </Dialog>
     );
-  },
+  }
 );
 
 export default AddressDialog;

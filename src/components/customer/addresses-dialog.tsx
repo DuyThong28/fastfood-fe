@@ -86,14 +86,16 @@ const AddressesDialog = forwardRef<AddressesDialogRef, AddressesDialogProps>(
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogContent className="max-w-[425px] max-h-[80%] flex flex-col">
             <DialogHeader className="flex-none">
-              <DialogTitle>Địa chỉ của tôi</DialogTitle>
+              <DialogTitle className="text-[#A93F15]">
+                Địa chỉ của tôi
+              </DialogTitle>
             </DialogHeader>
             <RadioGroup
               className="overflow-y-auto flex-1"
               defaultValue={addressId}
               onValueChange={(value) => {
                 const selectedAddress = addresses.find(
-                  (item) => item.id === value,
+                  (item) => item.id === value
                 );
                 if (selectedAddress) {
                   setAddressId(selectedAddress.id);
@@ -124,6 +126,7 @@ const AddressesDialog = forwardRef<AddressesDialogRef, AddressesDialogProps>(
                     <div className="flex flex-row gap-4 items-center">
                       <Button
                         variant="secondary"
+                        className="text-[#A93F15]"
                         onClick={() => dialogRef.current?.onOpen(item)}
                       >
                         Chỉnh sửa
@@ -137,8 +140,8 @@ const AddressesDialog = forwardRef<AddressesDialogRef, AddressesDialogProps>(
                 variant={"outline"}
                 onClick={handleAddNew}
               >
-                <PlusCircle className="h-3.5 w-3.5" />
-                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                <PlusCircle className="h-3.5 w-3.5 text-[#A93F15]" />
+                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap text-[#A93F15]">
                   Thêm địa chỉ mới
                 </span>
               </Button>
@@ -148,17 +151,23 @@ const AddressesDialog = forwardRef<AddressesDialogRef, AddressesDialogProps>(
               <Button
                 type="button"
                 variant="outline"
+                className="text-[#A93F15] hover:text-[#A93F15]"
                 onClick={() => setIsOpen(false)}
               >
                 Hủy
               </Button>
-              <Button onClick={handleSetAddress}>Xác nhận</Button>
+              <Button
+                className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                onClick={handleSetAddress}
+              >
+                Xác nhận
+              </Button>
             </div>
           </DialogContent>
         </Dialog>
       </>
     );
-  },
+  }
 );
 
 export default AddressesDialog;

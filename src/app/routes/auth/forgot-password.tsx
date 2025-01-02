@@ -71,17 +71,21 @@ export default function ForgotPasswordRoute() {
 
   return (
     <form
-      className="justify-center items-center flex h-screen"
+      className="justify-center items-center flex h-screen "
       onSubmit={handleSubmit}
       noValidate
     >
-      <Card className="w-full max-w-sm">
+      <Card className="w-full max-w-sm z-10">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl">Nhập Email Của Bạn</CardTitle>
+          <CardTitle className="text-2xl text-[#A93F15]">
+            Nhập Email Của Bạn
+          </CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-[#A93F15]">
+              Email
+            </Label>
             <Input
               id="email"
               type="email"
@@ -95,12 +99,20 @@ export default function ForgotPasswordRoute() {
           </div>
         </CardContent>
         <CardFooter className="grid grid-cols-2 gap-4">
-          <Button variant="outline" type="button" onClick={handleCancel}>
+          <Button
+            variant="outline"
+            className="text-[#A93F15] hover:text-[#A93F15]"
+            type="button"
+            onClick={handleCancel}
+          >
             Hủy
           </Button>
-          <Button type="submit">Tiếp tục</Button>
+          <Button type="submit" className="bg-[#A93F15] hover:bg-[#FF7E00]">
+            Tiếp tục
+          </Button>
         </CardFooter>
       </Card>
+      <div className="w-full h-2/5 z-0 absolute bottom-0 left-0 bg-[#A93F15]" />
     </form>
   );
 }

@@ -13,6 +13,8 @@ import { PasswordInput } from "@/components/shared/password-input";
 import { AxiosError } from "axios";
 import { toastSuccess } from "@/utils/toast";
 import { routes } from "@/config";
+import Background from "../../../assets/background.png";
+
 const URL_SERVER = import.meta.env.VITE_URL_SERVER;
 
 type ErrorState = {
@@ -114,15 +116,17 @@ export default function SignInRoute() {
 
   return (
     <div className="w-full grid grid-cols-2 h-screen">
-      <div className="bg-black"></div>
+      <img className="h-screen" src={Background} />
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
-            <h1 className="text-3xl font-bold">Đăng Nhập</h1>
+            <h1 className="text-3xl font-bold text-[#A93F15]">Đăng Nhập</h1>
           </div>
           <form className="grid gap-4" onSubmit={handleSubmit} noValidate>
             <div className="grid gap-2">
-              <Label htmlFor="phone-email">Email </Label>
+              <Label htmlFor="phone-email" className="text-[#A93F15]">
+                Email{" "}
+              </Label>
               <Input
                 id="phone-email"
                 type="text"
@@ -141,7 +145,9 @@ export default function SignInRoute() {
               )}
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="password">Mật khẩu</Label>
+              <Label htmlFor="password" className="text-[#A93F15]">
+                Mật khẩu
+              </Label>
               <PasswordInput
                 id="password"
                 name="password"
@@ -160,17 +166,20 @@ export default function SignInRoute() {
             </div>
             <Link
               to={routes.AUTH.FORGOT_PASSWORD}
-              className="ml-auto inline-block text-sm underline"
+              className="ml-auto inline-block text-sm underline text-[#A93F15] font-medium"
             >
               Quên mật khẩu?
             </Link>
-            <Button className="w-full" type="submit">
+            <Button
+              className="w-full bg-[#A93F15] hover:bg-[#FF7E00]"
+              type="submit"
+            >
               Đăng nhập
             </Button>
             <Button
               variant="outline"
               type="button"
-              className="w-full"
+              className="w-full text-[#A93F15] hover:text-[#A93F15]"
               onClick={handleSignInWithGoogle}
             >
               Đăng nhập với Google
@@ -179,7 +188,10 @@ export default function SignInRoute() {
 
           <div className="mt-4 text-center text-sm">
             Chưa có tài khoản?{" "}
-            <Link to={routes.AUTH.SIGN_UP} className="underline">
+            <Link
+              to={routes.AUTH.SIGN_UP}
+              className="underline text-[#A93F15] font-medium"
+            >
               Đăng ký
             </Link>
           </div>

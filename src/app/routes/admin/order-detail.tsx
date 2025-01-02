@@ -60,7 +60,27 @@ export default function AdminOrderDetailRoute() {
           } catch (err) {
             console.log(err);
           }
+        }
+      );
+    }
+  };
+
+  const handleFailDelivery = async () => {
+    if (orderDetail?.id) {
+      alertDialogRef.current?.onOpen(
+        {
+          title: `Đơn hàng giao thất bại?`,
+          description: "Xác nhận đơn hàng giao thất bại",
         },
+        async () => {
+          try {
+            await orderService.cancelOrder(orderDetail.id);
+            await getOrderById(orderDetail.id);
+            toastSuccess("Cập nhật trạng thái đơn hàng thành công");
+          } catch (err) {
+            console.log(err);
+          }
+        }
       );
     }
   };
@@ -99,7 +119,7 @@ export default function AdminOrderDetailRoute() {
           } catch (err) {
             console.log(err);
           }
-        },
+        }
       );
     }
   };
@@ -115,37 +135,54 @@ export default function AdminOrderDetailRoute() {
                 onClick={handleBack}
                 className="hover:cursor-pointer flex flexp-row gap-1 items-center"
               >
-                <ChevronLeft className="h-5 w-5" />
-                <span>TRỞ LẠI</span>
+                <ChevronLeft className="h-5 w-5 text-[#A93F15]" />
+                <span className="text-[#A93F15] font-semibold">TRỞ LẠI</span>
               </div>
-              <span className="ml-auto">{`MÃ ĐƠN HÀNG: ${orderDetail.id}`}</span>
+              <span className="ml-auto text-[#A93F15] font-semibold">{`MÃ ĐƠN HÀNG: ${orderDetail.id}`}</span>
             </SectionCard>
             <SectionCard className="p-4 flex flex-row gap-4 items-center">
-              <div>{ADMIN_ORDER_STATUS[orderDetail.status]}</div>
+              <div className="text-[#A93F15] font-semibold">
+                {ADMIN_ORDER_STATUS[orderDetail.status]}
+              </div>
               {(orderDetail.status === OrderStatus.PENDING ||
                 orderDetail.status === OrderStatus.PROCESSING) && (
                 <Button
                   variant="outline"
-                  className="ml-auto"
+                  className="ml-auto text-[#A93F15] hover:text-[#A93F15]"
                   onClick={handleCancelOrder}
                 >
                   Hủy đơn hàng
                 </Button>
               )}
               {orderDetail.status === OrderStatus.PENDING && (
-                <Button onClick={handleUpdateOrderStatus}>Chuẩn bị hàng</Button>
+                <Button
+                  onClick={handleUpdateOrderStatus}
+                  className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                >
+                  Chuẩn bị hàng
+                </Button>
               )}
               {orderDetail.status === OrderStatus.PROCESSING && (
-                <Button onClick={handleUpdateOrderStatus}>Sẵn sàng giao</Button>
+                <Button
+                  onClick={handleUpdateOrderStatus}
+                  className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                >
+                  Sẵn sàng giao
+                </Button>
               )}
               {orderDetail.status === OrderStatus.DELIVERED && (
-                <Button className="ml-auto" onClick={handleUpdateOrderStatus}>
+                <Button
+                  className="ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
+                  onClick={handleUpdateOrderStatus}
+                >
                   Đã giao hàng
                 </Button>
               )}
             </SectionCard>
             <SectionCard className="p-4 space-y-4">
-              <div className="font-medium">Địa chỉ nhận hàng</div>
+              <div className="text-[#A93F15] font-semibold">
+                Địa chỉ nhận hàng
+              </div>
               <div className="space-y-2 text-muted-foreground">
                 <div>{`Người nhận: ${orderDetail.full_name}`}</div>
                 <div>{`Số điện thoại: ${orderDetail.phone_number}`}</div>
@@ -168,7 +205,7 @@ export default function AdminOrderDetailRoute() {
                 })}
               </div>
               <div className="flex p-4">
-                <div className="ml-auto font-medium">{`Tổng tiền hàng: ${orderDetail.total_price}`}</div>
+                <div className="ml-auto font-semibold text-[#A93F15]">{`Tổng tiền hàng: ${orderDetail.total_price}`}</div>
               </div>
             </SectionCard>
           </main>
