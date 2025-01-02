@@ -135,10 +135,10 @@ export default function AddEmployeeRoute() {
             type="button"
             onClick={() => navigate(routes.ADMIN.EMPLOYEE)}
           >
-            Huy
+            Hủy
           </Button>
           <Button className="w-40" type="submit">
-            Luu
+            Lưu
           </Button>
         </div>
       </form>

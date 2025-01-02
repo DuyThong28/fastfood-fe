@@ -186,7 +186,7 @@ export const EmployeeInfoSection = ({
             <Label>Số diện thoại</Label>
             <Input
               id="phone"
-              type="number"
+              type="text"
               value={detailData.phone}
               onChange={(e) =>
                 handleChangeInput({
