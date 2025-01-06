@@ -335,7 +335,6 @@ export default function HomeRoute() {
         <div className="flex flex-col w-full col-span-4 py-4">
           <div className="flex items-center w-full gap-2">
             {" "}
-            {/* Added flex-wrap for responsiveness */}
             <Select onValueChange={(value) => setSortPrice(value)}>
               <SelectTrigger className="h-10 w-full md:w-[250px] !cursor-pointer rounded-md border-[1.5px] border-slate-300 bg-white text-base !font-normal text-black">
                 <SelectValue
@@ -350,7 +349,6 @@ export default function HomeRoute() {
             </Select>
             <div className="flex items-center w-full md:w-auto gap-2">
               {" "}
-              {/* Adjusted width for responsiveness */}
               <Checkbox
                 className="bg-white p-0"
                 id="quantity"
@@ -365,7 +363,6 @@ export default function HomeRoute() {
           </div>
           <div className="w-full grid grid-cols-1 max-md:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 py-4">
             {" "}
-            {/* Updated grid for responsiveness */}
             {filterProducts.map((item, index) => {
               return <ProductItemCard key={index} data={item} />;
             })}
