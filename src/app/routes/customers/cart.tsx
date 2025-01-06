@@ -121,7 +121,7 @@ export default function CartRoute() {
   return (
     <ProductLayout>
       <CustomAlertDialog ref={alertDialogRef} />
-      <main className="flex flex-1 flex-col gap-6 py-6 pl-6 relative">
+      <main className="flex flex-1 flex-col gap-6 py-6 md:pl-6 pl-0 relative">
         <Table className="table-auto border-separate border-spacing-y-2 w-full">
           <CartTableHeader onCheck={handleSelectAll} isCheck={isAllSelected} />
           <TableBody>
@@ -139,35 +139,36 @@ export default function CartRoute() {
           </TableBody>
         </Table>
         <div
-          className="sticky bottom-0 left-40 right-40  h-16 flex flex-row justify-between p-4 bg-white"
+          className="sticky bottom-0 left-40 right-40 md:h-16 h-28 flex flex-row justify-between p-4 bg-white"
           style={{
             boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 11px 5px",
           }}
         >
-          <div className="flex flex-row items-center gap-4">
+          <div className="flex flex-row md:items-center gap-4">
             <Checkbox
+              className="md:order-none order-3 md:transform-none translate-y-1/2"
               checked={isAllSelected}
               onCheckedChange={handleSelectAll}
             />
             <Button
-              className="bg-[#A93F15] hover:bg-[#FF7E00]"
+              className="bg-[#A93F15] hover:bg-[#FF7E00] text-xs md:text-sm md:order-none order-2"
               onClick={() => handleSelectAll(!isAllSelected)}
             >
               Chọn tất cả
             </Button>
             <Button
-              className="bg-[#A93F15] hover:bg-[#FF7E00]"
+              className="bg-[#A93F15] hover:bg-[#FF7E00] text-xs md:text-sm md:order-none order-1"
               onClick={handleDeleteMany}
             >
               Xóa
             </Button>
           </div>
-          <div className="flex flex-row items-center gap-4">
+          <div className="md:flex md:flex-row flex flex-col md:items-center items-start gap-4 md:order-1 -order-1">
             <div>{`Tổng thanh toán (${
               rowSelection.length
             } sản phẩm): ${formatNumber(handleCountTotalPrice())}`}</div>
             <Button
-              className="bg-[#A93F15] hover:bg-[#FF7E00]"
+              className="bg-[#A93F15] hover:bg-[#FF7E00] text-xs md:text-sm -order-1 md:order-1 md:py-0 py-4"
               onClick={handlePurchase}
             >
               Mua hàng

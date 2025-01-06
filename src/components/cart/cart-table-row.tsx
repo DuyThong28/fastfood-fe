@@ -10,6 +10,7 @@ import CustomAlertDialog, {
   CustomAlertDialogRef,
 } from "../shared/alert-dialog";
 import { useRef } from "react";
+import { Trash } from "lucide-react";
 
 interface CartTableRowProps {
   data: ResCartItem;
@@ -67,7 +68,7 @@ export const CartTableRow: React.FC<CartTableRowProps> = ({
             }}
           />
         </TableCell>
-        <TableCell className="flex flex-row gap-4">
+        <TableCell className="md:flex md:flex-row flex flex-col gap-4">
           <img
             alt="Product image"
             className="aspect-square rounded-md object-cover"
@@ -94,8 +95,11 @@ export const CartTableRow: React.FC<CartTableRowProps> = ({
           {formatNumber(data.quantity * data.product.price)}
         </TableCell>
         <TableCell>
-          <Button variant="outline" onClick={handleRemove}>
+          <Button className="hidden md:block" variant="outline" onClick={handleRemove}>
             xóa
+          </Button>
+          <Button className="md:hidden" variant="outline" size="icon" onClick={handleRemove}>
+            <Trash/>
           </Button>
         </TableCell>
       </TableRow>
