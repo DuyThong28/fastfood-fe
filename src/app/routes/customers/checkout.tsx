@@ -104,7 +104,7 @@ export default function CheckOutRoute() {
     <ProductLayout>
       <CustomAlertDialog ref={alertDialogRef} />
       <AddressesDialog ref={dialogRef} onSetAddress={setAddressInfo} />
-      <main className="flex flex-1 flex-col gap-6 py-6 pl-6">
+      <main className="flex flex-1 flex-col gap-6 py-6 md:pl-6 px-2">
         <div className="space-y-4">
           <h1 className="text-lg font-semibold text-[#A93F15]">
             Địa Chỉ Nhận Hàng
@@ -125,7 +125,7 @@ export default function CheckOutRoute() {
                 </div>
                 <Button
                   variant="secondary"
-                  className="text-[#A93F15]"
+                  className="text-[#A93F15] ml-2 md:ml-0"
                   onClick={() => dialogRef.current?.onOpen(addressInfo)}
                 >
                   Thay đổi
