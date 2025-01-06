@@ -328,7 +328,7 @@ export default function AccountInfo() {
           </div>
           <div className="flex flex-row gap-6 mx-auto">
             <Button
-              className="w-40 text-[#A93F15]"
+              className="md:w-40 w-fit text-[#A93F15]"
               variant="outline"
               type="button"
               onClick={handleCancel}
@@ -336,7 +336,7 @@ export default function AccountInfo() {
               Hủy
             </Button>
             <Button
-              className="w-40 bg-[#A93F15] hover:bg-[#FF7E00]"
+              className="md:w-40 w-fit bg-[#A93F15] hover:bg-[#FF7E00]"
               type="submit"
             >
               Xác Nhận
