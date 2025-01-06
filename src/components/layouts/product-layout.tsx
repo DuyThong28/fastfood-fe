@@ -70,14 +70,15 @@ const ProductLayout = forwardRef<ProductLayoutRef, ProductLayoutProps>(
     };
 
     return (
-      <div className="h-screen w-full grid grid-rows-[96px_1fr]">
-        <div className="px-40 h-full w-full flex flex-row items-center bg-[#fff] gap-16">
-          <a href="/" className="text-white text-nowrap  text-2xl font-bold">
+      <div className="h-screen w-full grid grid-rows-[96px_1fr] max-md:grid-rows-[160px_1fr]">
+        <div className="px-40 max-md:px-10 h-full w-full flex flex-row items-center bg-[#fff] gap-16 max-md:flex-col max-md:gap-y-2">
+          <a href="/" className="text-white text-nowrap text-2xl font-bold">
             <svg
               width="239"
               height="60"
               viewBox="0 0 239 60"
               fill="none"
+              className="max-md: w-40"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
