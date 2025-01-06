@@ -76,17 +76,13 @@ export default function DashBoardLayout({
                   Quản Lý Danh Mục
                 </button>
               )}
-              {onlyAdmin && (
-                <button
-                  onClick={() => navigate(routes.ADMIN.ORDER)}
-                  className={
-                    pathname === routes.ADMIN.ORDER ? active : inActive
-                  }
-                >
-                  <ShoppingCart className="h-4 w-4" />
-                  Quản Lý Đơn Hàng
-                </button>
-              )}
+              <button
+                onClick={() => navigate(routes.ADMIN.ORDER)}
+                className={pathname === routes.ADMIN.ORDER ? active : inActive}
+              >
+                <ShoppingCart className="h-4 w-4" />
+                Quản Lý Đơn Hàng
+              </button>
               {onlyAdmin && (
                 <button
                   onClick={() => navigate(routes.ADMIN.REVIEW)}

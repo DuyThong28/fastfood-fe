@@ -23,6 +23,7 @@ class AuthService {
     return api.post("/auth/verify-email", trimmedData);
   }
   async logOut() {
+    localStorage.removeItem("role");
     return api.delete("/auth/sign-out");
   }
 

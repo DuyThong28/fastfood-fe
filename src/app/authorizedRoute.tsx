@@ -29,3 +29,28 @@ export const AuthorizedStaff = function ({
   } else if (role === UserRole.ADMIN || role === UserRole.STAFF)
     return children;
 }; // both admin and staff can access
+export const UnauthorizedUser = function ({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const role = localStorage.getItem("role");
+  if (role === UserRole.ADMIN || role === UserRole.STAFF) {
+    return <Navigate to={routes.ADMIN.DASHBOAD} replace={true} />;
+  } else if (role === UserRole.CUSTOMER) {
+    return <Navigate to={routes.CUSTOMER.HOME} replace={true} />;
+  } else {
+    return children;
+  }
+};
+
+export const AuthorizedCustomer = function ({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const role = localStorage.getItem("role");
+  if (role !== UserRole.CUSTOMER) {
+    return <Navigate to={routes.AUTH.SIGN_IN} replace={true} />;
+  } else if (role === UserRole.CUSTOMER) return children;
+};

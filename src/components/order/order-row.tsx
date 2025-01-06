@@ -64,7 +64,7 @@ export const OrderRow: React.FC<OrderRowProps> = ({
           })}
         </div>
         <div className="w-full  flex flex-col gap-4 p-4 items-end">
-          <div className="text-[#A93F15] font-semibold">{`Tổng tiền: ${formatNumber(data.total_price)}`}</div>
+          <div>{`Tổng tiền: ${formatNumber(data.total_price)}`}</div>
           <div className="w-full flex flex-row">
             <div className="flex flex-row gap-4 ml-auto">
               {(data.status === OrderStatus.PENDING ||

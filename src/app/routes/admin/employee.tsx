@@ -111,7 +111,7 @@ export default function EmployeeRoute() {
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Nhap ten khach hang"
+                  placeholder="Nhập tên nhân viên"
                   className="w-full rounded-lg bg-background pl-8"
                   value={textSearch}
                   onChange={(e) => setTextSearch(e.target.value)}

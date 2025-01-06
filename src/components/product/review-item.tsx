@@ -26,7 +26,7 @@ export const ReviewItem: React.FC<ReviewItemProps> = ({ data }) => {
                 key={rating}
                 aria-hidden="true"
                 className={(data.rating > rating
-                  ? "text-gray-900"
+                  ? "text-[#A93F15]"
                   : "text-gray-200"
                 ).concat(" h-4 w-4 flex-shrink-0")}
               />

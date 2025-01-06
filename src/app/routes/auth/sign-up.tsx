@@ -242,7 +242,7 @@ export default function SignUpRoute() {
           </div>
         </div>
       </div>
-      <img src={Background} className="flex-1" />
+      <img src={Background} className="flex-1 h-screen" />
     </div>
   );
 }

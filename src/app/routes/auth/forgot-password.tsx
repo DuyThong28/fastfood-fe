@@ -71,11 +71,11 @@ export default function ForgotPasswordRoute() {
 
   return (
     <form
-      className="justify-center items-center flex h-screen"
+      className="justify-center items-center flex h-screen "
       onSubmit={handleSubmit}
       noValidate
     >
-      <Card className="w-full max-w-sm">
+      <Card className="w-full max-w-sm z-10">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl text-[#A93F15]">
             Nhập Email Của Bạn
@@ -112,6 +112,7 @@ export default function ForgotPasswordRoute() {
           </Button>
         </CardFooter>
       </Card>
+      <div className="w-full h-2/5 z-0 absolute bottom-0 left-0 bg-[#A93F15]" />
     </form>
   );
 }
