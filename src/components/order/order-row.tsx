@@ -54,9 +54,9 @@ export const OrderRow: React.FC<OrderRowProps> = ({
     <>
       <CustomAlertDialog ref={alertDialogRef} />
       <SectionCard>
-        <div className="flex flex-row justify-between p-4 text-[#A93F15] font-semibold">
+        <div className="flex flex-row md:text-base text-xs justify-between p-4 text-[#A93F15] font-semibold">
           <span>{`Mã đơn hàng: ${data.id}`}</span>
-          <span>{ORDER_STATUS[data.status]}</span>
+          <span className="text-right">{ORDER_STATUS[data.status]}</span>
         </div>
         <div onClick={handleShowDetail}>
           {data.OrderItems.map((item, index) => {

@@ -32,7 +32,7 @@ export default function AccountAddressRoute() {
   return (
     <CustomerLayout>
       <AddressDialog ref={dialogRef} onRefetch={getAllAddress} />
-      <main className="flex flex-1 flex-col gap-6 py-6 pl-6">
+      <main className="flex flex-1 flex-col gap-6 py-6 md:pl-6 px-2">
         <div className="flex items-center">
           <h1 className="text-lg font-semibold md:text-2xl text-[#A93F15]">
             Địa Chỉ Của Tôi

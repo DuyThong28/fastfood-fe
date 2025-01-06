@@ -63,9 +63,9 @@ export default function PurchaseRoute() {
   return (
     <CustomerLayout>
       <ReviewDialog ref={reviewDialogRef} onRefetch={getAllOrdersByUser} />
-      <main className="flex flex-1 flex-col gap-6 py-6 pl-6">
-        <Tabs value={tabState} className="mx-auto">
-          <TabsList>
+      <main className="flex flex-1 flex-col gap-6 py-6 md:pl-6 px-2 max-w-screen overflow-x-hidden">
+        <Tabs value={tabState} className="md:mx-auto mx-0">
+          <TabsList className="">
             <TabsTrigger value="all" onClick={() => setTabState("all")}>
               Tất cả
             </TabsTrigger>
@@ -107,7 +107,7 @@ export default function PurchaseRoute() {
             </TabsTrigger>
           </TabsList>
         </Tabs>
-        <div className="flex flex-row gap-4">
+        <div className="flex flex-row gap-4 mt-10 md:mt-0">
           <div className="relative w-full">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
