@@ -72,8 +72,8 @@ const ProductLayout = forwardRef<ProductLayoutRef, ProductLayoutProps>(
     };
 
     return (
-      <div className="h-screen w-full grid grid-rows-[96px_1fr]">
-        <div className="px-40 h-full w-full flex flex-row items-center bg-[#fff] gap-16 border-b">
+      <div className="h-screen md:w-full w-full grid grid-rows-[96px_1fr] overflow-y-auto overflow-x-hidden md:overflow-hidden md:pb-0 pb-10">
+        <div className="md:px-40 px-0 h-full w-full flex flex-row items-center bg-[#fff] gap-16 border-b">
           <a href="/" className="text-white text-nowrap  text-2xl font-bold">
             <svg
               width="239"
@@ -153,7 +153,7 @@ const ProductLayout = forwardRef<ProductLayoutRef, ProductLayoutProps>(
             </div>
           )}
         </div>
-        <div className="px-[10%] flex flex-col gap-6 bg-[#f9f9f9] overflow-y-auto">
+        <div className="md:px-[10%] px-0 flex flex-col gap-6 bg-[#f9f9f9] h-screen pb-10 overflow-y-auto overflow-x-hidden md:h-full">
           {children}
         </div>
       </div>
