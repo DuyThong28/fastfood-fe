@@ -80,7 +80,7 @@ export default function RevenueTab() {
 
       try {
         if (selectedView === "week") {
-          const startOfWeek = selectedDate.startOf("week").add(1, "day");
+          const startOfWeek = selectedDate.startOf("week").add(0, "day");
           const weeklyRevenue = Array(7).fill(0);
           const dailyOrder = Array(7).fill(0);
           const weekStatistics: Statistic[] = [];
@@ -94,30 +94,42 @@ export default function RevenueTab() {
               `/statistics?year=${currentDay.year()}&month=${currentDay.month() + 1}&day=${currentDay.date()}`
             );
 
-            const day = currentDay.add(-1, "day");
-
-            dayArray[i] = day.date();
-            monthArray[i] = day.month() + 1;
-            yearArray[i] = day.year();
+            dayArray[i] = currentDay.date();
+            monthArray[i] = currentDay.month() + 1;
+            yearArray[i] = currentDay.year();
             dailyOrder[i] =
               response.data.data.length > 0
-                ? response.data.data[0].total_order
+                ? response.data.data.reduce(
+                    (sum: number, stat: any) => sum + Number(stat.total_order),
+                    0
+                  )
                 : 0;
             weeklyRevenue[i] =
               response.data.data.length > 0
-                ? Number(response.data.data[0].total_revenue)
+                ? response.data.data.reduce(
+                    (sum: any, stat: any) => sum + Number(stat.total_revenue),
+                    0
+                  )
                 : 0;
 
             weekStatistics.push(...response.data.data);
           }
 
-          const dailyReport: any = weeklyRevenue.map((totalRevenue, index) => ({
-            day: dayArray[index],
-            month: monthArray[index],
-            year: yearArray[index],
-            total_order: dailyOrder[index],
-            total_revenue: totalRevenue,
-          }));
+          const dailyReport: any = weeklyRevenue.map((totalRevenue, index) => {
+            console.log(
+              dayArray[index],
+              monthArray[index],
+              yearArray[index],
+              dailyOrder[index]
+            );
+            return {
+              day: dayArray[index],
+              month: monthArray[index],
+              year: yearArray[index],
+              total_order: dailyOrder[index],
+              total_revenue: totalRevenue,
+            };
+          });
 
           setStatistics(dailyReport);
 
@@ -137,7 +149,6 @@ export default function RevenueTab() {
           const response = await api.get(
             `/statistics?year=${year}&month=${month}`
           );
-
           const daysInMonth = new Date(year, month, 0).getDate();
           const monthlyRevenue = Array(daysInMonth).fill(0);
           const monthlyOrder = Array(daysInMonth).fill(0);
@@ -179,6 +190,7 @@ export default function RevenueTab() {
           setTotalRevenue(total);
         } else if (selectedView === "year") {
           const response = await api.get(`/statistics?year=${year}`);
+          console.log(response.data.data);
 
           const yearlyRevenue = Array(12).fill(0);
           const yearlyOrder = Array(12).fill(0);
@@ -239,16 +251,8 @@ export default function RevenueTab() {
   }, []);
 
   useEffect(() => {
-    if (selectedDate) {
-      fetchData();
-    }
-  }, [selectedDate]);
-
-  useEffect(() => {
-    if (selectedView) {
-      fetchData();
-    }
-  }, [selectedView]);
+    fetchData();
+  }, [selectedDate, selectedView]);
 
   useEffect(() => {
     setInputValue(getCurrentDateRange(dayjs()));
