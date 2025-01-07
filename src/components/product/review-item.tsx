@@ -18,25 +18,29 @@ export const ReviewItem: React.FC<ReviewItemProps> = ({ data }) => {
         />
       </div>
       <div className="flex flex-col gap-3">
-        <div>{data.user.full_name}</div>
-        <div className="flex">
-          {[0, 1, 2, 3, 4].map((rating) => {
-            return (
-              <StarIcon
-                key={rating}
-                aria-hidden="true"
-                className={(data.rating > rating
-                  ? "text-[#A93F15]"
-                  : "text-gray-200"
-                ).concat(" h-4 w-4 flex-shrink-0")}
-              />
-            );
-          })}
+        <div className="flex flex-col gap-1">
+          <div className="text-xs">{data.user.full_name}</div>
+          <div className="flex text-xs">
+            {[0, 1, 2, 3, 4].map((rating) => {
+              return (
+                <StarIcon
+                  key={rating}
+                  aria-hidden="true"
+                  className={(data.rating > rating
+                    ? "text-[#A93F15]"
+                    : "text-gray-200"
+                  ).concat(" h-4 w-4 flex-shrink-0")}
+                />
+              );
+            })}
+          </div>
         </div>
-        <div>{dateToVNString(new Date(data.created_at))}</div>
+        <div className="text-xs">
+          {dateToVNString(new Date(data.created_at))}
+        </div>
         <div>{data.description}</div>
         {(data as ResReview).ReplyReviews && (
-          <div className="bg-[#FFFBF7] p-4 rounded-md">
+          <div className="bg-[#FFFBF7] p-4 rounded-md border border-[#A93F15]">
             <p className="mb-2 text-[#A93F15] font-semibold">
               Phản hồi của người bán
             </p>

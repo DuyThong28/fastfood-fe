@@ -41,36 +41,9 @@ export default function RevenueTab() {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [selectedView, setSelectedView] = useState("week");
   const [showPicker, setShowPicker] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState<string>("");
   const [totalRevenue, setTotalRevenue] = useState<number>(0);
   const [totalOrder, setTotalOrder] = useState<number>(0);
-
-  const getCurrentDateRange = (date: Dayjs) => {
-    if (selectedView === "week") {
-      const startOfWeek = date
-        .startOf("week")
-        .add(date.startOf("week").day() === 0 ? 1 : 0, "day");
-      const endOfWeek = startOfWeek.add(6, "days");
-      return `${startOfWeek.format("DD/MM/YYYY")} - ${endOfWeek.format("DD/MM/YYYY")}`;
-    } else if (selectedView === "month") {
-      return date.format("MM/YYYY");
-    } else if (selectedView === "year") {
-      return date.format("YYYY");
-    }
-    return "";
-  };
-
-  const handleDateChange = (date: Dayjs | null) => {
-    setSelectedDate(date);
-    setShowPicker(false);
-    if (date) {
-      setInputValue(getCurrentDateRange(date));
-    }
-  };
-
-  const handleInputClick = () => {
-    setShowPicker(true);
-  };
 
   const fetchData = async () => {
     if (selectedDate) {
@@ -80,7 +53,7 @@ export default function RevenueTab() {
 
       try {
         if (selectedView === "week") {
-          const startOfWeek = selectedDate.startOf("week").add(1, "day");
+          const startOfWeek = selectedDate.startOf("week").add(0, "day");
           const weeklyRevenue = Array(7).fill(0);
           const dailyOrder = Array(7).fill(0);
           const weekStatistics: Statistic[] = [];
@@ -94,30 +67,36 @@ export default function RevenueTab() {
               `/statistics?year=${currentDay.year()}&month=${currentDay.month() + 1}&day=${currentDay.date()}`
             );
 
-            const day = currentDay.add(-1, "day");
-
-            dayArray[i] = day.date();
-            monthArray[i] = day.month() + 1;
-            yearArray[i] = day.year();
+            dayArray[i] = currentDay.date();
+            monthArray[i] = currentDay.month() + 1;
+            yearArray[i] = currentDay.year();
             dailyOrder[i] =
               response.data.data.length > 0
-                ? response.data.data[0].total_order
+                ? response.data.data.reduce(
+                    (sum: number, stat: any) => sum + Number(stat.total_order),
+                    0
+                  )
                 : 0;
             weeklyRevenue[i] =
               response.data.data.length > 0
-                ? Number(response.data.data[0].total_revenue)
+                ? response.data.data.reduce(
+                    (sum: any, stat: any) => sum + Number(stat.total_revenue),
+                    0
+                  )
                 : 0;
 
             weekStatistics.push(...response.data.data);
           }
 
-          const dailyReport: any = weeklyRevenue.map((totalRevenue, index) => ({
-            day: dayArray[index],
-            month: monthArray[index],
-            year: yearArray[index],
-            total_order: dailyOrder[index],
-            total_revenue: totalRevenue,
-          }));
+          const dailyReport: any = weeklyRevenue.map((totalRevenue, index) => {
+            return {
+              day: dayArray[index],
+              month: monthArray[index],
+              year: yearArray[index],
+              total_order: dailyOrder[index],
+              total_revenue: totalRevenue,
+            };
+          });
 
           setStatistics(dailyReport);
 
@@ -137,7 +116,6 @@ export default function RevenueTab() {
           const response = await api.get(
             `/statistics?year=${year}&month=${month}`
           );
-
           const daysInMonth = new Date(year, month, 0).getDate();
           const monthlyRevenue = Array(daysInMonth).fill(0);
           const monthlyOrder = Array(daysInMonth).fill(0);
@@ -179,6 +157,7 @@ export default function RevenueTab() {
           setTotalRevenue(total);
         } else if (selectedView === "year") {
           const response = await api.get(`/statistics?year=${year}`);
+          console.log(response.data.data);
 
           const yearlyRevenue = Array(12).fill(0);
           const yearlyOrder = Array(12).fill(0);
@@ -225,34 +204,46 @@ export default function RevenueTab() {
     }
   };
 
+  const getCurrentDateRange = (date: Dayjs) => {
+    if (selectedView === "week") {
+      const startOfWeek = date
+        .startOf("week")
+        .add(date.startOf("week").day() === 0 ? 1 : 0, "day");
+      const endOfWeek = startOfWeek.add(6, "days");
+      return `${startOfWeek.format("DD/MM/YYYY")} - ${endOfWeek.format("DD/MM/YYYY")}`;
+    } else if (selectedView === "month") {
+      return date.format("MM/YYYY");
+    } else if (selectedView === "year") {
+      return date.format("YYYY");
+    }
+    return "";
+  };
+
+  const handleDateChange = (date: Dayjs | null) => {
+    setSelectedDate(date);
+    if (date) {
+      setInputValue(getCurrentDateRange(date));
+    }
+    setShowPicker(false);
+  };
+
+  const handleInputClick = () => {
+    setShowPicker(true);
+  };
+
   const handleViewChange = (value: string) => {
     setSelectedView(value);
-    setInputValue(getCurrentDateRange(dayjs()));
-    fetchData();
   };
 
   useEffect(() => {
-    const currentDate = dayjs();
-    setSelectedDate(currentDate);
-    setInputValue(getCurrentDateRange(currentDate));
-    fetchData();
-  }, []);
-
-  useEffect(() => {
     if (selectedDate) {
-      fetchData();
+      setInputValue(getCurrentDateRange(selectedDate));
     }
-  }, [selectedDate]);
+  }, [selectedDate, selectedView]);
 
   useEffect(() => {
-    if (selectedView) {
-      fetchData();
-    }
-  }, [selectedView]);
-
-  useEffect(() => {
-    setInputValue(getCurrentDateRange(dayjs()));
-  }, [selectedView]);
+    fetchData();
+  }, [selectedView, selectedDate]);
 
   const chartData = statistics.map((stat) => ({
     date:
@@ -366,7 +357,9 @@ export default function RevenueTab() {
             <TableHeader className="text-[#A93F15] font-semibold">
               <TableRow>
                 <TableCell>STT</TableCell>
-                <TableCell>Ngày</TableCell>
+                <TableCell>
+                  {selectedView !== "year" ? "Ngày" : "Tháng"}
+                </TableCell>
                 <TableCell>Số đơn hàng</TableCell>
                 <TableCell>Doanh thu</TableCell>
               </TableRow>
