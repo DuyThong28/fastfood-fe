@@ -4,9 +4,12 @@ import ProductItemCard from "../product/product-item-card";
 import { ChatbotMessage } from "@/common/enums";
 import { useNavigate } from "react-router-dom";
 import { Order } from "@/types/order";
-import { Product } from "@/types/product";
+import { Product, ResProductDetail } from "@/types/product";
 import SectionCard from "../shared/section-card";
 import { ORDER_STATUS } from "@/common/constants/order";
+import { Button } from "../ui/button";
+import { toastSuccess } from "@/utils/toast";
+import cartService from "@/services/cart.service";
 
 type Message = {
   sender: string;
@@ -26,6 +29,7 @@ export default function Chatbot() {
   const [content, setContent] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  // const [item, setItem] = useState<ResProductDetail | any>();
   const navigate = useNavigate();
 
   const toggleChat = () => {
@@ -90,6 +94,18 @@ export default function Chatbot() {
     if (e.key === "Enter") {
       e.preventDefault();
       handleSend();
+    }
+  };
+
+  const handleAddToCart = async (item: any) => {
+    try {
+      await cartService.addToCart({
+        productId: item.id,
+        quantity: 1,
+      });
+      toastSuccess("Thêm vào giỏ hàng thành công");
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -212,7 +228,18 @@ export default function Chatbot() {
                       <div className="flex space-x-4 min-w-max pb-2">
                         {msg.results.map((result, index) => (
                           <div className="w-48">
-                            <ProductItemCard key={index} data={result} />
+                            <div>
+                              <ProductItemCard key={index} data={result} />
+                              <Button
+                                onClick={() => {
+                                  handleAddToCart(result);
+                                }}
+                                type="button"
+                                className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                              >
+                                Thêm vào giỏ hàng
+                              </Button>
+                            </div>
                           </div>
                         ))}
                       </div>
