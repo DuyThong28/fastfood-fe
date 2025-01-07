@@ -366,7 +366,9 @@ export default function RevenueTab() {
             <TableHeader className="text-[#A93F15] font-semibold">
               <TableRow>
                 <TableCell>STT</TableCell>
-                <TableCell>Ngày</TableCell>
+                <TableCell>
+                  {selectedView !== "year" ? "Ngày" : "Tháng"}
+                </TableCell>
                 <TableCell>Số đơn hàng</TableCell>
                 <TableCell>Doanh thu</TableCell>
               </TableRow>
