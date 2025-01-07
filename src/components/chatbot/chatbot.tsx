@@ -112,7 +112,7 @@ export default function Chatbot() {
         style={{
           boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.5)",
         }}
-        className="fixed bottom-5 z-20 right-5 bg-[#FF7E00] text-white p-2 rounded-full shadow-lg transition-transform transform hover:scale-105"
+        className="absolute bottom-5 z-20 right-5 bg-[#FF7E00] text-white p-2 rounded-full shadow-lg transition-transform transform hover:scale-105"
       >
         <svg
           width="36"
@@ -131,7 +131,7 @@ export default function Chatbot() {
       </button>
 
       {isOpen && (
-        <div className="fixed bottom-20 right-5 w-80 bg-white shadow-lg rounded-lg flex flex-col z-20">
+        <div className="absolute bottom-20 right-5 w-80 bg-white shadow-lg rounded-lg flex flex-col z-20">
           <div className="flex justify-between items-center p-2 border-b border-gray-200">
             <div className="flex gap-x-1 items-center">
               <svg

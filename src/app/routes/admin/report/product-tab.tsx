@@ -181,7 +181,7 @@ export default function ProductTab() {
       worksheet.addRow({
         no: index + 1,
         title: product.product.title,
-        sold_quantity: product.product.sold_quantity,
+        sold_quantity: product.quantity,
       });
     });
 
@@ -263,7 +263,7 @@ export default function ProductTab() {
                   <TableRow key={index}>
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{product.product.title}</TableCell>
-                    <TableCell>{product.product.sold_quantity}</TableCell>
+                    <TableCell>{product.quantity}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -277,7 +277,7 @@ export default function ProductTab() {
           <ProductByDay
             data={soldProducts.map((product: any) => ({
               name: product.product.title,
-              numberOfProducts: product.product.sold_quantity,
+              numberOfProducts: product.quantity,
             }))}
           />
         </ChartCard>
