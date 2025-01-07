@@ -28,8 +28,8 @@ export default function ProductItemCard({ data }: ProductItemCardProps) {
         </p>
         <p className="text-gray-500 ">{`${formatNumber(data.price)} đ`}</p>
         <div className="flex flex-row justify-between">
-          <span className="flex flex-row">
-            <StarIcon className="text-[#A93F15]  h-4 w-4 flex-shrink-0" />
+          <span className="flex gap-x-1">
+            <StarIcon className="text-[#A93F15] h-4 w-4 flex-shrink-0" />
             {data.avg_stars}
           </span>
         </div>
