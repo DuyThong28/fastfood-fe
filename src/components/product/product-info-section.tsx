@@ -242,27 +242,6 @@ export const ProductInfoSection = ({
           </div>
         </div>
         <div className="grid grid-cols-3 gap-4">
-          <div className="grid grid-cols-[120px_1fr]  gap-4">
-            <Label className="text-right text-[#A93F15]">Giá đầu vào</Label>
-            <div>
-              <Input
-                id="entryPrice"
-                name="entryPrice"
-                type="number"
-                min={0}
-                value={detailData.entryPrice}
-                onChange={(e) =>
-                  handleChangeInput({
-                    name: "entryPrice",
-                    value: e.target.value,
-                  })
-                }
-              />
-              {errors?.entryPrice && (
-                <p className="text-red-500 text-xs">{errors.entryPrice}</p>
-              )}
-            </div>
-          </div>
           <div className="grid grid-cols-[120px_1fr]  gap-4 ">
             <Label className="text-right text-[#A93F15]">Giá bán</Label>
             <div>
@@ -281,27 +260,6 @@ export const ProductInfoSection = ({
               )}
             </div>
           </div>
-          {/* <div className="grid grid-cols-[120px_1fr]  gap-4">
-            <Label className="text-right">Tồn kho</Label>
-            <div>
-              <Input
-                id="stockQuantity"
-                name="stockQuantity"
-                type="number"
-                min={0}
-                value={detailData.stockQuantity}
-                onChange={(e) =>
-                  handleChangeInput({
-                    name: "stockQuantity",
-                    value: e.target.value,
-                  })
-                }
-              />
-              {errors?.stockQuantity && (
-                <p className="text-red-500 text-xs">{errors.stockQuantity}</p>
-              )}
-            </div>
-          </div> */}
         </div>
       </CardContent>
     </Card>
