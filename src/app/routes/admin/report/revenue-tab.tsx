@@ -41,36 +41,9 @@ export default function RevenueTab() {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [selectedView, setSelectedView] = useState("week");
   const [showPicker, setShowPicker] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState<string>("");
   const [totalRevenue, setTotalRevenue] = useState<number>(0);
   const [totalOrder, setTotalOrder] = useState<number>(0);
-
-  const getCurrentDateRange = (date: Dayjs) => {
-    if (selectedView === "week") {
-      const startOfWeek = date
-        .startOf("week")
-        .add(date.startOf("week").day() === 0 ? 1 : 0, "day");
-      const endOfWeek = startOfWeek.add(6, "days");
-      return `${startOfWeek.format("DD/MM/YYYY")} - ${endOfWeek.format("DD/MM/YYYY")}`;
-    } else if (selectedView === "month") {
-      return date.format("MM/YYYY");
-    } else if (selectedView === "year") {
-      return date.format("YYYY");
-    }
-    return "";
-  };
-
-  const handleDateChange = (date: Dayjs | null) => {
-    setSelectedDate(date);
-    setShowPicker(false);
-    if (date) {
-      setInputValue(getCurrentDateRange(date));
-    }
-  };
-
-  const handleInputClick = () => {
-    setShowPicker(true);
-  };
 
   const fetchData = async () => {
     if (selectedDate) {
@@ -116,12 +89,6 @@ export default function RevenueTab() {
           }
 
           const dailyReport: any = weeklyRevenue.map((totalRevenue, index) => {
-            console.log(
-              dayArray[index],
-              monthArray[index],
-              yearArray[index],
-              dailyOrder[index]
-            );
             return {
               day: dayArray[index],
               month: monthArray[index],
@@ -237,26 +204,46 @@ export default function RevenueTab() {
     }
   };
 
+  const getCurrentDateRange = (date: Dayjs) => {
+    if (selectedView === "week") {
+      const startOfWeek = date
+        .startOf("week")
+        .add(date.startOf("week").day() === 0 ? 1 : 0, "day");
+      const endOfWeek = startOfWeek.add(6, "days");
+      return `${startOfWeek.format("DD/MM/YYYY")} - ${endOfWeek.format("DD/MM/YYYY")}`;
+    } else if (selectedView === "month") {
+      return date.format("MM/YYYY");
+    } else if (selectedView === "year") {
+      return date.format("YYYY");
+    }
+    return "";
+  };
+
+  const handleDateChange = (date: Dayjs | null) => {
+    setSelectedDate(date);
+    if (date) {
+      setInputValue(getCurrentDateRange(date));
+    }
+    setShowPicker(false);
+  };
+
+  const handleInputClick = () => {
+    setShowPicker(true);
+  };
+
   const handleViewChange = (value: string) => {
     setSelectedView(value);
-    setInputValue(getCurrentDateRange(dayjs()));
-    fetchData();
   };
 
   useEffect(() => {
-    const currentDate = dayjs();
-    setSelectedDate(currentDate);
-    setInputValue(getCurrentDateRange(currentDate));
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    fetchData();
+    if (selectedDate) {
+      setInputValue(getCurrentDateRange(selectedDate));
+    }
   }, [selectedDate, selectedView]);
 
   useEffect(() => {
-    setInputValue(getCurrentDateRange(dayjs()));
-  }, [selectedView]);
+    fetchData();
+  }, [selectedView, selectedDate]);
 
   const chartData = statistics.map((stat) => ({
     date:
