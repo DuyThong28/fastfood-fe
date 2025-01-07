@@ -104,10 +104,10 @@ export default function ProductTab() {
 
   const handleViewChange = (value: string) => {
     setSelectedView(value);
-    const currentDate = dayjs();
-    setInputValue(formatInputValue(currentDate));
-    setSelectedDate(currentDate);
-    fetchData();
+    // const currentDate = dayjs();
+    // setInputValue(formatInputValue(currentDate));
+    // setSelectedDate(currentDate);
+    // fetchData();
   };
 
   const fetchData = async () => {
@@ -196,19 +196,14 @@ export default function ProductTab() {
   }, []);
 
   useEffect(() => {
-    const currentDate = dayjs();
-    setSelectedDate(currentDate);
-    setInputValue(formatInputValue(currentDate));
-    fetchData();
-  }, [selectedView]);
+    if (selectedDate) {
+      setInputValue(formatInputValue(selectedDate));
+    }
+  }, [selectedDate, selectedView]);
 
   useEffect(() => {
     fetchData();
-  }, [selectedDate]);
-
-  useEffect(() => {
-    fetchData();
-  }, [selectedView]);
+  }, [selectedDate, selectedView]);
 
   return (
     <div className="flex flex-col w-full gap-y-5">
