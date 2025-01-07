@@ -204,11 +204,7 @@ export default function ProductTab() {
 
   useEffect(() => {
     fetchData();
-  }, [selectedDate]);
-
-  useEffect(() => {
-    fetchData();
-  }, [selectedView]);
+  }, [selectedDate, selectedView]);
 
   return (
     <div className="flex flex-col w-full gap-y-5">
