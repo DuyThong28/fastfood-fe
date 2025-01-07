@@ -228,7 +228,7 @@ export default function Chatbot() {
                       <div className="flex space-x-4 min-w-max pb-2">
                         {msg.results.map((result, index) => (
                           <div className="w-48">
-                            <div>
+                            <div className="flex flex-col gap-y-2">
                               <ProductItemCard key={index} data={result} />
                               <Button
                                 onClick={() => {
