@@ -135,8 +135,8 @@ export default function ProductDetailRoute() {
             </h2>
 
             <div>
-              <div className="flex items-center ">
-                <p className=" text-sm pr">{detailData.avg_stars}</p>
+              <div className="flex items-center">
+                <p className="text-sm mr-1">{detailData.avg_stars}</p>
                 <div className="flex items-center">
                   {[0, 1, 2, 3, 4].map((rating) => (
                     <StarIcon
@@ -190,7 +190,7 @@ export default function ProductDetailRoute() {
             <CardTitle className="text-[#A93F15]">Đánh Giá Sản Phẩm</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-6">
-            <div className="border border-gray-300 rounded-md p-6 w-full flex flex-row gap-10 items-start bg-muted/50">
+            <div className="border border-[#A93F15] rounded-md p-6 w-full flex flex-row gap-10 items-start bg-[#FFFBF7]">
               <div>
                 <div className="mb-2">
                   <span className=" text-[30px] text-[#A93F15]">
