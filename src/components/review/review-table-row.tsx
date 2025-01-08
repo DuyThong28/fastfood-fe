@@ -11,7 +11,9 @@ import { DEFAULT_AVATAR_URL } from "@/common/constants/user";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { MoreHorizontal } from "lucide-react";
 import { useRef, useState } from "react";
-import CustomAlertDialog, { CustomAlertDialogRef } from "../shared/alert-dialog";
+import CustomAlertDialog, {
+  CustomAlertDialogRef,
+} from "../shared/alert-dialog";
 import { toastSuccess } from "@/utils/toast";
 import reviewService from "@/services/review.service";
 interface ReviewTableRowProps {
@@ -57,7 +59,7 @@ export const ReviewTableRow: React.FC<ReviewTableRowProps> = ({
       async () => {
         try {
           await reviewService.showReview(data.id);
-          toastSuccess("Kích hoạt danh mục thành công");
+          toastSuccess("Kích hoạt đánh giá thành công");
           await onRefetch();
           setIsOpen(false);
         } catch (err) {
