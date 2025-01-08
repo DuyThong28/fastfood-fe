@@ -130,9 +130,14 @@ export default function ProductDetailRoute() {
             />
           </div>
           <div className="space-y-6 md:col-span-3">
-            <h2 className=" text-5xl font-medium text-gray-900 ">
-              {detailData.title}
-            </h2>
+            <div className="flex gap-x-5 items-end">
+              <h2 className=" text-5xl font-medium text-gray-900 ">
+                {detailData.title}
+              </h2>
+              <p className="text-lg font-medium">
+                (Đã bán: {detailData.sold_quantity})
+              </p>
+            </div>
 
             <div>
               <div className="flex items-center">

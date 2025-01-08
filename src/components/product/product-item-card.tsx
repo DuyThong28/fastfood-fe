@@ -28,10 +28,11 @@ export default function ProductItemCard({ data }: ProductItemCardProps) {
           {data.title}
         </p>
         <p className="font-semibold text-lg text-[#FF4E59]">{`${formatNumber(data.price)} đ`}</p>
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between items-center">
           <span className="flex flex-row">
             <FiveStars value={data.avg_stars} />
           </span>
+          <span className="font-medium">Đã bán: {data.sold_quantity}</span>
         </div>
       </div>
     </div>
