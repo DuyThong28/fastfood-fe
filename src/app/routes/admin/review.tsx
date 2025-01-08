@@ -32,6 +32,7 @@ import { ReviewStatus } from "@/common/enums";
 import { REVIEW_sTATUS } from "@/common/constants";
 import { dateToString, stringToDate } from "@/utils/format";
 import ReplyDialog, { ReplyDialogRef } from "@/components/review/reply-dialog";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function ReviewRoute() {
   const [reviews, setReviews] = useState<ResReviewOfAdmin[]>([]);
@@ -48,16 +49,31 @@ export default function ReviewRoute() {
   const [isAllSelected, setIsAllSelected] = useState<boolean>(true);
   const [date, setDate] = useState<Date | null>(null);
   const [reviewwState, serReviewState] = useState<string>("all");
+  const [hiddenState, setHiddenState] = useState<string>("all");
   const replyDialogRef = useRef<ReplyDialogRef>(null);
 
   const getAllReviews = async () => {
+    let isHidden;
+    if (hiddenState === "hidden") {
+      isHidden = true;
+    } else if (hiddenState === "show") {
+      isHidden = false;
+    } else {
+      isHidden = null;
+    }
     try {
       const response = await reviewService.getAllReviews(
         {
           page: meta.page,
           take: meta.take,
         },
-        { rating: rating, search: searchText, date: date, state: reviewwState }
+        {
+          rating: rating,
+          search: searchText,
+          date: date,
+          state: reviewwState,
+          isHidden: isHidden,
+        }
       );
       setReviews(response.data.data);
       setMeta(response.data.meta);
@@ -68,7 +84,7 @@ export default function ReviewRoute() {
 
   useEffect(() => {
     getAllReviews();
-  }, []);
+  }, [meta.page,hiddenState]);
 
   useEffect(() => {
     if (rating.length === 5) {
@@ -106,6 +122,24 @@ export default function ReviewRoute() {
         <h1 className="text-2xl font-bold text-[#A93F15]">
           Danh Sách Đánh Giá
         </h1>
+        <Tabs value={hiddenState}>
+          <div className="flex items-center">
+            <TabsList>
+              <TabsTrigger value="all" onClick={() => setHiddenState("all")}>
+                Tất cả
+              </TabsTrigger>
+              <TabsTrigger value="show" onClick={() => setHiddenState("show")}>
+                Đã hiện
+              </TabsTrigger>
+              <TabsTrigger
+                value="hidden"
+                onClick={() => setHiddenState("hidden")}
+              >
+                Đã ấn
+              </TabsTrigger>
+            </TabsList>
+          </div>
+        </Tabs>
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader className="flex flex-col gap-4">
             <div className="flex flex-row gap-6 text-[#A93F15]">
@@ -213,6 +247,7 @@ export default function ReviewRoute() {
                     key={index}
                     data={review}
                     onReply={() => replyDialogRef.current?.onOpen(review.id)}
+                    onRefetch={getAllReviews}
                   />
                 ))}
               </TableBody>

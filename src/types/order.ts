@@ -47,4 +47,5 @@ export interface CreateOrder {
   phoneNumber: number | undefined;
   address: string;
   items: { productId: string; quantity: number }[];
+  paymentMethod: string;
 }

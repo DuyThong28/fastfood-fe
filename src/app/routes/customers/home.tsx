@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/shared/accordion";
+import { TablePagination } from "@/components/shared/table-pagination";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -220,7 +221,7 @@ export default function HomeRoute() {
                       />
                       <label
                         htmlFor={val.id}
-                        className="text-left text-base text-black"
+                        className="text-left text-base text-black font-medium"
                       >
                         {val.name}
                       </label>
@@ -278,7 +279,7 @@ export default function HomeRoute() {
                         htmlFor="all"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span>Tất cả</span>
+                        <span className="font-semibold">Tất cả</span>
                       </label>
                     </div>
                     <div className="flex w-full items-center space-x-2">
@@ -287,7 +288,7 @@ export default function HomeRoute() {
                         htmlFor="1"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span>1</span> <Star />
+                        <span className="font-semibold">1</span> <Star className="text-[#FFC400]" />
                       </label>
                     </div>
                     <div className="flex w-full items-center space-x-2">
@@ -296,7 +297,7 @@ export default function HomeRoute() {
                         htmlFor="2"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span>2</span> <Star />
+                        <span className="font-semibold">2</span><Star className="text-[#FFC400]" />
                       </label>
                     </div>
                     <div className="flex w-full items-center space-x-2">
@@ -305,7 +306,7 @@ export default function HomeRoute() {
                         htmlFor="3"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span>3</span> <Star />
+                        <span className="font-semibold">3</span> <Star className="text-[#FFC400]" />
                       </label>
                     </div>
                     <div className="flex w-full items-center space-x-2">
@@ -314,7 +315,7 @@ export default function HomeRoute() {
                         htmlFor="4"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span>4</span> <Star />
+                        <span className="font-semibold">4</span> <Star className="text-[#FFC400]" />
                       </label>
                     </div>
                     <div className="flex w-full items-center space-x-2">
@@ -323,7 +324,7 @@ export default function HomeRoute() {
                         htmlFor="5"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span>5</span> <Star />
+                        <span className="font-semibold">5</span><Star className="text-[#FFC400]" />
                       </label>
                     </div>
                   </RadioGroup>
@@ -334,7 +335,6 @@ export default function HomeRoute() {
         </div>
         <div className="flex flex-col w-full col-span-4 py-4">
           <div className="flex items-center w-full gap-2">
-            {" "}
             <Select onValueChange={(value) => setSortPrice(value)}>
               <SelectTrigger className="h-10 w-full md:w-[250px] !cursor-pointer rounded-md border-[1.5px] border-slate-300 bg-white text-base !font-normal text-black">
                 <SelectValue
@@ -347,25 +347,14 @@ export default function HomeRoute() {
                 <SelectItem value="des">Giá: Cao đến thấp</SelectItem>
               </SelectContent>
             </Select>
-            <div className="flex items-center w-full md:w-auto gap-2">
-              {" "}
-              <Checkbox
-                className="bg-white p-0"
-                id="quantity"
-                checked={checkQuantity}
-                onCheckedChange={() => setCheckQuantity(!checkQuantity)}
-                onClick={(e) => e.stopPropagation()}
-              />
-              <label htmlFor="quantity" className="w-full text-base text-black">
-                Còn hàng
-              </label>
-            </div>
           </div>
           <div className="w-full grid grid-cols-1 max-md:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 py-4">
-            {" "}
             {filterProducts.map((item, index) => {
               return <ProductItemCard key={index} data={item} />;
             })}
+          </div>
+          <div>
+            <TablePagination data={meta} onChange={setMeta} />
           </div>
         </div>
       </div>

@@ -45,6 +45,8 @@ class ReviewService {
     if (trimmedData.state in ReviewStatus) {
       url += `&state=${trimmedData.state}`;
     }
+    if (trimmedData.isHidden !== null)
+      url += `&isHidden=${trimmedData.isHidden}`;
     return api.get(url);
   }
 
@@ -57,7 +59,7 @@ class ReviewService {
   }
 
   async getReviewsByOrderId(
-    orderId: string,
+    orderId: string
   ): Promise<{ data: { data: ResReview[] } }> {
     return api.get(`reviews/get-review-by-order-id/${orderId}`);
   }
@@ -65,7 +67,7 @@ class ReviewService {
   async getReivewsByProductId(
     { page, take }: Page,
     productId: string,
-    query: { rating: number[] },
+    query: { rating: number[] }
   ): Promise<GetReviewByProductId> {
     let url = `reviews/get-review-by-product-id/${productId}?page=${page}&take=${take}`;
     if (query.rating.length > 0) {
@@ -89,6 +91,14 @@ class ReviewService {
       };
     }
     return api.get(url);
+  }
+
+  async hideReview(id: string) {
+    return api.post(`reviews/hide/${id}`);
+  }
+
+  async showReview(id: string) {
+    return api.post(`reviews/unhide/${id}`);
   }
 }
 

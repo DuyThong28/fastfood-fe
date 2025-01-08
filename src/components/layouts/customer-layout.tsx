@@ -5,7 +5,7 @@ import ProductLayout from "./product-layout";
 import UserHeader from "../shared/user-header";
 
 const inActive =
-  "flex items-center gap-3 rounded-lg px-3 py-2 text-[#A93F15] transition-all hover:text-[#FF7E00]";
+  "flex items-center bg-white gap-3 rounded-lg px-3 py-2 text-[#A93F15] transition-all hover:text-[#FF7E00]";
 const active =
   "flex items-center gap-3 rounded-lg bg-[#A93F15] px-3 py-2 text-white transition-all hover:text-white";
 
