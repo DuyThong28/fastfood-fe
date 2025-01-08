@@ -85,7 +85,9 @@ export const OrderRow: React.FC<OrderRowProps> = ({
                   Thanh toán
                 </Button>
               )}
-              {data.status === OrderStatus.PENDING && (
+              {((data.status === OrderStatus.PROCESSING &&
+                data.payment_method == "CASH") ||
+                data.status === OrderStatus.PENDING) && (
                 <Button
                   variant="outline"
                   className="text-[#A93F15] hover:text-[#A93F15]"

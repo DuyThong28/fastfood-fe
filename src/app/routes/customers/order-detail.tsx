@@ -115,7 +115,9 @@ export default function OrderDetailRoute() {
                     Thanh toán
                   </Button>
                 )}
-                {orderDetail.status === OrderStatus.PENDING && (
+                {((orderDetail.status === OrderStatus.PROCESSING &&
+                  orderDetail.payment_method == "CASH") ||
+                  orderDetail.status === OrderStatus.PENDING) && (
                   <Button
                     variant="outline"
                     className="text-[#A93F15] hover:text-[#A93F15]"

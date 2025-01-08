@@ -1,5 +1,7 @@
 import { ProductStatus } from "@/common/enums";
-import ProductLayout from "@/components/layouts/product-layout";
+import ProductLayout, {
+  ProductLayoutRef,
+} from "@/components/layouts/product-layout";
 import ProductItemCard from "@/components/product/product-item-card";
 import {
   Accordion,
@@ -24,7 +26,7 @@ import { Meta } from "@/types/api";
 import { Category } from "@/types/category";
 import { ResProductDetail } from "@/types/product";
 import { Star } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
 interface PriceFilter {
@@ -45,6 +47,8 @@ export default function HomeRoute() {
     const titleParam = queryParams.get("title");
     if (titleParam) {
       setQuerySearch(titleParam);
+    } else {
+      setQuerySearch("");
     }
   }, [location.search]);
 
@@ -57,11 +61,12 @@ export default function HomeRoute() {
   });
   const [sortPrice, setSortPrice] = useState<string>("asc");
   const [rating, setRating] = useState<string | null>();
+  const homeRef = useRef<ProductLayoutRef | null>(null);
   const [checkQuantity, setCheckQuantity] = useState<boolean | undefined>();
   const [errors, setErrors] = useState<ErrorState>({});
   const [meta, setMeta] = useState<Meta>({
     page: 1,
-    take: 20,
+    take: 50,
     itemCount: 0,
     pageCount: 0,
     hasPreviousPage: false,
@@ -82,7 +87,11 @@ export default function HomeRoute() {
           page: meta.page,
           take: meta.take,
         },
-        { status: ProductStatus.ACTIVE }
+        {
+          status: ProductStatus.ACTIVE,
+          categoryStatus: false,
+          title: querySearch,
+        }
       );
 
       setProducts(response.data.data);
@@ -96,7 +105,7 @@ export default function HomeRoute() {
     try {
       const response = await categoryService.getAllCategories(
         { page: metaCategory.page, take: metaCategory.take },
-        null
+        false
       );
       setCategories(response.data.data);
       setMetaCategory(response.data.meta);
@@ -106,20 +115,33 @@ export default function HomeRoute() {
   };
 
   useEffect(() => {
-    getAllProducts();
     getAllCategories();
   }, [meta.page]);
+
+  useEffect(() => {
+    getAllProducts();
+    if (homeRef.current) {
+      if (querySearch) homeRef.current.setSearchText(querySearch);
+      else {
+        homeRef.current.setSearchText("");
+      }
+    }
+  }, [querySearch]);
   console.log("PriceFilter", priceFilter.from, priceFilter.to);
   console.log("categorySelect", categorySelect);
 
   const filterProducts = useMemo(() => {
     const newErrors: ErrorState = {};
     let fakeProducts = products;
-    if (querySearch) {
-      fakeProducts = fakeProducts.filter((product) =>
-        product.title.includes(querySearch)
-      );
-    }
+    // if (querySearch) {
+    //   fakeProducts = fakeProducts.filter((product) => {
+    //     const normalizedTitle = normalizeString(product.title);
+    //     const normalizedQuery = normalizeString(querySearch);
+    //     return normalizedTitle.includes(normalizedQuery);
+    //   });
+    // } else {
+    //   fakeProducts = [...products];
+    // }
     if (categorySelect.length > 0) {
       fakeProducts = fakeProducts.filter((product) =>
         categorySelect.includes(product?.Category?.id || "")
@@ -186,7 +208,7 @@ export default function HomeRoute() {
   ]);
 
   return (
-    <ProductLayout>
+    <ProductLayout ref={homeRef}>
       <div className="grid grid-cols-5 max-md:flex max-md:flex-col gap-5">
         <div className="col-span-1 py-4 flex flex-col">
           <Accordion
@@ -288,7 +310,8 @@ export default function HomeRoute() {
                         htmlFor="1"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span className="font-semibold">1</span> <Star className="text-[#FFC400]" />
+                        <span className="font-semibold">1</span>{" "}
+                        <Star className="text-[#FFC400]" />
                       </label>
                     </div>
                     <div className="flex w-full items-center space-x-2">
@@ -297,7 +320,8 @@ export default function HomeRoute() {
                         htmlFor="2"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span className="font-semibold">2</span><Star className="text-[#FFC400]" />
+                        <span className="font-semibold">2</span>
+                        <Star className="text-[#FFC400]" />
                       </label>
                     </div>
                     <div className="flex w-full items-center space-x-2">
@@ -306,7 +330,8 @@ export default function HomeRoute() {
                         htmlFor="3"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span className="font-semibold">3</span> <Star className="text-[#FFC400]" />
+                        <span className="font-semibold">3</span>{" "}
+                        <Star className="text-[#FFC400]" />
                       </label>
                     </div>
                     <div className="flex w-full items-center space-x-2">
@@ -315,7 +340,8 @@ export default function HomeRoute() {
                         htmlFor="4"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span className="font-semibold">4</span> <Star className="text-[#FFC400]" />
+                        <span className="font-semibold">4</span>{" "}
+                        <Star className="text-[#FFC400]" />
                       </label>
                     </div>
                     <div className="flex w-full items-center space-x-2">
@@ -324,7 +350,8 @@ export default function HomeRoute() {
                         htmlFor="5"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span className="font-semibold">5</span><Star className="text-[#FFC400]" />
+                        <span className="font-semibold">5</span>
+                        <Star className="text-[#FFC400]" />
                       </label>
                     </div>
                   </RadioGroup>
@@ -353,9 +380,9 @@ export default function HomeRoute() {
               return <ProductItemCard key={index} data={item} />;
             })}
           </div>
-          <div>
+          {/* <div>
             <TablePagination data={meta} onChange={setMeta} />
-          </div>
+          </div> */}
         </div>
       </div>
     </ProductLayout>
