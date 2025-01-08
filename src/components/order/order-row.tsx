@@ -50,6 +50,15 @@ export const OrderRow: React.FC<OrderRowProps> = ({
     }
   };
 
+  const handlePay = async () => {
+    if (!data.payment_url) {
+      const paymentRespone = await orderService.createMOMOURL(data.id);
+      if (paymentRespone && paymentRespone.data.data.payUrl) {
+        window.location.href = paymentRespone.data.data.payUrl;
+      }
+    } else window.location.href = data.payment_url;
+  };
+
   return (
     <>
       <CustomAlertDialog ref={alertDialogRef} />
@@ -64,11 +73,19 @@ export const OrderRow: React.FC<OrderRowProps> = ({
           })}
         </div>
         <div className="w-full  flex flex-col gap-4 p-4 items-end">
-          <div>{`Tổng tiền: ${formatNumber(data.total_price)}`}</div>
+          <div className="font-semibold text-[#FF7E00]">{`Tổng tiền: ${formatNumber(data.total_price)} đ`}</div>
           <div className="w-full flex flex-row">
             <div className="flex flex-row gap-4 ml-auto">
-              {(data.status === OrderStatus.PENDING ||
-                data.status === OrderStatus.PROCESSING) && (
+              {data.status === OrderStatus.PENDING && (
+                <Button
+                  variant="default"
+                  className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                  onClick={handlePay}
+                >
+                  Thanh toán
+                </Button>
+              )}
+              {data.status === OrderStatus.PENDING && (
                 <Button
                   variant="outline"
                   className="text-[#A93F15] hover:text-[#A93F15]"
@@ -80,8 +97,8 @@ export const OrderRow: React.FC<OrderRowProps> = ({
               {data.status === OrderStatus.SUCCESS &&
                 data.review_state === ReviewStatus.UNREVIEW && (
                   <Button
-                    onClick={() => onReview(data.id, ReviewStatus.UNREVIEW)}
                     className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                    onClick={() => onReview(data.id, ReviewStatus.UNREVIEW)}
                   >
                     Đánh giá
                   </Button>
@@ -89,8 +106,8 @@ export const OrderRow: React.FC<OrderRowProps> = ({
               {data.status === OrderStatus.SUCCESS &&
                 data.review_state === ReviewStatus.REVIEWED && (
                   <Button
-                    onClick={() => onReview(data.id, ReviewStatus.REVIEWED)}
                     className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                    onClick={() => onReview(data.id, ReviewStatus.REVIEWED)}
                   >
                     Xem đánh giá
                   </Button>
@@ -98,8 +115,8 @@ export const OrderRow: React.FC<OrderRowProps> = ({
               {data.status === OrderStatus.SUCCESS &&
                 data.review_state === ReviewStatus.REPLIED && (
                   <Button
-                    onClick={() => onReview(data.id, ReviewStatus.REPLIED)}
                     className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                    onClick={() => onReview(data.id, ReviewStatus.REPLIED)}
                   >
                     Xem phản hồi
                   </Button>

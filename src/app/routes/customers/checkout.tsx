@@ -95,9 +95,12 @@ export default function CheckOutRoute() {
             paymentMethod: paymentMethod,
           });
           const responseData = response.data.data;
-          if (responseData.payment_method == "MOMO") {
-            if (responseData.payment_url) {
-              window.location.href = responseData.payment_url;
+          if (responseData.payment_method == "MOMO" && responseData.id) {
+            const paymentRespone = await orderService.createMOMOURL(
+              responseData.id
+            );
+            if (paymentRespone && paymentRespone.data.data.payUrl) {
+              window.location.href = paymentRespone.data.data.payUrl;
             } else {
               navigate(routes.CUSTOMER.PURCHASE);
               toastSuccess("Đặt hàng thành công");

@@ -71,6 +71,16 @@ export default function OrderDetailRoute() {
     reviewDialogRef.current?.onOpen(id, action);
   };
 
+  const handlePay = async () => {
+    if (!orderDetail) return;
+    if (!orderDetail.payment_url) {
+      const paymentRespone = await orderService.createMOMOURL(orderDetail.id);
+      if (paymentRespone && paymentRespone.data.data.payUrl) {
+        window.location.href = paymentRespone.data.data.payUrl;
+      }
+    } else window.location.href = orderDetail.payment_url;
+  };
+
   return (
     <CustomerLayout>
       {orderDetail && (
@@ -95,49 +105,59 @@ export default function OrderDetailRoute() {
               <div className="text-[#A93F15] font-semibold">
                 {ORDER_STATUS[orderDetail.status]}
               </div>
-              {(orderDetail.status === OrderStatus.PENDING ||
-                orderDetail.status === OrderStatus.PROCESSING) && (
-                <Button
-                  variant="outline"
-                  className="ml-auto"
-                  onClick={handleCancelOrder}
-                >
-                  Hủy đơn hàng
-                </Button>
-              )}
-              {orderDetail.status === OrderStatus.SUCCESS &&
-                orderDetail.review_state === ReviewStatus.UNREVIEW && (
+              <div className="flex flex-row gap-4 ml-auto">
+                {orderDetail.status === OrderStatus.PENDING && (
                   <Button
-                    className="ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
-                    onClick={() =>
-                      handleReview(orderDetail.id, ReviewStatus.UNREVIEW)
-                    }
+                    variant="default"
+                    className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                    onClick={handlePay}
                   >
-                    Đánh giá
+                    Thanh toán
                   </Button>
                 )}
-              {orderDetail.status === OrderStatus.SUCCESS &&
-                orderDetail.review_state === ReviewStatus.REVIEWED && (
+                {orderDetail.status === OrderStatus.PENDING && (
                   <Button
-                    className="ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
-                    onClick={() =>
-                      handleReview(orderDetail.id, ReviewStatus.REVIEWED)
-                    }
+                    variant="outline"
+                    className="text-[#A93F15] hover:text-[#A93F15]"
+                    onClick={handleCancelOrder}
                   >
-                    Xem đánh giá
+                    Hủy đơn hàng
                   </Button>
                 )}
-              {orderDetail.status === OrderStatus.SUCCESS &&
-                orderDetail.review_state === ReviewStatus.REPLIED && (
-                  <Button
-                    className="ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
-                    onClick={() =>
-                      handleReview(orderDetail.id, ReviewStatus.REPLIED)
-                    }
-                  >
-                    Xem phản hồi
-                  </Button>
-                )}
+                {orderDetail.status === OrderStatus.SUCCESS &&
+                  orderDetail.review_state === ReviewStatus.UNREVIEW && (
+                    <Button
+                      className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                      onClick={() =>
+                        handleReview(orderDetail.id, ReviewStatus.UNREVIEW)
+                      }
+                    >
+                      Đánh giá
+                    </Button>
+                  )}
+                {orderDetail.status === OrderStatus.SUCCESS &&
+                  orderDetail.review_state === ReviewStatus.REVIEWED && (
+                    <Button
+                      className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                      onClick={() =>
+                        handleReview(orderDetail.id, ReviewStatus.REVIEWED)
+                      }
+                    >
+                      Xem đánh giá
+                    </Button>
+                  )}
+                {orderDetail.status === OrderStatus.SUCCESS &&
+                  orderDetail.review_state === ReviewStatus.REPLIED && (
+                    <Button
+                      className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                      onClick={() =>
+                        handleReview(orderDetail.id, ReviewStatus.REPLIED)
+                      }
+                    >
+                      Xem phản hồi
+                    </Button>
+                  )}
+              </div>
             </SectionCard>
             <SectionCard className="p-4 space-y-4">
               <div className="font-semibold text-[#A93F15]">
@@ -167,7 +187,7 @@ export default function OrderDetailRoute() {
               <div className="flex p-4">
                 <div className="ml-auto font-semibold text-[#A93F15]">{`Tổng tiền hàng: ${formatNumber(
                   orderDetail.total_price
-                )}`}</div>
+                )} đ`}</div>
               </div>
             </SectionCard>
           </main>
