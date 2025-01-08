@@ -128,7 +128,7 @@ export default function DashboardRoute() {
                   </h2>
                   <p className="text-lg font-bold">{orders.length}</p>
                   <p className="text-sm font-bold mt-2">
-                    Số lượng đơn hàng đã đặt
+                    Số lượng đơn hàng thành công
                   </p>
                 </div>
                 <svg
