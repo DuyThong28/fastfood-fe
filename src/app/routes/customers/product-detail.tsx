@@ -143,7 +143,7 @@ export default function ProductDetailRoute() {
                       key={rating}
                       aria-hidden="true"
                       className={(detailData.avg_stars > rating
-                        ? "text-[#A93F15]"
+                        ? "text-[#FFC400]"
                         : "text-gray-200"
                       ).concat(" h-4 w-4 flex-shrink-0")}
                     />
@@ -163,7 +163,9 @@ export default function ProductDetailRoute() {
                   aria-label="Choose a size"
                   className="grid grid-cols-[100px_1fr]"
                 >
-                  <div className="text-gray-900 font-semibold text-lg">Số lượng</div>
+                  <div className="text-gray-900 font-semibold text-lg">
+                    Số lượng
+                  </div>
                   <CounterInput value={quantity} onChange={setQuantity} />
                 </fieldset>
                 <Button
@@ -179,7 +181,9 @@ export default function ProductDetailRoute() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="text-[#A93F15] text-2xl font-semibold">Mô Tả Sản Phẩm</CardTitle>
+            <CardTitle className="text-[#A93F15] text-2xl font-semibold">
+              Mô Tả Sản Phẩm
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-justify indent-4">{detailData.description}</p>
@@ -187,7 +191,9 @@ export default function ProductDetailRoute() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="text-[#A93F15] text-2xl font-semibold">Đánh Giá Sản Phẩm</CardTitle>
+            <CardTitle className="text-[#A93F15] text-2xl font-semibold">
+              Đánh Giá Sản Phẩm
+            </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-6">
             <div className="border border-[#A93F15] rounded-md p-6 w-full md:flex md:flex-row flex flex-col gap-10 items-start bg-[#FFFBF7]">
@@ -204,7 +210,7 @@ export default function ProductDetailRoute() {
                       key={rating}
                       aria-hidden="true"
                       className={(detailData.avg_stars > rating
-                        ? "text-[#A93F15]"
+                        ? "text-[#FFC400]"
                         : "text-gray-200"
                       ).concat(" h-5 w-5 flex-shrink-0")}
                     />
