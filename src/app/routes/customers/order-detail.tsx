@@ -80,16 +80,16 @@ export default function OrderDetailRoute() {
             ref={reviewDialogRef}
             onRefetch={() => getOrderById(orderDetail.id)}
           />
-          <main className="flex flex-1 flex-col gap-6 py-6 pl-6">
-            <SectionCard className="flex flex-row items-center p-4 gap-1">
+          <main className="flex flex-1 flex-col gap-6 py-6 md:pl-6 mx-2">
+            <SectionCard className="flex md:flex-row flex-col md:items-center p-4 gap-1">
               <div
                 onClick={handleBack}
-                className="hover:cursor-pointer flex flexp-row gap-1 items-center"
+                className="hover:cursor-pointer flex flex-row gap-1 items-center"
               >
                 <ChevronLeft className="h-5 w-5 text-[#A93F15]" />
                 <span className="text-[#A93F15] font-semibold">TRỞ LẠI</span>
               </div>
-              <span className="ml-auto text-[#A93F15] font-semibold">{`MÃ ĐƠN HÀNG: ${orderDetail.id}`}</span>
+              <span className="ml-auto text-[#A93F15] font-semibold mt-4 md:mt-0">{`MÃ ĐƠN HÀNG: ${orderDetail.id}`}</span>
             </SectionCard>
             <SectionCard className="p-4 flex flex-row  items-center">
               <div className="text-[#A93F15] font-semibold">

@@ -13,8 +13,8 @@ export const StarButton: React.FC<StarButtonProps> = ({
     <button
       className={
         isActive
-          ? "px-4 py-2 border border-[#A93F15] bg-white text-[#A93F15]"
-          : "px-4 py-2 border border-muted/50 text-black bg-white"
+          ? "px-4 py-2 border border-[#A93F15] bg-white text-[#A93F15] min-w-[80.39px] md:w-fit"
+          : "px-4 py-2 border border-muted/50 text-black bg-white min-w-[80.39px] md:w-fit"
       }
       onClick={onClick}
     >

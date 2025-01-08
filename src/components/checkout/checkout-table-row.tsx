@@ -9,7 +9,7 @@ interface CheckoutTableRowProps {
 export const CheckoutTableRow: React.FC<CheckoutTableRowProps> = ({ data }) => {
   return (
     <div className="w-full py-2 items-center flex flex-row font-medium text-muted-foreground text-sm border-b border-gray-300">
-      <div className="basis-[55%]  px-2 text-left flex flex-row gap-4">
+      <div className="md:basis-[55%] basis-[30%] px-2 text-left flex md:flex-row flex-col gap-4">
         <img
           alt="Product image"
           className="aspect-square rounded-md object-cover"
@@ -25,9 +25,9 @@ export const CheckoutTableRow: React.FC<CheckoutTableRowProps> = ({ data }) => {
           <div className="font-medium">{data.product.title}</div>
         </div>
       </div>
-      <div className="basis-[15%] px-2 text-right">{data.product.price}</div>
-      <div className="basis-[15%] px-2 text-right">{data.quantity}</div>
-      <div className="basis-[15%] px-2 text-right ">
+      <div className="md:basis-[15%] basis-[20%] px-2 text-right">{data.product.price}</div>
+      <div className="md:basis-[15%] basis-[25%] px-2 text-right">{data.quantity}</div>
+      <div className="md:basis-[15%] basis-[25%] px-2 text-right ">
         {data.quantity * data.product.price}
       </div>
     </div>
