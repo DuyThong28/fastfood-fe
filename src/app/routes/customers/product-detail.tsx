@@ -118,8 +118,8 @@ export default function ProductDetailRoute() {
   return (
     detailData && (
       <ProductLayout>
-        <Card className="mt-6 grid grid-cols-5 gap-12 p-6">
-          <div className="w-full col-span-2">
+        <Card className="mt-6 md:grid md:grid-cols-5 gap-12 p-6 flex flex-col justify-center">
+          <div className="w-full md:col-span-2">
             <EmblaCarousel
               slides={
                 detailData?.image_url && detailData?.image_url.length > 0
@@ -129,32 +129,37 @@ export default function ProductDetailRoute() {
               options={OPTIONS}
             />
           </div>
-          <div className="space-y-6  col-span-3">
-            <h2 className="text-xl font-medium text-gray-900 ">
-              {detailData.title}
-            </h2>
+          <div className="space-y-6 md:col-span-3">
+            <div className="flex flex-col md:flex-row gap-x-5 items-start md:items-end">
+              <h2 className=" text-5xl font-medium text-gray-900 ">
+                {detailData.title}
+              </h2>
+              <p className="text-lg font-medium">
+                (Đã bán: {detailData.sold_quantity})
+              </p>
+            </div>
 
             <div>
               <div className="flex items-center">
-                <p className="text-sm mr-1">{detailData.avg_stars}</p>
+                <p className="text-lg mr-1">{detailData.avg_stars}</p>
                 <div className="flex items-center">
                   {[0, 1, 2, 3, 4].map((rating) => (
                     <StarIcon
                       key={rating}
                       aria-hidden="true"
                       className={(detailData.avg_stars > rating
-                        ? "text-[#A93F15]"
+                        ? "text-[#FFC400]"
                         : "text-gray-200"
                       ).concat(" h-4 w-4 flex-shrink-0")}
                     />
                   ))}
                 </div>
-                <p className="ml-3 text-sm">
+                <p className="ml-3  text-lg">
                   {`${detailData.total_reviews} đánh giá`}
                 </p>
               </div>
             </div>
-            <p className="text-xl text-gray-900">{`${formatNumber(
+            <p className="text-4xl font-semibold text-[#A93F15]">{`${formatNumber(
               detailData.price
             )} đ`}</p>
             <section aria-labelledby="options-heading">
@@ -163,13 +168,15 @@ export default function ProductDetailRoute() {
                   aria-label="Choose a size"
                   className="grid grid-cols-[100px_1fr]"
                 >
-                  <div className="text-gray-900">Số lượng</div>
+                  <div className="text-gray-900 font-semibold text-lg">
+                    Số lượng
+                  </div>
                   <CounterInput value={quantity} onChange={setQuantity} />
                 </fieldset>
                 <Button
                   onClick={handleAddToCart}
                   type="button"
-                  className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                  className="bg-[#A93F15] hover:bg-[#FF7E00] w-[300px] h-[60xp] rounded-lg text-lg"
                 >
                   Thêm vào giỏ hàng
                 </Button>
@@ -179,7 +186,9 @@ export default function ProductDetailRoute() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="text-[#A93F15]">Mô Tả Sản Phẩm</CardTitle>
+            <CardTitle className="text-[#A93F15] text-2xl font-semibold">
+              Mô Tả Sản Phẩm
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-justify indent-4">{detailData.description}</p>
@@ -187,10 +196,12 @@ export default function ProductDetailRoute() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="text-[#A93F15]">Đánh Giá Sản Phẩm</CardTitle>
+            <CardTitle className="text-[#A93F15] text-2xl font-semibold">
+              Đánh Giá Sản Phẩm
+            </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-6">
-            <div className="border border-[#A93F15] rounded-md p-6 w-full flex flex-row gap-10 items-start bg-[#FFFBF7]">
+            <div className="border border-[#A93F15] rounded-md p-6 w-full md:flex md:flex-row flex flex-col gap-10 items-start bg-[#FFFBF7]">
               <div>
                 <div className="mb-2">
                   <span className=" text-[30px] text-[#A93F15]">
@@ -204,14 +215,14 @@ export default function ProductDetailRoute() {
                       key={rating}
                       aria-hidden="true"
                       className={(detailData.avg_stars > rating
-                        ? "text-[#A93F15]"
+                        ? "text-[#FFC400]"
                         : "text-gray-200"
                       ).concat(" h-5 w-5 flex-shrink-0")}
                     />
                   ))}
                 </div>
               </div>
-              <div className="flex flex-row gap-4">
+              <div className="flex flex-row gap-4 flex-wrap">
                 <StarButton
                   onClick={() => handleSelectAll(!isAllSelected)}
                   value={"Tất cả"}

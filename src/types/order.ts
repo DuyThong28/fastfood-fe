@@ -27,6 +27,8 @@ export interface Order {
     id: string;
   };
   review_state: string;
+  payment_url: string | null;
+  payment_method: string;
 }
 
 export interface ResGetOrdersByUser {
@@ -47,4 +49,14 @@ export interface CreateOrder {
   phoneNumber: number | undefined;
   address: string;
   items: { productId: string; quantity: number }[];
+  paymentMethod: string;
+}
+
+export interface ResPayment {
+  data: {
+    data: {
+      orderId: string;
+      payUrl?: string;
+    };
+  };
 }

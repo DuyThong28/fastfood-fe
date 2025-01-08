@@ -113,7 +113,7 @@ export default function SignUpRoute() {
   };
 
   return (
-    <div className="w-full grid grid-cols-2 h-screen">
+    <div className="w-full grid-cols-1 md:grid-cols-2 h-screen">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
@@ -242,7 +242,7 @@ export default function SignUpRoute() {
           </div>
         </div>
       </div>
-      <img src={Background} className="flex-1 h-screen" />
+      <img src={Background} className="flex-1 h-screen hidden md:block" />
     </div>
   );
 }

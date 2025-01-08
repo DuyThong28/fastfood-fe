@@ -25,7 +25,7 @@ export default function ProductRoute() {
   const [products, setProducts] = useState<ResProductDetail[]>([]);
   const [meta, setMeta] = useState<Meta>({
     page: 1,
-    take: 20,
+    take: 10,
     itemCount: 0,
     pageCount: 0,
     hasPreviousPage: false,

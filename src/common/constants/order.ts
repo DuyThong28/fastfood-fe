@@ -1,5 +1,5 @@
 export const ORDER_STATUS = {
-  PENDING: "Chờ xác nhận",
+  PENDING: "Chưa thanh toán",
   PROCESSING: "Đang xử lý",
   DELIVERED: "Đang vận chuyển",
   SUCCESS: "Hoàn tất",
@@ -8,7 +8,7 @@ export const ORDER_STATUS = {
 };
 
 export const ADMIN_ORDER_STATUS = {
-  PENDING: "Chờ xác nhận",
+  PENDING: "Chưa thanh toán",
   PROCESSING: "Đang xử lý",
   DELIVERED: "Đang vận chuyển",
   SUCCESS: "Hoàn tất",

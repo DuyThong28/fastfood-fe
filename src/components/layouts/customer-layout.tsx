@@ -2,9 +2,10 @@ import { ClipboardList, MapPin, UserRound } from "lucide-react";
 import { routes } from "@/config";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProductLayout from "./product-layout";
+import UserHeader from "../shared/user-header";
 
 const inActive =
-  "flex items-center gap-3 rounded-lg px-3 py-2 text-[#A93F15] transition-all hover:text-[#FF7E00]";
+  "flex items-center bg-white gap-3 rounded-lg px-3 py-2 text-[#A93F15] transition-all hover:text-[#FF7E00]";
 const active =
   "flex items-center gap-3 rounded-lg bg-[#A93F15] px-3 py-2 text-white transition-all hover:text-white";
 
@@ -19,7 +20,7 @@ export default function CustomerLayout({
 
   return (
     <ProductLayout>
-      <div className="grid w-full h-full grid-cols-[220px_1fr]">
+      <div className="w-full h-full grid-cols-[220px_1fr] hidden md:grid">
         <div className=" border-x bg-white">
           <div className="flex-1">
             <nav className="grid items-start  text-sm font-medium px-4 mt-6">
@@ -61,6 +62,8 @@ export default function CustomerLayout({
         </div>
         <div className="flex flex-col">{children}</div>
       </div>
+      <UserHeader />
+      <div className="flex-col md:hidden flex h-full overflow-y-auto pb-10">{children}</div>
     </ProductLayout>
   );
 }

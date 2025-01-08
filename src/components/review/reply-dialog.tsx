@@ -21,6 +21,7 @@ import CustomAlertDialog, {
   CustomAlertDialogRef,
 } from "../shared/alert-dialog";
 import { toastSuccess, toastWarning } from "@/utils/toast";
+import { AxiosError } from "axios";
 
 export interface ReplyDialogRef {
   onOpen: (id: string) => Promise<void>;
@@ -80,6 +81,11 @@ const ReplyDialog = forwardRef<ReplyDialogRef, ReplyDialogProps>(
             setIsOpen(false);
             await onRefetch();
           } catch (err) {
+            if (err instanceof AxiosError && err.response?.status === 400) {
+              toastWarning(
+                "Vui lòng tuân thủ quy tắc cộng đồng và sử dụng ngôn từ phù hợp. Cảm ơn bạn!"
+              );
+            }
             console.log(err);
           }
         }
@@ -109,7 +115,7 @@ const ReplyDialog = forwardRef<ReplyDialogRef, ReplyDialogProps>(
                         }
                       />
                     </div>
-                    <div>{review.product_id}</div>
+                    <div className="font-medium">{review.product.title}</div>
                   </div>
                   <div className="flex items-center gap-x-3">
                     <div className="text-[#A93F15] font-medium">
@@ -121,16 +127,16 @@ const ReplyDialog = forwardRef<ReplyDialogRef, ReplyDialogProps>(
                           key={rating}
                           aria-hidden="true"
                           className={(review.rating > rating
-                            ? "text-gray-900"
+                            ? "text-[#FFC400]"
                             : "text-gray-200"
                           ).concat(" h-4 w-4 flex-shrink-0")}
                         />
                       ))}
                     </div>
                   </div>
-                  <div className="flex items-center gap-x-3">
-                    <div className="text-[#A93F15] font-medium">
-                      Bình luận:{" "}
+                  <div className="flex items-start gap-x-3">
+                    <div className="text-[#A93F15] font-medium text-nowrap">
+                      Bình luận:
                     </div>
                     <div>{review.description}</div>
                   </div>

@@ -6,6 +6,7 @@ import {
   CreateOrder,
   ResGetOrderById,
   ResGetOrdersByUser,
+  ResPayment,
 } from "@/types/order";
 import { Review } from "@/types/review";
 import { trimObjectAttributes } from "@/utils/format";
@@ -71,6 +72,10 @@ class OrderService {
         title,
       },
     );
+  }
+
+  async createMOMOURL(orderId: string): Promise<ResPayment> {
+    return api.post(`orders/create-order-payment-url-with-momo`, { orderId });
   }
 }
 

@@ -1,5 +1,7 @@
 import { ProductStatus } from "@/common/enums";
-import ProductLayout from "@/components/layouts/product-layout";
+import ProductLayout, {
+  ProductLayoutRef,
+} from "@/components/layouts/product-layout";
 import ProductItemCard from "@/components/product/product-item-card";
 import {
   Accordion,
@@ -7,6 +9,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/shared/accordion";
+import { TablePagination } from "@/components/shared/table-pagination";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -23,7 +26,7 @@ import { Meta } from "@/types/api";
 import { Category } from "@/types/category";
 import { ResProductDetail } from "@/types/product";
 import { Star } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
 interface PriceFilter {
@@ -44,6 +47,8 @@ export default function HomeRoute() {
     const titleParam = queryParams.get("title");
     if (titleParam) {
       setQuerySearch(titleParam);
+    } else {
+      setQuerySearch("");
     }
   }, [location.search]);
 
@@ -56,11 +61,12 @@ export default function HomeRoute() {
   });
   const [sortPrice, setSortPrice] = useState<string>("asc");
   const [rating, setRating] = useState<string | null>();
+  const homeRef = useRef<ProductLayoutRef | null>(null);
   const [checkQuantity, setCheckQuantity] = useState<boolean | undefined>();
   const [errors, setErrors] = useState<ErrorState>({});
   const [meta, setMeta] = useState<Meta>({
     page: 1,
-    take: 20,
+    take: 50,
     itemCount: 0,
     pageCount: 0,
     hasPreviousPage: false,
@@ -81,7 +87,11 @@ export default function HomeRoute() {
           page: meta.page,
           take: meta.take,
         },
-        { status: ProductStatus.ACTIVE }
+        {
+          status: ProductStatus.ACTIVE,
+          categoryStatus: false,
+          title: querySearch,
+        }
       );
 
       setProducts(response.data.data);
@@ -95,7 +105,7 @@ export default function HomeRoute() {
     try {
       const response = await categoryService.getAllCategories(
         { page: metaCategory.page, take: metaCategory.take },
-        null
+        false
       );
       setCategories(response.data.data);
       setMetaCategory(response.data.meta);
@@ -105,20 +115,33 @@ export default function HomeRoute() {
   };
 
   useEffect(() => {
-    getAllProducts();
     getAllCategories();
   }, [meta.page]);
+
+  useEffect(() => {
+    getAllProducts();
+    if (homeRef.current) {
+      if (querySearch) homeRef.current.setSearchText(querySearch);
+      else {
+        homeRef.current.setSearchText("");
+      }
+    }
+  }, [querySearch]);
   console.log("PriceFilter", priceFilter.from, priceFilter.to);
   console.log("categorySelect", categorySelect);
 
   const filterProducts = useMemo(() => {
     const newErrors: ErrorState = {};
     let fakeProducts = products;
-    if (querySearch) {
-      fakeProducts = fakeProducts.filter((product) =>
-        product.title.includes(querySearch)
-      );
-    }
+    // if (querySearch) {
+    //   fakeProducts = fakeProducts.filter((product) => {
+    //     const normalizedTitle = normalizeString(product.title);
+    //     const normalizedQuery = normalizeString(querySearch);
+    //     return normalizedTitle.includes(normalizedQuery);
+    //   });
+    // } else {
+    //   fakeProducts = [...products];
+    // }
     if (categorySelect.length > 0) {
       fakeProducts = fakeProducts.filter((product) =>
         categorySelect.includes(product?.Category?.id || "")
@@ -185,7 +208,7 @@ export default function HomeRoute() {
   ]);
 
   return (
-    <ProductLayout>
+    <ProductLayout ref={homeRef}>
       <div className="grid grid-cols-5 max-md:flex max-md:flex-col gap-5">
         <div className="col-span-1 py-4 flex flex-col">
           <Accordion
@@ -220,7 +243,7 @@ export default function HomeRoute() {
                       />
                       <label
                         htmlFor={val.id}
-                        className="text-left text-base text-black"
+                        className="text-left text-base text-black font-medium"
                       >
                         {val.name}
                       </label>
@@ -278,7 +301,7 @@ export default function HomeRoute() {
                         htmlFor="all"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span>Tất cả</span>
+                        <span className="font-semibold">Tất cả</span>
                       </label>
                     </div>
                     <div className="flex w-full items-center space-x-2">
@@ -287,7 +310,8 @@ export default function HomeRoute() {
                         htmlFor="1"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span>1</span> <Star />
+                        <span className="font-semibold">1</span>{" "}
+                        <Star className="text-[#FFC400]" />
                       </label>
                     </div>
                     <div className="flex w-full items-center space-x-2">
@@ -296,7 +320,8 @@ export default function HomeRoute() {
                         htmlFor="2"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span>2</span> <Star />
+                        <span className="font-semibold">2</span>
+                        <Star className="text-[#FFC400]" />
                       </label>
                     </div>
                     <div className="flex w-full items-center space-x-2">
@@ -305,7 +330,8 @@ export default function HomeRoute() {
                         htmlFor="3"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span>3</span> <Star />
+                        <span className="font-semibold">3</span>{" "}
+                        <Star className="text-[#FFC400]" />
                       </label>
                     </div>
                     <div className="flex w-full items-center space-x-2">
@@ -314,7 +340,8 @@ export default function HomeRoute() {
                         htmlFor="4"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span>4</span> <Star />
+                        <span className="font-semibold">4</span>{" "}
+                        <Star className="text-[#FFC400]" />
                       </label>
                     </div>
                     <div className="flex w-full items-center space-x-2">
@@ -323,7 +350,8 @@ export default function HomeRoute() {
                         htmlFor="5"
                         className="text-left text-base text-black flex item-center gap-2"
                       >
-                        <span>5</span> <Star />
+                        <span className="font-semibold">5</span>
+                        <Star className="text-[#FFC400]" />
                       </label>
                     </div>
                   </RadioGroup>
@@ -334,7 +362,6 @@ export default function HomeRoute() {
         </div>
         <div className="flex flex-col w-full col-span-4 py-4">
           <div className="flex items-center w-full gap-2">
-            {" "}
             <Select onValueChange={(value) => setSortPrice(value)}>
               <SelectTrigger className="h-10 w-full md:w-[250px] !cursor-pointer rounded-md border-[1.5px] border-slate-300 bg-white text-base !font-normal text-black">
                 <SelectValue
@@ -347,26 +374,15 @@ export default function HomeRoute() {
                 <SelectItem value="des">Giá: Cao đến thấp</SelectItem>
               </SelectContent>
             </Select>
-            <div className="flex items-center w-full md:w-auto gap-2">
-              {" "}
-              <Checkbox
-                className="bg-white p-0"
-                id="quantity"
-                checked={checkQuantity}
-                onCheckedChange={() => setCheckQuantity(!checkQuantity)}
-                onClick={(e) => e.stopPropagation()}
-              />
-              <label htmlFor="quantity" className="w-full text-base text-black">
-                Còn hàng
-              </label>
-            </div>
           </div>
           <div className="w-full grid grid-cols-1 max-md:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 py-4">
-            {" "}
             {filterProducts.map((item, index) => {
               return <ProductItemCard key={index} data={item} />;
             })}
           </div>
+          {/* <div>
+            <TablePagination data={meta} onChange={setMeta} />
+          </div> */}
         </div>
       </div>
     </ProductLayout>

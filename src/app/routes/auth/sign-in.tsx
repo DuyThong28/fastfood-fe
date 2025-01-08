@@ -115,8 +115,8 @@ export default function SignInRoute() {
   };
 
   return (
-    <div className="w-full grid grid-cols-2 h-screen">
-      <img className="h-screen" src={Background} />
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 h-screen">
+      <img className="h-screen hidden md:block" src={Background} />
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">

@@ -3,6 +3,7 @@ import { ResProductDetail } from "@/types/product";
 import { formatNumber } from "@/utils/format";
 import { useNavigate } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/20/solid";
+import { FiveStars } from "../shared/five-stars";
 
 interface ProductItemCardProps {
   data: ResProductDetail;
@@ -13,25 +14,25 @@ export default function ProductItemCard({ data }: ProductItemCardProps) {
 
   return (
     <div
-      className="h-fit p-2 space-y-2 bg-white shadow-sm hover:shadow-md hover:-translate-y-[2px]"
+      className="h-fit rounded-xl p-3 space-y-2 bg-white shadow-sm hover:shadow-lg hover:-translate-y-[2px]"
       onClick={() => navigate(`/product/${data.id}`)}
     >
-      <div className="aspect-square rounded-md overflow-hidden ">
+      <div className="aspect-square rounded-lg overflow-hidden ">
         <img
           className="h-full w-full object-cover"
           src={(data.image_url.length > 0 && data.image_url[0]) || image}
         />
       </div>
-      <div className="flex flex-col justify-between h-[60px]">
-        <p className="overflow-hidden text-ellipsis line-clamp-2 font-bold">
+      <div className="flex flex-col justify-between h-[auto]">
+        <p className="overflow-hidden text-ellipsis line-clamp-2 font-semibold text-lg">
           {data.title}
         </p>
-        <p className="text-gray-500 ">{`${formatNumber(data.price)} đ`}</p>
-        <div className="flex flex-row justify-between">
-          <span className="flex gap-x-1">
-            <StarIcon className="text-[#A93F15] h-4 w-4 flex-shrink-0" />
-            {data.avg_stars}
+        <p className="font-semibold text-lg text-[#FF4E59]">{`${formatNumber(data.price)} đ`}</p>
+        <div className="flex flex-row justify-between items-center">
+          <span className="flex flex-row">
+            <FiveStars value={data.avg_stars} />
           </span>
+          <span className="font-medium">Đã bán: {data.sold_quantity}</span>
         </div>
       </div>
     </div>

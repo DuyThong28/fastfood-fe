@@ -12,7 +12,7 @@ export const FiveStars: React.FC<FiveStarsProps> = ({ value }) => {
             key={rating}
             aria-hidden="true"
             className={(value > rating
-              ? "text-gray-900"
+              ? "text-[#FFC400]"
               : "text-gray-200"
             ).concat(" h-4 w-4 flex-shrink-0")}
           />

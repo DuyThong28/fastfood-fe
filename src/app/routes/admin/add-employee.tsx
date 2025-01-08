@@ -137,7 +137,10 @@ export default function AddEmployeeRoute() {
           >
             Hủy
           </Button>
-          <Button className="w-40" type="submit">
+          <Button
+            className="w-40 bg-[#A93F15] hover:bg-[#FF7E00]"
+            type="submit"
+          >
             Lưu
           </Button>
         </div>

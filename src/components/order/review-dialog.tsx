@@ -22,6 +22,7 @@ import CustomAlertDialog, {
   CustomAlertDialogRef,
 } from "../shared/alert-dialog";
 import { toastSuccess, toastWarning } from "@/utils/toast";
+import { AxiosError } from "axios";
 
 export interface ReviewDialogRef {
   onOpen: (id: string, action: ReviewStatus) => Promise<void>;
@@ -122,6 +123,11 @@ const ReviewDialog = forwardRef<ReviewDialogRef, ReviewDialogProps>(
             setReviews([]);
             await onRefetch();
           } catch (err) {
+            if (err instanceof AxiosError && err.response?.status === 400) {
+              toastWarning(
+                "Vui lòng tuân thủ quy tắc cộng đồng và sử dụng ngôn từ phù hợp. Cảm ơn bạn!"
+              );
+            }
             console.log(err);
           }
         }

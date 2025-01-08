@@ -71,6 +71,16 @@ export default function OrderDetailRoute() {
     reviewDialogRef.current?.onOpen(id, action);
   };
 
+  const handlePay = async () => {
+    if (!orderDetail) return;
+    if (!orderDetail.payment_url) {
+      const paymentRespone = await orderService.createMOMOURL(orderDetail.id);
+      if (paymentRespone && paymentRespone.data.data.payUrl) {
+        window.location.href = paymentRespone.data.data.payUrl;
+      }
+    } else window.location.href = orderDetail.payment_url;
+  };
+
   return (
     <CustomerLayout>
       {orderDetail && (
@@ -80,64 +90,76 @@ export default function OrderDetailRoute() {
             ref={reviewDialogRef}
             onRefetch={() => getOrderById(orderDetail.id)}
           />
-          <main className="flex flex-1 flex-col gap-6 py-6 pl-6">
-            <SectionCard className="flex flex-row items-center p-4 gap-1">
+          <main className="flex flex-1 flex-col gap-6 py-6 md:pl-6 mx-2">
+            <SectionCard className="flex md:flex-row flex-col md:items-center p-4 gap-1">
               <div
                 onClick={handleBack}
-                className="hover:cursor-pointer flex flexp-row gap-1 items-center"
+                className="hover:cursor-pointer flex flex-row gap-1 items-center"
               >
                 <ChevronLeft className="h-5 w-5 text-[#A93F15]" />
                 <span className="text-[#A93F15] font-semibold">TRỞ LẠI</span>
               </div>
-              <span className="ml-auto text-[#A93F15] font-semibold">{`MÃ ĐƠN HÀNG: ${orderDetail.id}`}</span>
+              <span className="ml-auto text-[#A93F15] font-semibold mt-4 md:mt-0">{`MÃ ĐƠN HÀNG: ${orderDetail.id}`}</span>
             </SectionCard>
             <SectionCard className="p-4 flex flex-row  items-center">
               <div className="text-[#A93F15] font-semibold">
                 {ORDER_STATUS[orderDetail.status]}
               </div>
-              {(orderDetail.status === OrderStatus.PENDING ||
-                orderDetail.status === OrderStatus.PROCESSING) && (
-                <Button
-                  variant="outline"
-                  className="ml-auto"
-                  onClick={handleCancelOrder}
-                >
-                  Hủy đơn hàng
-                </Button>
-              )}
-              {orderDetail.status === OrderStatus.SUCCESS &&
-                orderDetail.review_state === ReviewStatus.UNREVIEW && (
+              <div className="flex flex-row gap-4 ml-auto">
+                {orderDetail.status === OrderStatus.PENDING && (
                   <Button
-                    className="ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
-                    onClick={() =>
-                      handleReview(orderDetail.id, ReviewStatus.UNREVIEW)
-                    }
+                    variant="default"
+                    className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                    onClick={handlePay}
                   >
-                    Đánh giá
+                    Thanh toán
                   </Button>
                 )}
-              {orderDetail.status === OrderStatus.SUCCESS &&
-                orderDetail.review_state === ReviewStatus.REVIEWED && (
+                {((orderDetail.status === OrderStatus.PROCESSING &&
+                  orderDetail.payment_method == "CASH") ||
+                  orderDetail.status === OrderStatus.PENDING) && (
                   <Button
-                    className="ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
-                    onClick={() =>
-                      handleReview(orderDetail.id, ReviewStatus.REVIEWED)
-                    }
+                    variant="outline"
+                    className="text-[#A93F15] hover:text-[#A93F15]"
+                    onClick={handleCancelOrder}
                   >
-                    Xem đánh giá
+                    Hủy đơn hàng
                   </Button>
                 )}
-              {orderDetail.status === OrderStatus.SUCCESS &&
-                orderDetail.review_state === ReviewStatus.REPLIED && (
-                  <Button
-                    className="ml-auto bg-[#A93F15] hover:bg-[#FF7E00]"
-                    onClick={() =>
-                      handleReview(orderDetail.id, ReviewStatus.REPLIED)
-                    }
-                  >
-                    Xem phản hồi
-                  </Button>
-                )}
+                {orderDetail.status === OrderStatus.SUCCESS &&
+                  orderDetail.review_state === ReviewStatus.UNREVIEW && (
+                    <Button
+                      className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                      onClick={() =>
+                        handleReview(orderDetail.id, ReviewStatus.UNREVIEW)
+                      }
+                    >
+                      Đánh giá
+                    </Button>
+                  )}
+                {orderDetail.status === OrderStatus.SUCCESS &&
+                  orderDetail.review_state === ReviewStatus.REVIEWED && (
+                    <Button
+                      className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                      onClick={() =>
+                        handleReview(orderDetail.id, ReviewStatus.REVIEWED)
+                      }
+                    >
+                      Xem đánh giá
+                    </Button>
+                  )}
+                {orderDetail.status === OrderStatus.SUCCESS &&
+                  orderDetail.review_state === ReviewStatus.REPLIED && (
+                    <Button
+                      className="bg-[#A93F15] hover:bg-[#FF7E00]"
+                      onClick={() =>
+                        handleReview(orderDetail.id, ReviewStatus.REPLIED)
+                      }
+                    >
+                      Xem phản hồi
+                    </Button>
+                  )}
+              </div>
             </SectionCard>
             <SectionCard className="p-4 space-y-4">
               <div className="font-semibold text-[#A93F15]">
@@ -167,7 +189,7 @@ export default function OrderDetailRoute() {
               <div className="flex p-4">
                 <div className="ml-auto font-semibold text-[#A93F15]">{`Tổng tiền hàng: ${formatNumber(
                   orderDetail.total_price
-                )}`}</div>
+                )} đ`}</div>
               </div>
             </SectionCard>
           </main>

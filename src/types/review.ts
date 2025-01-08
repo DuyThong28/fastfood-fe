@@ -27,6 +27,8 @@ export interface ResReview {
   product: ResProductDetail;
   user: ResUser;
   ReplyReviews: ReplyReviews | null;
+  is_hidden: boolean;
+  type: string;
 }
 
 export interface ReplyReviews {
@@ -54,6 +56,7 @@ export interface GetAllReviewQueries {
   rating: number[];
   date: Date | null;
   state: string;
+  isHidden: boolean | null;
 }
 
 export interface GetReviewByProductId {

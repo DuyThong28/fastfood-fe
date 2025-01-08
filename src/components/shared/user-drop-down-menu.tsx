@@ -3,7 +3,13 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { Button } from "../ui/button";
-import { ClipboardList, LogOut, User } from "lucide-react";
+import {
+  ClipboardList,
+  LogOut,
+  User,
+  ShoppingCart,
+  ShoppingCartIcon,
+} from "lucide-react";
 import {
   DropdownMenuContent,
   DropdownMenuItem,
@@ -65,6 +71,15 @@ export default function UserDropDownMenu() {
           <span>{user?.full_name || ""}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        {auth && auth.role === UserRole.CUSTOMER && (
+          <DropdownMenuItem
+            className="inline-flex md:hidden"
+            onClick={() => navigate(routes.CUSTOMER.CART)}
+          >
+            <ShoppingCartIcon className="w-4 h-4 mr-2" />
+            <span>Giỏ hàng</span>
+          </DropdownMenuItem>
+        )}
         {auth && auth.role === UserRole.ADMIN && (
           <DropdownMenuItem
             onClick={() => navigate(routes.ADMIN.ACCOUNT_PROFILE)}
