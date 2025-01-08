@@ -146,18 +146,18 @@ export default function CartRoute() {
         >
           <div className="flex flex-row md:items-center gap-4">
             <Checkbox
-              className="md:order-none order-3 md:transform-none translate-y-1/2"
+              className="md:order-none order-3 md:transform-none translate-y-1/2 hidden md:block"
               checked={isAllSelected}
               onCheckedChange={handleSelectAll}
             />
             <Button
-              className="bg-[#A93F15] hover:bg-[#FF7E00] text-xs md:text-sm md:order-none order-2"
+              className="bg-[#A93F15] hover:bg-[#FF7E00] text-xs md:text-sm md:order-none order-2 hidden md:block"
               onClick={() => handleSelectAll(!isAllSelected)}
             >
               Chọn tất cả
             </Button>
             <Button
-              className="bg-[#A93F15] hover:bg-[#FF7E00] text-xs md:text-sm md:order-none order-1"
+              className="bg-[#A93F15] hover:bg-[#FF7E00] text-xs md:text-sm md:order-none order-1 hidden md:block"
               onClick={handleDeleteMany}
             >
               Xóa
@@ -168,7 +168,7 @@ export default function CartRoute() {
               rowSelection.length
             } sản phẩm): ${formatNumber(handleCountTotalPrice())}`}</div>
             <Button
-              className="bg-[#A93F15] hover:bg-[#FF7E00] text-xs md:text-sm -order-1 md:order-1 md:py-0 py-4"
+              className="bg-[#A93F15] hover:bg-[#FF7E00] text-xs md:text-sm order-1 md:order-1 md:py-0 py-4"
               onClick={handlePurchase}
             >
               Mua hàng

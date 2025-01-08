@@ -173,8 +173,8 @@ const ProductLayout = forwardRef<ProductLayoutRef, ProductLayoutProps>(
           </DialogContent>
         </Dialog>
         <div className="h-screen md:w-full w-full grid grid-rows-[96px_1fr] overflow-y-auto overflow-x-hidden md:overflow-hidden md:pb-0 pb-10">
-          <div className="md:px-40 px-0 h-full w-full flex flex-row items-center bg-[#fff] gap-16 border-b">
-            <a href="/" className="text-white text-nowrap  text-2xl font-bold">
+          <div className="md:px-40 px-0 h-full w-full flex flex-row items-center bg-[#fff] gap-0 md:gap-16 border-b">
+            <a href="/" className="text-white text-nowrap  text-2xl font-bold hidden md:block">
               <svg
                 width="239"
                 height="60"
@@ -207,8 +207,8 @@ const ProductLayout = forwardRef<ProductLayoutRef, ProductLayoutProps>(
                 <path d="M225 10.5L230 8H178L225 10.5Z" fill="#A93F15" />
               </svg>
             </a>
-            <div className="flex flex-row gap-4 flex-1">
-              <div className="flex w-full rounded-sm items-center space-x-2 bg-white p-[2px]">
+            <div className="flex flex-row gap-1 md:gap-4 flex-1">
+              <div className="flex w-[90%] md:w-full rounded-sm items-center space-x-2 bg-white p-[2px]">
                 <input
                   className="w-full px-2 py-2 rounded-sm border border-[#A93F15]"
                   type="search"
@@ -251,9 +251,9 @@ const ProductLayout = forwardRef<ProductLayoutRef, ProductLayoutProps>(
               </div>
             )}
             {auth && auth.role === UserRole.CUSTOMER && (
-              <div className="flex flex-row gap-4 w-fit items-center">
+              <div className="flex flex-row gap-0 md:gap-4 w-fit items-center">
                 <div
-                  className="w-11"
+                  className="w-11 hidden md:block"
                   onClick={() => navigate(routes.CUSTOMER.CART)}
                 >
                   <ShoppingCart className="h-7 w-7 text-[#A93F15]" />

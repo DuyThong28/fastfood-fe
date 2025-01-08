@@ -130,7 +130,7 @@ export default function ProductDetailRoute() {
             />
           </div>
           <div className="space-y-6 md:col-span-3">
-            <div className="flex gap-x-5 items-end">
+            <div className="flex flex-col md:flex-row gap-x-5 items-start md:items-end">
               <h2 className=" text-5xl font-medium text-gray-900 ">
                 {detailData.title}
               </h2>
